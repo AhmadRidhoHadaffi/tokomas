@@ -36,7 +36,6 @@ database.tests.DBCollat = utf8mb4_general_ci
 database.tests.port = 3306
 
 #--------------------------------------------------------------------
-# JWT (CHANGE IN PRODUCTION!)
 #--------------------------------------------------------------------
 
 jwt.secret = 'your-secret-key-min-32-chars'
@@ -44,7 +43,6 @@ jwt.ttl = 604800
 jwt.issuer = 'toko-mas-gembira'
 
 #--------------------------------------------------------------------
-# CORS
 #--------------------------------------------------------------------
 
 cors.allowedOrigins = 'http://localhost:5173,http://localhost:3000'

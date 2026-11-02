@@ -1,69 +1,118 @@
-# CodeIgniter 4 Application Starter
+# Toko Mas Gembira
 
-## What is CodeIgniter?
+Sistem informasi manajemen dan promosi toko emas berbasis CodeIgniter 4 dengan tampilan server-rendered (PHP Views + Tailwind CSS).
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Stack
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- CodeIgniter 4.7.4 (PHP 8.2+)
+- MySQL/MySQLi
+- Tailwind CSS 3.4.17 (CLI build)
+- Alpine.js 3.14 (interaktivitas ringan)
+- Session authentication (bukan JWT)
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Struktur
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
-
-## Installation & updates
-
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
-
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- `app/Controllers/{Public,Owner,Staff,Customer,Ajax}`: controller per area role.
+- `app/Services`: logika bisnis (dipanggil controller, tidak punya query).
+- `app/Models`, `app/Entities`: data layer.
+- `app/Views`: layout + komponen + halaman, server-rendered CI4 views.
+- `app/Cells`: komponen presentasi dengan logika kecil.
+- `app/Database/Migrations`: skema database (tidak diubah tanpa migration baru).
+- `resources/css/app.css`: input Tailwind → `public/assets/css/app.css`.
+- `tests/feature`, `tests/unit`: PHPUnit suite.
+- `docs/`: dokumentasi rute, struktur, dan pemetaan.
 
 ## Setup
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+1. Clone repo, `composer install`, `npm install`.
+2. Duplikat `env` ke `.env`, atur database:
+   ```
+   database.default.database = db_tokogembira
+   database.default.username = root
+   database.default.password =
+   
+   database.tests.database = db_tokogembira_test
+   ```
+3. Buat database MySQL:
+   ```sql
+   CREATE DATABASE db_tokogembira CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+   CREATE DATABASE db_tokogembira_test CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+   ```
+4. Migrasi dan seed data demo:
+   ```bash
+   php spark migrate --all
+   php spark db:seed DemoSeeder
+   php spark migrate --all --dbgroup tests
+   ```
+5. Build CSS:
+   ```bash
+   npm run build
+   # atau npm run dev untuk watch mode
+   ```
+6. Jalankan server:
+   ```bash
+   php spark serve
+   ```
+   Buka http://localhost:8080
 
-## Important Change with index.php
+## Testing
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+```bash
+composer test
+# atau
+vendor/bin/phpunit
+```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+Database tes (`db_tokogembira_test`) terpisah, tidak pernah menyentuh data produksi.
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## Role & Akses
 
-## Repository Management
+- **Owner**: akses penuh (produk, transaksi, pembukuan, pesanan custom, pelanggan, promosi, karyawan, laporan, pengaturan).
+- **Karyawan**: produk, transaksi, pembukuan, pesanan custom, pelanggan, promosi.
+- **Pelanggan**: lihat pesanan custom sendiri, riwayat transaksi, notifikasi, profil.
+- **Publik**: landing page, login, register.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+## Migration & Data
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+- Migration ada di `app/Database/Migrations/`. JANGAN diubah atau dihapus.
+- Perubahan skema hanya lewat migration BARU.
+- Tes memakai database terpisah `db_tokogembira_test`.
+- JANGAN menjalankan tes atau migration ke `db_tokogembira` produksi.
 
-## Server Requirements
+## Keamanan
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+- CSRF aktif global untuk semua form.
+- Session-based auth, regenerasi session ID saat login.
+- Filter `auth`, `role`, `guest`, `throttle` di rute.
+- Password hash `password_hash()`, tidak pernah dikirim ke client.
+- Query memakai Query Builder dan prepared statement.
+- Output view memakai `esc()`.
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Deployment
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+1. `APP_ENV = production` di `.env`.
+2. `composer install --no-dev --optimize-autoloader`.
+3. `npm run build`.
+4. Arahkan web server ke folder `public/`.
+5. Atur `app.baseURL` sesuai domain produksi.
+6. Aktifkan HTTPS dan `app.forceGlobalSecureRequests = true`.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Dokumentasi
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+- `docs/RUTE.md`: daftar URL dan role.
+- `docs/STRUKTUR.md`: alur request dan organisasi kode.
+- `docs/PEMETAAN.md`: pemetaan halaman desain ke controller/view/tabel.
+
+## Status
+
+Refactor dari REST API + React ke server-rendered CI4 views sudah selesai:
+
+- ✅ Session auth, filter, routing, layout, placeholder semua halaman
+- ✅ Modul Produk owner/karyawan (list dengan filter/sort/pagination)
+- ✅ Tes auth dan routing (5/5 lulus tanpa database)
+- ⏳ Tes database menunggu MySQL lokal aktif (migration ke `db_tokogembira_test`)
+- ⏳ Modul transaksi, pembukuan, pesanan custom, pelanggan, promosi, laporan, pengaturan
+- ⏳ Form POST dengan validasi dan CSRF
+- ⏳ Tampilan isi halaman (sekarang placeholder)
+
+JWT, CORS lintas origin, React, dan Blade tidak dipakai.

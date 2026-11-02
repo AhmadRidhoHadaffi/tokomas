@@ -1,0 +1,12 @@
+import type { Transaction } from '../types/transaction';
+
+export const transactions: Transaction[] = [
+{ id: 'TRX-20260925-014', date: '2026-09-25T14:22:00', cashier: 'Rina Marlina', customer: 'Siti Rahmawati', items: [{ productCode: 'AE-001', name: 'Anting Tetes Filigree', qty: 1, price: 3240000 }], discount: 100000, method: 'QRIS', status: 'Lunas' },
+{ id: 'TRX-20260925-013', date: '2026-09-25T12:05:00', cashier: 'Dedi Saputra', customer: 'Andi Pratama', items: [{ productCode: 'KE-001', name: 'Kalung Rantai Liontin', qty: 1, price: 13200000 }], discount: 0, method: 'Transfer', status: 'Lunas' },
+{ id: 'TRX-20260925-012', date: '2026-09-25T10:41:00', cashier: 'Rina Marlina', customer: 'Yuliani Syafitri', items: [{ productCode: 'CP-001', name: 'Cincin Perak Solitaire', qty: 2, price: 385000 }, { productCode: 'GP-001', name: 'Gelang Perak Rantai', qty: 1, price: 520000 }], discount: 40000, method: 'Tunai', status: 'Lunas' },
+{ id: 'TRX-20260924-021', date: '2026-09-24T16:10:00', cashier: 'Dedi Saputra', customer: 'Hendra Gunawan', items: [{ productCode: 'GE-001', name: 'Gelang Ukir Bunga', qty: 1, price: 20625000 }], discount: 250000, method: 'Transfer', status: 'Lunas' },
+{ id: 'TRX-20260924-018', date: '2026-09-24T11:30:00', cashier: 'Rina Marlina', customer: 'Siti Rahmawati', items: [{ productCode: 'CE-002', name: 'Cincin Polos Klasik', qty: 1, price: 3375000 }], discount: 0, method: 'Tunai', status: 'Lunas' },
+{ id: 'TRX-20260923-009', date: '2026-09-23T13:45:00', cashier: 'Dedi Saputra', customer: 'Nurhayati', items: [{ productCode: 'AE-002', name: 'Anting Jepit Anak', qty: 2, price: 1450000 }], discount: 50000, method: 'QRIS', status: 'Lunas' },
+{ id: 'TRX-20260922-015', date: '2026-09-22T15:20:00', cashier: 'Rina Marlina', customer: 'Rizky Maulana', items: [{ productCode: 'CE-001', name: 'Cincin Filigree Minang', qty: 1, price: 5280000 }], discount: 0, method: 'Transfer', status: 'Menunggu' },
+{ id: 'TRX-20260920-007', date: '2026-09-20T10:15:00', cashier: 'Dedi Saputra', customer: 'Fauzan Hakim', items: [{ productCode: 'GE-002', name: 'Gelang Bangle Polos', qty: 1, price: 16500000 }], discount: 200000, method: 'Transfer', status: 'Lunas' },
+{ id: 'TRX-20260912-011', date: '2026-09-12T14:00:00', cashier: 'Rina Marlina', customer: 'Siti Rahmawati', items: [{ productCode: 'CP-001', name: 'Cincin Perak Solitaire', qty: 1, price: 385000 }], discount: 0, method: 'Tunai', status: 'Lunas' }];

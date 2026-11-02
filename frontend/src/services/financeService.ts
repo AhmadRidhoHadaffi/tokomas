@@ -1,2 +1,0 @@
-import { apiClient } from './apiClient';
-export const financeService = { list: (query = '') => apiClient.get(`/finances${query}`), summary: (query = '') => apiClient.get(`/finances/summary${query}`), create: (data: unknown) => apiClient.post('/finances', data), update: (id: number, data: unknown) => apiClient.put(`/finances/${id}`, data), remove: (id: number) => apiClient.delete(`/finances/${id}`) };

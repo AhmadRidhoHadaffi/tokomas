@@ -1,2 +1,0 @@
-import { apiClient } from './apiClient';
-export const customOrderService = { list: (query = '') => apiClient.get(`/custom-orders${query}`), detail: (id: number) => apiClient.get(`/custom-orders/${id}`), create: (data: unknown) => apiClient.post('/custom-orders', data), update: (id: number, data: unknown) => apiClient.put(`/custom-orders/${id}`, data), updateStatus: (id: number, status: string) => apiClient.put(`/custom-orders/${id}/status`, { status }) };

@@ -2,8 +2,11 @@
 
 namespace Config;
 
+use App\Filters\AuthFilter;
+use App\Filters\GuestFilter;
+use App\Filters\RoleFilter;
+use App\Filters\ThrottleFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
-use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\ForceHTTPS;
@@ -16,47 +19,30 @@ use CodeIgniter\Filters\SecureHeaders;
 class Filters extends BaseFilters
 {
     public array $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
+        'csrf' => CSRF::class,
+        'toolbar' => DebugToolbar::class,
+        'honeypot' => Honeypot::class,
+        'invalidchars' => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'cors'          => Cors::class,
-        'forcehttps'    => ForceHTTPS::class,
-        'pagecache'     => PageCache::class,
-        'performance'   => PerformanceMetrics::class,
-        'jwt'           => \App\Filters\JwtAuthFilter::class,
-        'role'          => \App\Filters\RoleFilter::class,
-        'throttle'      => \App\Filters\ThrottleFilter::class,
+        'forcehttps' => ForceHTTPS::class,
+        'pagecache' => PageCache::class,
+        'performance' => PerformanceMetrics::class,
+        'auth' => AuthFilter::class,
+        'role' => RoleFilter::class,
+        'guest' => GuestFilter::class,
+        'throttle' => ThrottleFilter::class,
     ];
 
     public array $required = [
-        'before' => [
-            'forcehttps',
-            'pagecache',
-        ],
-        'after' => [
-            'pagecache',
-            'performance',
-            'toolbar',
-        ],
+        'before' => ['forcehttps', 'pagecache'],
+        'after' => ['pagecache', 'performance', 'toolbar'],
     ];
 
     public array $globals = [
-        'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
-        ],
-        'after' => [
-            // 'honeypot',
-            // 'secureheaders',
-        ],
+        'before' => ['csrf'],
+        'after' => [],
     ];
 
     public array $methods = [];
-
     public array $filters = [];
 }
-
-

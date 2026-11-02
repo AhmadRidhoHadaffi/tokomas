@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-ivory text-charcoal font-sans; }
+}
+
+.bg-arabesque { background-image: radial-gradient(circle at 25% 25%, rgba(212,175,55,.08) 0 2px, transparent 3px), radial-gradient(circle at 75% 75%, rgba(139,0,0,.04) 0 2px, transparent 3px); background-size: 34px 34px; }
+.scrollbar-thin::-webkit-scrollbar { width: 5px; height: 5px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 999px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

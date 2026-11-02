@@ -60,6 +60,11 @@ class CustomerService
         return $this->customerModel->getWithStats($id);
     }
 
+    public function getByUserId(int $userId): ?array
+    {
+        return $this->customerModel->findByUserId($userId);
+    }
+
     public function update(int $id, array $data): bool
     {
         // Don't allow changing user_id
@@ -67,3 +72,4 @@ class CustomerService
         return $this->customerModel->update($id, $data);
     }
 }
+
