@@ -16,5 +16,5 @@ $routes->group('karyawan', ['filter' => ['auth', 'role:karyawan']], static funct
     $routes->get('pesanan-custom/(:num)', 'Staff\CustomOrderController::show/$1');
     $routes->post('pesanan-custom/(:num)/ubah-status', 'Staff\CustomOrderController::changeStatus/$1');
     $routes->get('pelanggan', 'Staff\PageController::customers');
-    $routes->get('promosi', 'Staff\PageController::promotions');
+    $routes->get('promosi', 'Staff\PromotionController::index');
 });
