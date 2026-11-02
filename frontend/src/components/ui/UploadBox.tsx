@@ -1,0 +1,3 @@
+import { useId, useState } from 'react';
+interface UploadBoxProps { label: string; hint?: string; onChange?: (file: File | null) => void; }
+export function UploadBox({ label, hint = 'PNG, JPG, atau WEBP. Maks. 2 MB', onChange }: UploadBoxProps) { const id = useId(); const [name, setName] = useState(''); return <div><label htmlFor={id} className="mb-1.5 block text-sm font-medium text-charcoal/80">{label}</label><input id={id} type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => { const file = event.target.files?.[0] ?? null; setName(file?.name ?? ''); onChange?.(file); }} className="block w-full rounded-lg border border-dashed border-gold/50 bg-ivory p-3 text-sm" /> <p className="mt-1 text-xs text-charcoal/50">{name || hint}</p></div>; }

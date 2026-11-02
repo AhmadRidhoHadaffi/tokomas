@@ -1,0 +1,2 @@
+import { apiClient } from './apiClient';
+export const employeeService = { list: (query = '') => apiClient.get(`/employees${query}`), create: (data: unknown) => apiClient.post('/employees', data), update: (id: number, data: unknown) => apiClient.put(`/employees/${id}`, data), toggleActive: (id: number) => apiClient.put(`/employees/${id}/toggle-active`), resetPassword: (id: number, newPassword: string) => apiClient.put(`/employees/${id}/reset-password`, { new_password: newPassword }) };

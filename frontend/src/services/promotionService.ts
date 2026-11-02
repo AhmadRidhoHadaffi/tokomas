@@ -1,0 +1,2 @@
+import { apiClient } from './apiClient';
+export const promotionService = { list: (query = '') => apiClient.get(`/promotions${query}`), create: (data: unknown) => apiClient.post('/promotions', data), update: (id: number, data: unknown) => apiClient.put(`/promotions/${id}`, data), remove: (id: number) => apiClient.delete(`/promotions/${id}`), send: (id: number) => apiClient.post(`/promotions/${id}/send`) };
