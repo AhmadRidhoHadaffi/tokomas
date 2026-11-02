@@ -10,7 +10,11 @@ $routes->group('karyawan', ['filter' => ['auth', 'role:karyawan']], static funct
     $routes->get('pembukuan', 'Staff\FinanceController::index');
     $routes->get('pembukuan/baru', 'Staff\FinanceController::create');
     $routes->post('pembukuan', 'Staff\FinanceController::store');
-    $routes->get('pesanan-custom', 'Staff\PageController::customOrders');
+    $routes->get('pesanan-custom', 'Staff\CustomOrderController::index');
+    $routes->get('pesanan-custom/baru', 'Staff\CustomOrderController::create');
+    $routes->post('pesanan-custom', 'Staff\CustomOrderController::store');
+    $routes->get('pesanan-custom/(:num)', 'Staff\CustomOrderController::show/$1');
+    $routes->post('pesanan-custom/(:num)/ubah-status', 'Staff\CustomOrderController::changeStatus/$1');
     $routes->get('pelanggan', 'Staff\PageController::customers');
     $routes->get('promosi', 'Staff\PageController::promotions');
 });

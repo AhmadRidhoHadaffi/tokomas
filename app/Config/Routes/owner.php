@@ -11,7 +11,11 @@ $routes->group('owner', ['filter' => ['auth', 'role:owner']], static function ($
     $routes->get('pembukuan/baru', 'Owner\FinanceController::create');
     $routes->post('pembukuan', 'Owner\FinanceController::store');
     $routes->post('pembukuan/(:num)/hapus', 'Owner\FinanceController::delete/$1');
-    $routes->get('pesanan-custom', 'Owner\PageController::customOrders');
+    $routes->get('pesanan-custom', 'Owner\CustomOrderController::index');
+    $routes->get('pesanan-custom/baru', 'Owner\CustomOrderController::create');
+    $routes->post('pesanan-custom', 'Owner\CustomOrderController::store');
+    $routes->get('pesanan-custom/(:num)', 'Owner\CustomOrderController::show/$1');
+    $routes->post('pesanan-custom/(:num)/ubah-status', 'Owner\CustomOrderController::changeStatus/$1');
     $routes->get('pelanggan', 'Owner\PageController::customers');
     $routes->get('promosi', 'Owner\PageController::promotions');
     $routes->get('karyawan', 'Owner\PageController::employees');
