@@ -20,7 +20,7 @@ class CustomOrderController extends BaseController
             'per_page' => 20,
         ];
 
-        return view('pages/owner/custom_orders/index', [
+        return view('pages/staff/custom_orders/index', [
             'title' => 'Pesanan Custom',
             'result' => (new CustomOrderService())->getAll($filters),
             'filters' => $filters,
@@ -30,7 +30,7 @@ class CustomOrderController extends BaseController
     public function create(): string
     {
         $customers = (new CustomerService())->getAll(['per_page' => 1000])['items'];
-        return view('pages/owner/custom_orders/create', [
+        return view('pages/staff/custom_orders/create', [
             'title' => 'Tambah Pesanan Custom',
             'customers' => $customers,
         ]);
@@ -72,7 +72,7 @@ class CustomOrderController extends BaseController
             return redirect()->to('/karyawan/pesanan-custom')->with('error', 'Pesanan tidak ditemukan');
         }
 
-        return view('pages/owner/custom_orders/show', [
+        return view('pages/staff/custom_orders/show', [
             'title' => 'Detail Pesanan Custom',
             'order' => $order,
         ]);
@@ -94,4 +94,5 @@ class CustomOrderController extends BaseController
         }
     }
 }
+
 

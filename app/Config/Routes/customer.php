@@ -5,6 +5,6 @@ $routes->group('pelanggan', ['filter' => ['auth', 'role:pelanggan']], static fun
     $routes->get('pesanan', 'Customer\OrderController::index');
     $routes->get('pesanan/(:num)', 'Customer\OrderController::show/$1');
     $routes->get('riwayat', 'Customer\PageController::history');
-    $routes->get('notifikasi', 'Customer\PageController::notifications');
-    $routes->get('profil', 'Customer\PageController::profile');
+    $routes->get('notifikasi', 'Customer\NotificationController::index');
+    $routes->get('profil', 'Customer\ProfileController::index');
 });
