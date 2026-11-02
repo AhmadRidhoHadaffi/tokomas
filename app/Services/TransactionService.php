@@ -135,6 +135,10 @@ class TransactionService
             ->join('customers', 'customers.id = transactions.customer_id')
             ->join('users', 'users.id = transactions.user_id');
 
+        if (!empty($filters['customer_id'])) {
+            $builder->where('transactions.customer_id', (int) $filters['customer_id']);
+        }
+
         // Search
         if (!empty($filters['search'])) {
             $builder->groupStart()
@@ -188,3 +192,4 @@ class TransactionService
         return $this->transactionModel->getWithDetails($id);
     }
 }
+
