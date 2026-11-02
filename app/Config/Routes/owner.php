@@ -1,7 +1,7 @@
 <?php
 
 $routes->group('owner', ['filter' => ['auth', 'role:owner']], static function ($routes) {
-    $routes->get('', 'Owner\PageController::dashboard');
+    $routes->get('', 'Owner\DashboardController::index');
     $routes->get('produk', 'Owner\ProductController::index');
     $routes->get('transaksi', 'Owner\TransactionController::index');
     $routes->get('transaksi/baru', 'Owner\TransactionController::create');
@@ -16,10 +16,10 @@ $routes->group('owner', ['filter' => ['auth', 'role:owner']], static function ($
     $routes->post('pesanan-custom', 'Owner\CustomOrderController::store');
     $routes->get('pesanan-custom/(:num)', 'Owner\CustomOrderController::show/$1');
     $routes->post('pesanan-custom/(:num)/ubah-status', 'Owner\CustomOrderController::changeStatus/$1');
-    $routes->get('pelanggan', 'Owner\PageController::customers');
+    $routes->get('pelanggan', 'Owner\CustomerController::index');
     $routes->get('promosi', 'Owner\PromotionController::index');
     $routes->post('promosi/(:num)/kirim', 'Owner\PromotionController::send/$1');
-    $routes->get('karyawan', 'Owner\PageController::employees');
+    $routes->get('karyawan', 'Owner\EmployeeController::index');
     $routes->get('laporan', 'Owner\ReportController::index');
     $routes->get('pengaturan', 'Owner\SettingController::index');
 });

@@ -1,7 +1,7 @@
 <?php
 
 $routes->group('karyawan', ['filter' => ['auth', 'role:karyawan']], static function ($routes) {
-    $routes->get('', 'Staff\PageController::dashboard');
+    $routes->get('', 'Staff\DashboardController::index');
     $routes->get('produk', 'Staff\ProductController::index');
     $routes->get('transaksi', 'Staff\TransactionController::index');
     $routes->get('transaksi/baru', 'Staff\TransactionController::create');
@@ -15,6 +15,6 @@ $routes->group('karyawan', ['filter' => ['auth', 'role:karyawan']], static funct
     $routes->post('pesanan-custom', 'Staff\CustomOrderController::store');
     $routes->get('pesanan-custom/(:num)', 'Staff\CustomOrderController::show/$1');
     $routes->post('pesanan-custom/(:num)/ubah-status', 'Staff\CustomOrderController::changeStatus/$1');
-    $routes->get('pelanggan', 'Staff\PageController::customers');
+    $routes->get('pelanggan', 'Staff\CustomerController::index');
     $routes->get('promosi', 'Staff\PromotionController::index');
 });
