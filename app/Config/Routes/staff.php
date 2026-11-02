@@ -7,9 +7,10 @@ $routes->group('karyawan', ['filter' => ['auth', 'role:karyawan']], static funct
     $routes->get('transaksi/baru', 'Staff\TransactionController::create');
     $routes->post('transaksi', 'Staff\TransactionController::store');
     $routes->get('transaksi/(:num)', 'Staff\TransactionController::show/$1');
-    $routes->get('pembukuan', 'Staff\PageController::finances');
+    $routes->get('pembukuan', 'Staff\FinanceController::index');
+    $routes->get('pembukuan/baru', 'Staff\FinanceController::create');
+    $routes->post('pembukuan', 'Staff\FinanceController::store');
     $routes->get('pesanan-custom', 'Staff\PageController::customOrders');
     $routes->get('pelanggan', 'Staff\PageController::customers');
     $routes->get('promosi', 'Staff\PageController::promotions');
 });
-
