@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Owner;
+namespace App\Controllers\Staff;
 
 use App\Controllers\BaseController;
 use App\Services\CustomerService;
@@ -13,4 +13,5 @@ class CustomerController extends BaseController
         return view('pages/staff/customers/index', ['title' => 'Pelanggan', 'result' => (new CustomerService())->getAll($filters), 'filters' => $filters]);
     }
 }
+
 
