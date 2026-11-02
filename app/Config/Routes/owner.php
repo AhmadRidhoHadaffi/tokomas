@@ -15,3 +15,4 @@ $routes->group('owner', ['filter' => ['auth', 'role:owner']], static function ($
     $routes->get('laporan', 'Owner\PageController::reports');
     $routes->get('pengaturan', 'Owner\PageController::settings');
 });
+

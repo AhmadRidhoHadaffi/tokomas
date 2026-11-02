@@ -12,3 +12,4 @@ $routes->group('karyawan', ['filter' => ['auth', 'role:karyawan']], static funct
     $routes->get('pelanggan', 'Staff\PageController::customers');
     $routes->get('promosi', 'Staff\PageController::promotions');
 });
+
