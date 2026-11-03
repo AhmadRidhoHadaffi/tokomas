@@ -8,7 +8,7 @@ use App\Services\TransactionService;
 
 class HistoryController extends BaseController
 {
-    public function index(): string
+    public function index(): string|\CodeIgniter\HTTP\ResponseInterface
     {
         $customer = (new CustomerService())->getByUserId($this->userId());
         if (!$customer) {

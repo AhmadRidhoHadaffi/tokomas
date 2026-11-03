@@ -8,7 +8,7 @@ use App\Services\CustomOrderService;
 
 class HomeController extends BaseController
 {
-    public function index(): string
+    public function index(): string|\CodeIgniter\HTTP\ResponseInterface
     {
         $customer = (new CustomerService())->getByUserId($this->userId());
         $activeOrders = $customer ? (new CustomOrderService())->getAll(['customer_id' => $customer['id'], 'per_page' => 5])['items'] : [];

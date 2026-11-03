@@ -15,4 +15,19 @@ final class RoutePageTest extends CIUnitTestCase
             $this->get($path)->assertRedirectTo('/masuk');
         }
     }
+
+    public function testAllRoleGetPagesDoNotReturnServerError(): void
+    {
+        $routes = [
+            'owner' => ['/owner', '/owner/produk', '/owner/transaksi', '/owner/transaksi/baru', '/owner/pembukuan', '/owner/pembukuan/baru', '/owner/pesanan-custom', '/owner/pesanan-custom/baru', '/owner/pelanggan', '/owner/promosi', '/owner/karyawan', '/owner/laporan', '/owner/pengaturan'],
+            'karyawan' => ['/karyawan', '/karyawan/produk', '/karyawan/transaksi', '/karyawan/transaksi/baru', '/karyawan/pembukuan', '/karyawan/pembukuan/baru', '/karyawan/pesanan-custom', '/karyawan/pesanan-custom/baru', '/karyawan/pelanggan', '/karyawan/promosi'],
+            'pelanggan' => ['/pelanggan', '/pelanggan/pesanan', '/pelanggan/riwayat', '/pelanggan/notifikasi', '/pelanggan/profil'],
+        ];
+        foreach ($routes as $role => $paths) {
+            foreach ($paths as $path) {
+                $response = $this->withSession(['user_id' => 1, 'role' => $role])->get($path);
+                $this->assertNotSame(500, $response->response()->getStatusCode(), $role . ' ' . $path);
+            }
+        }
+    }
 }

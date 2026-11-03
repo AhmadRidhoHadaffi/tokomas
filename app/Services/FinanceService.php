@@ -49,6 +49,12 @@ class FinanceService
         if (!empty($filters['end_date'])) {
             $builder->where('finances.entry_date <=', $filters['end_date']);
         }
+        if (isset($filters['custom_order_id'])) {
+            $builder->where('finances.custom_order_id', (int) $filters['custom_order_id']);
+        }
+        if (isset($filters['transaction_id'])) {
+            $builder->where('finances.transaction_id', (int) $filters['transaction_id']);
+        }
 
         // Search
         if (!empty($filters['search'])) {

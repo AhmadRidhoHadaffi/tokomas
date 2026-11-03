@@ -8,7 +8,7 @@ use App\Services\NotificationService;
 
 class NotificationController extends BaseController
 {
-    public function index(): string
+    public function index(): string|\CodeIgniter\HTTP\ResponseInterface
     {
         $customer = (new CustomerService())->getByUserId($this->userId());
         if (!$customer) {

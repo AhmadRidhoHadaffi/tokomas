@@ -8,7 +8,7 @@ use App\Services\CustomerService;
 
 class OrderController extends BaseController
 {
-    public function index(): string
+    public function index(): string|\CodeIgniter\HTTP\ResponseInterface
     {
         $customer = (new CustomerService())->getByUserId($this->userId());
         if (!$customer) {
@@ -23,7 +23,7 @@ class OrderController extends BaseController
         ]);
     }
 
-    public function show(int $id): string
+    public function show(int $id): string|\CodeIgniter\HTTP\ResponseInterface
     {
         $customer = (new CustomerService())->getByUserId($this->userId());
         $order = (new CustomOrderService())->getById($id);
