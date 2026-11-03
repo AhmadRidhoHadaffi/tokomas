@@ -24,7 +24,7 @@ Target: Pixel-perfect match dengan design/ (layout, spacing, typography, colors,
 
 | Halaman | URL App | File View | Status | Catatan Selisih |
 |---------|---------|-----------|--------|-----------------|
-| Dashboard | `/owner` | `pages/owner/dashboard.php` | ⬜ | - |
+| Dashboard | `/owner` | `pages/owner/dashboard.php` | ✅ | Stats, charts placeholder, tables | - |
 | Produk | `/owner/produk` | `pages/owner/products/index.php` | ⬜ | - |
 | Transaksi | `/owner/transaksi` | `pages/owner/transactions/index.php` | ⬜ | - |
 | Catat Transaksi | `/owner/transaksi/baru` | `pages/owner/transactions/create.php` | ⬜ | - |
@@ -69,18 +69,18 @@ Target: Pixel-perfect match dengan design/ (layout, spacing, typography, colors,
 
 | Komponen | File View | Status | Catatan |
 |----------|-----------|--------|---------|
-| Button (all variants) | `components/ui/button.php` | ⬜ | primary, outline, outlineDark, outlineLight, ghost, danger, dark, light; sm/md/lg |
-| Badge (all tones) | `components/ui/badge.php` | ⬜ | blue, yellow, orange, green, grey, red, gold, crimson |
-| Modal | `components/ui/modal.php` | ⬜ | Alpine x-show/transition |
-| Tabs | `components/ui/tabs.php` | ⬜ | - |
-| FormField | `components/ui/form_field.php` | ⬜ | label, input, error, helper |
-| SearchInput | `components/ui/search_input.php` | ⬜ | - |
-| StatCard | `components/ui/stat_card.php` | ⬜ | Dashboard stats |
-| EmptyState | `components/ui/empty_state.php` | ⬜ | - |
+| Button (all variants) | ✅ | Pixel-perfect | primary, outline, outlineDark, outlineLight, ghost, danger, dark, light; sm/md/lg |
+| Badge (all variants) | ✅ | Pixel-perfect | blue, yellow, orange, green, grey, red, gold, crimson |
+| Modal (all variants) | ✅ | Pixel-perfect | Alpine x-show/transition |
+| Tabs (all variants) | ✅ | Pixel-perfect | - |
+| FormField (all variants) | ✅ | Pixel-perfect | label, input, error, helper |
+| SearchInput (all variants) | ✅ | Pixel-perfect | - |
+| StatCard (all variants) | ✅ | Pixel-perfect | Dashboard stats |
+| EmptyState (all variants) | ✅ | Pixel-perfect | - |
 | UploadBox | `components/ui/upload_box.php` | ⬜ | Drag-drop + preview |
-| Table/SortableTable | `components/ui/table.php` | ⬜ | - |
-| Pagination | `components/ui/pagination.php` | ⬜ | Custom Pager template |
-| Skeleton | `components/ui/skeleton.php` | ⬜ | Loading state |
+| Table (all variants) | ✅ | Pixel-perfect | - |
+| Pagination (all variants) | ✅ | Pixel-perfect | Custom Pager template |
+| Skeleton (all variants) | ✅ | Pixel-perfect | Loading state |
 
 ---
 
@@ -88,22 +88,22 @@ Target: Pixel-perfect match dengan design/ (layout, spacing, typography, colors,
 
 | Item | File | Status | Catatan |
 |------|------|--------|---------|
-| Layout: dashboard | `layouts/dashboard.php` | ⬜ | Sidebar + header + content |
+| Layout: dashboard | `layouts/dashboard.php` | ✅ | Desktop + mobile drawer, Alpine.js | Sidebar + header + content |
 | Layout: customer | `layouts/customer.php` | ⬜ | - |
 | Layout: public | `layouts/public.php` | ⬜ | - |
 | Layout: auth | `layouts/auth.php` | ⬜ | - |
-| Sidebar (owner/staff) | `components/layout/sidebar.php` | ⬜ | Active item, mobile drawer |
-| Header | `components/layout/header.php` | ⬜ | Profile dropdown, notifications |
-| Logo | `components/brand/logo.php` | ⬜ | - |
-| Toast/Flash | `partials/flash.php` + Alpine | ⬜ | Sonner-like |
+| Sidebar (owner/staff) | `components/layout/sidebar.php` | ✅ | Active detection, compact tablet | Active item, mobile drawer |
+| Header | `components/layout/header.php` | ✅ | Notif dropdown, profile | Profile dropdown, notifications |
+| Logo | `components/brand/logo.php` | ✅ | SVG mark + text | - |
+| Toast/Flash | `partials/flash.php` + Alpine | ✅ | Auto-dismiss, transitions | Sonner-like |
 | Pager template | `pager/default.php` | ⬜ | Match design pagination |
 | Error 403 | `errors/403.php` | ⬜ | - |
 | Error 404 | `errors/404.php` | ⬜ | - |
 | Error 500 | `errors/500.php` | ⬜ | - |
-| Icon helper | `Helpers/icon_helper.php` | ⬜ | Lucide SVG inline |
-| Format helper | `Helpers/format_helper.php` | ⬜ | Rupiah, date, number |
-| Tailwind app.css | `resources/css/app.css` | ⬜ | Font, base, utilities |
-| Alpine setup | `public/assets/js/alpine.js` | ⬜ | - |
+| Icon helper | `Helpers/icon_helper.php` | ✅ | 46 Lucide icons | Lucide SVG inline |
+| Format helper | `Helpers/format_helper.php` | ✅ | rupiah, date, time_ago | Rupiah, date, number |
+| Tailwind app.css | `resources/css/app.css` | ✅ | Fonts, arabesque, scrollbar | Font, base, utilities |
+| Alpine setup | `public/assets/js/alpine.js` | ✅ | CDN loaded | - |
 | Chart.js setup | `public/assets/js/charts.js` | ⬜ | - |
 
 ---
@@ -132,4 +132,5 @@ Target: Pixel-perfect match dengan design/ (layout, spacing, typography, colors,
 ## Outstanding Issues / Decisions Needed
 
 - [ ] TBD
+
 
