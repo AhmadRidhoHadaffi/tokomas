@@ -53,7 +53,7 @@ $variant = $variant ?? 'underline';
     </div>
 
 <?php else: ?>
-    <div role="tablist" class="scrollbar-thin flex gap-1 overflow-x-auto border-b border-line">
+    <div role="tablist" class="scrollbar-thin flex gap-1 overflow-x-auto border-b border-line pb-px">
         <?php foreach ($items as $item): ?>
             <button
                 role="tab"

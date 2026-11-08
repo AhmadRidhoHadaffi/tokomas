@@ -9,3 +9,8 @@ require APPPATH . 'Config/Routes/owner.php';
 require APPPATH . 'Config/Routes/staff.php';
 require APPPATH . 'Config/Routes/customer.php';
 require APPPATH . 'Config/Routes/ajax.php';
+
+$routes->get('test/owner-dashboard', 'TestController::ownerDashboard');
+$routes->get('test/owner-products', 'TestController::ownerProducts');
+$routes->get('test/staff-dashboard', 'TestController::staffDashboard');
+$routes->get('test/customer-home', 'TestController::customerHome');

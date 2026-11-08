@@ -24,6 +24,7 @@
 
 $id = $id ?? 'modal';
 $title = $title ?? '';
+$modalTitle = $modalTitle ?? $title;
 $description = $description ?? '';
 $size = $size ?? 'md';
 $content = $content ?? '';
@@ -77,7 +78,7 @@ $sizeClass = $sizeClasses[$size] ?? $sizeClasses['md'];
         <div class="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
             <div>
                 <h2 id="modal-<?= esc($id, 'attr') ?>-title" class="font-serif text-xl font-semibold text-charcoal">
-                    <?= esc($title) ?>
+                    <?= esc($modalTitle) ?>
                 </h2>
                 <?php if ($description): ?>
                     <p class="mt-1 text-sm text-charcoal/60"><?= esc($description) ?></p>

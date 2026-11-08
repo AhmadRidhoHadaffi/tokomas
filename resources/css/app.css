@@ -36,6 +36,48 @@
   .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
   }
+
+  /* Large, low-contrast arabesque for the auth backdrop (screenshot reference). */
+  .bg-arabesque-lg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='0.22' opacity='0.42'%3E%3Cpath d='M44 0 C57 13 57 31 44 44 C31 31 31 13 44 0Z'/%3E%3Cpath d='M44 88 C57 75 57 57 44 44 C31 57 31 75 44 88Z'/%3E%3Cpath d='M0 44 C13 31 31 31 44 44 C31 57 13 57 0 44Z'/%3E%3Cpath d='M88 44 C75 31 57 31 44 44 C57 57 75 57 88 44Z'/%3E%3Ccircle cx='44' cy='44' r='6'/%3E%3Ccircle cx='0' cy='0' r='15'/%3E%3Ccircle cx='88' cy='0' r='15'/%3E%3Ccircle cx='0' cy='88' r='15'/%3E%3Ccircle cx='88' cy='88' r='15'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 300px 300px;
+    background-position: center;
+  }
+
+  @media (min-width: 640px) {
+    .bg-arabesque-lg {
+      background-size: 440px 440px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .bg-arabesque-lg {
+      background-size: 560px 560px;
+    }
+  }
+
+  /* Scroll reveal used by the public landing sections. */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+      transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: opacity, transform;
+  }
+
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

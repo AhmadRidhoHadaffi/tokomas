@@ -54,6 +54,7 @@ $lowStock = $stats['low_stock_count'] ?? 0;
         ]) ?>
         
         <?= view('components/ui/stat_card', [
+            'featured' => false,
             'icon' => 'shopping-cart',
             'label' => 'Jumlah Transaksi',
             'value' => $transToday . ' transaksi',
@@ -62,16 +63,20 @@ $lowStock = $stats['low_stock_count'] ?? 0;
         ]) ?>
         
         <?= view('components/ui/stat_card', [
+            'featured' => false,
             'icon' => 'package',
             'label' => 'Stok Produk',
             'value' => '0 item',
+            'trend' => null,
             'hint' => $lowStock . ' produk hampir/sudah habis',
         ]) ?>
         
         <?= view('components/ui/stat_card', [
+            'featured' => false,
             'icon' => 'gem',
             'label' => 'Pesanan Custom Aktif',
             'value' => $activeOrders . ' pesanan',
+            'trend' => null,
             'hint' => 'Belum diambil',
         ]) ?>
     </div>

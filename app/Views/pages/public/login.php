@@ -20,59 +20,69 @@ $this->endSection();
 $this->section('content');
 
 $error = session('error');
-$oldIdentifier = old('identifier');
+$errors = session('errors') ?? [];
+$oldIdentifier = old('email');
+$authInputClass = 'px-4 py-3.5';
 ?>
 
 <form method="POST" action="<?= base_url('masuk') ?>" noValidate class="space-y-4">
     <?= csrf_field() ?>
-    
+
     <!-- Identifier Field -->
     <?= view('components/ui/form_field', [
         'label' => 'Nomor HP / Email',
-        'name' => 'identifier',
+        'name' => 'email',
         'id' => 'identifier',
-        'type' => 'text',
+        'type' => 'email',
         'placeholder' => '0812xxxx atau nama@email.com',
         'value' => $oldIdentifier,
+        'error' => $errors['email'] ?? '',
         'required' => true,
+        'showRequired' => false,
+        'autocomplete' => 'username',
+        'inputClass' => $authInputClass,
     ]) ?>
 
     <!-- Password Field -->
     <div>
         <label for="password" class="mb-1.5 block text-sm font-medium text-charcoal/80">
-            Kata Sandi<span class="text-crimson">*</span>
+            Kata Sandi
         </label>
         <div x-data="{ showPassword: false }" class="relative">
-            <input 
+            <input
                 :type="showPassword ? 'text' : 'password'"
                 name="password"
                 id="password"
                 placeholder="Masukkan kata sandi"
                 autocomplete="current-password"
                 required
-                class="w-full rounded-lg border border-line bg-white px-3.5 py-2.5 pr-10 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20"
-            />
-            <button 
+                class="w-full rounded-lg border bg-white px-4 py-3.5 pr-12 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20 <?= isset($errors['password']) ? 'border-crimson' : 'border-line' ?>"
+            >
+            <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/40 hover:text-charcoal"
+                aria-label="Tampilkan atau sembunyikan kata sandi"
+                class="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-charcoal/40 transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
             >
                 <span x-show="!showPassword"><?= icon('eye', 'h-5 w-5') ?></span>
                 <span x-show="showPassword" x-cloak><?= icon('eye-off', 'h-5 w-5') ?></span>
             </button>
         </div>
+        <?php if (isset($errors['password'])): ?>
+            <p class="mt-1.5 text-xs text-crimson"><?= esc($errors['password']) ?></p>
+        <?php endif; ?>
     </div>
 
     <!-- Forgot Password -->
     <div class="flex justify-end">
-        <button type="button" class="text-xs font-medium text-gold-deep hover:underline">
+        <button type="button" class="min-h-[40px] text-sm font-medium text-gold-deep transition-colors duration-150 hover:text-gold-dark hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
             Lupa kata sandi?
         </button>
     </div>
 
     <!-- Error Message -->
     <?php if ($error): ?>
-        <p role="alert" class="rounded-lg bg-crimson/5 px-3 py-2.5 text-sm text-crimson">
+        <p role="alert" class="rounded-lg bg-crimson/5 px-3.5 py-2.5 text-sm text-crimson">
             <?= esc($error) ?>
         </p>
     <?php endif; ?>
@@ -82,43 +92,43 @@ $oldIdentifier = old('identifier');
         'variant' => 'primary',
         'size' => 'lg',
         'type' => 'submit',
-        'class' => 'w-full',
+        'class' => 'h-[52px] w-full text-base',
         'content' => 'Masuk',
     ]) ?>
 </form>
 
 <!-- Register Link -->
 <p class="mt-6 text-center text-sm text-charcoal/60">
-    Belum punya akun? 
+    Belum punya akun?
     <a href="<?= base_url('daftar') ?>" class="font-semibold text-gold-deep hover:underline">
         Daftar di sini
     </a>
 </p>
 
 <!-- Demo Accounts -->
-<div class="mt-7 rounded-xl bg-ivory p-4">
-    <p class="text-xs text-charcoal/60">
+<div class="mt-7 rounded-xl bg-ivory p-4 sm:p-5">
+    <p class="text-sm leading-relaxed text-charcoal/60">
         Peran terdeteksi otomatis dari akun. Coba akun demo (kata sandi bebas, min. 6 karakter):
     </p>
     <div class="mt-3 flex flex-wrap gap-2">
-        <button 
+        <button
             type="button"
             onclick="document.getElementById('identifier').value='owner@tokomasgembira.id'; document.getElementById('password').value='gembira123';"
-            class="rounded-full border border-gold/40 bg-white px-3 py-1.5 text-xs font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10"
+            class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
         >
             Owner
         </button>
-        <button 
+        <button
             type="button"
             onclick="document.getElementById('identifier').value='rina@tokomasgembira.id'; document.getElementById('password').value='gembira123';"
-            class="rounded-full border border-gold/40 bg-white px-3 py-1.5 text-xs font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10"
+            class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
         >
             Karyawan
         </button>
-        <button 
+        <button
             type="button"
             onclick="document.getElementById('identifier').value='siti.rahma@gmail.com'; document.getElementById('password').value='gembira123';"
-            class="rounded-full border border-gold/40 bg-white px-3 py-1.5 text-xs font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10"
+            class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
         >
             Pelanggan
         </button>
