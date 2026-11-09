@@ -1,16 +1,22 @@
 <?= $this->extend('layouts/dashboard') ?>
 <?= $this->section('content') ?>
 <?= $this->include('partials/flash') ?>
-<div class="rounded-2xl border border-line bg-white p-6 shadow-card">
-    <h1 class="font-serif text-3xl font-semibold text-charcoal">Pengaturan</h1><p class="mt-2 text-sm text-charcoal/60">Konfigurasi toko.</p>
-    <form method="post" class="mt-8 max-w-2xl space-y-6">
-        <?= csrf_field() ?>
-        <div><label class="block text-sm font-medium text-charcoal">Nama Toko</label><input type="text" name="store_name" value="<?= esc($settings['store_name'] ?? 'Toko Mas Gembira') ?>" class="mt-2 w-full rounded-lg border border-line px-3 py-2"></div>
-        <div><label class="block text-sm font-medium text-charcoal">Alamat</label><textarea name="address" rows="3" class="mt-2 w-full rounded-lg border border-line px-3 py-2"><?= esc($settings['address'] ?? '') ?></textarea></div>
-        <div><label class="block text-sm font-medium text-charcoal">Telepon</label><input type="tel" name="phone" value="<?= esc($settings['phone'] ?? '') ?>" class="mt-2 w-full rounded-lg border border-line px-3 py-2"></div>
-        <div><label class="block text-sm font-medium text-charcoal">Email</label><input type="email" name="email" value="<?= esc($settings['email'] ?? '') ?>" class="mt-2 w-full rounded-lg border border-line px-3 py-2"></div>
-        <div><label class="block text-sm font-medium text-charcoal">Harga Emas per Gram (Rp)</label><input type="number" name="gold_price_per_gram" value="<?= esc((string) ($settings['gold_price_per_gram'] ?? 1000000)) ?>" class="mt-2 w-full rounded-lg border border-line px-3 py-2"></div>
-        <button type="submit" class="rounded-lg bg-gold px-5 py-2.5 font-medium text-charcoal">Simpan Perubahan</button>
-    </form>
+<div class="space-y-6">
+    <div class="rounded-2xl border border-line bg-white p-6 shadow-card">
+        <h1 class="font-serif text-3xl font-semibold text-charcoal">Pengaturan</h1><p class="mt-2 text-sm text-charcoal/60">Konfigurasi toko dan harga emas.</p>
+        <dl class="mt-6 grid gap-5 sm:grid-cols-2">
+            <div><dt class="text-sm text-charcoal/50">Nama Toko</dt><dd class="mt-1 font-medium text-charcoal"><?= esc($store['store_name'] ?? 'Toko Mas Gembira') ?></dd></div>
+            <div><dt class="text-sm text-charcoal/50">Telepon</dt><dd class="mt-1 font-medium text-charcoal"><?= esc($store['phone'] ?? '-') ?></dd></div>
+            <div><dt class="text-sm text-charcoal/50">Email</dt><dd class="mt-1 font-medium text-charcoal"><?= esc($store['email'] ?? '-') ?></dd></div>
+            <div><dt class="text-sm text-charcoal/50">WhatsApp</dt><dd class="mt-1 font-medium text-charcoal"><?= esc($store['whatsapp'] ?? '-') ?></dd></div>
+            <div class="sm:col-span-2"><dt class="text-sm text-charcoal/50">Alamat</dt><dd class="mt-1 font-medium text-charcoal"><?= esc($store['address'] ?? '-') ?></dd></div>
+        </dl>
+        <p class="mt-6 rounded-lg bg-ivory px-4 py-3 text-sm text-charcoal/60">Perubahan pengaturan belum dapat disimpan dari halaman ini.</p>
+    </div>
+
+    <div class="rounded-2xl border border-line bg-white p-6 shadow-card">
+        <h2 class="font-serif text-xl font-semibold text-charcoal">Harga Emas per Gram</h2>
+        <div class="mt-4 overflow-x-auto"><table class="w-full text-left text-sm"><thead><tr class="border-b border-line text-charcoal/60"><th class="p-3">Kadar</th><th class="p-3">Harga</th><th class="p-3">Diperbarui</th></tr></thead><tbody><?php foreach ($goldPrices ?? [] as $price): ?><tr class="border-b border-line/70"><td class="p-3 font-medium"><?= esc($price['purity']) ?></td><td class="p-3">Rp <?= number_format((float) $price['price_per_gram'], 0, ',', '.') ?></td><td class="p-3"><?= format_datetime((string) ($price['updated_at'] ?? '')) ?></td></tr><?php endforeach; ?></tbody></table></div>
+    </div>
 </div>
 <?= $this->endSection() ?>

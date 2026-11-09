@@ -23,6 +23,17 @@ $salesToday = $stats['sales_today'] ?? 0;
 $transToday = $stats['transactions_today'] ?? 0;
 $activeOrders = $stats['active_custom_orders'] ?? 0;
 $lowStock = $stats['low_stock_count'] ?? 0;
+$totalProducts = $stats['total_products'] ?? 0;
+
+$transactionRows = '';
+foreach ($stats['recent_transactions'] ?? [] as $trx) {
+    $transactionRows .= '<tr class="border-b border-line/70">'
+        . '<td class="p-3 font-medium"><a class="text-gold-deep hover:underline" href="' . base_url('owner/transaksi/' . $trx['id']) . '">' . esc($trx['invoice_no']) . '</a></td>'
+        . '<td class="p-3">' . esc($trx['customer_name'] ?? '-') . '</td>'
+        . '<td class="p-3">Rp ' . number_format((float) $trx['total'], 0, ',', '.') . '</td>'
+        . '<td class="p-3">' . view_cell('App\\Cells\\StatusBadgeCell::show', ['status' => $trx['payment_status']]) . '</td>'
+        . '</tr>';
+}
 ?>
 
 <div class="space-y-6">
@@ -66,7 +77,7 @@ $lowStock = $stats['low_stock_count'] ?? 0;
             'featured' => false,
             'icon' => 'package',
             'label' => 'Stok Produk',
-            'value' => '0 item',
+            'value' => $totalProducts . ' item',
             'trend' => null,
             'hint' => $lowStock . ' produk hampir/sudah habis',
         ]) ?>
@@ -124,9 +135,9 @@ $lowStock = $stats['low_stock_count'] ?? 0;
                         ['label' => 'Total', 'class' => ''],
                         ['label' => 'Status', 'class' => ''],
                     ],
-                    'rows' => view('components/ui/empty_state', [
+                    'rows' => $transactionRows !== '' ? $transactionRows : view('components/ui/empty_state', [
                         'icon' => 'receipt-text',
-                        'title' => 'Belum ada transaksi hari ini',
+                        'title' => 'Belum ada transaksi',
                         'description' => 'Transaksi yang dicatat akan muncul di sini',
                     ]),
                 ]) ?>
@@ -142,11 +153,26 @@ $lowStock = $stats['low_stock_count'] ?? 0;
                 </a>
             </div>
             <div class="rounded-2xl border border-line bg-white p-5 shadow-card">
-                <?= view('components/ui/empty_state', [
-                    'icon' => 'gem',
-                    'title' => 'Belum ada pesanan aktif',
-                    'description' => 'Pesanan custom yang belum selesai akan muncul di sini',
-                ]) ?>
+                <?php if (! empty($stats['active_order_list'])): ?>
+                    <ul class="divide-y divide-line">
+                        <?php foreach ($stats['active_order_list'] as $order): ?>
+                            <li class="py-3 first:pt-0 last:pb-0">
+                                <a href="<?= base_url('owner/pesanan-custom/' . $order['id']) ?>" class="text-sm font-medium text-gold-deep hover:underline"><?= esc($order['order_no']) ?></a>
+                                <p class="mt-1 text-sm text-charcoal/70"><?= esc($order['customer_name'] ?? '-') ?></p>
+                                <div class="mt-1 flex items-center justify-between gap-2 text-xs text-charcoal/50">
+                                    <span><?= esc($order['status']) ?></span>
+                                    <span><?= format_date((string) $order['order_date']) ?></span>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <?= view('components/ui/empty_state', [
+                        'icon' => 'gem',
+                        'title' => 'Belum ada pesanan aktif',
+                        'description' => 'Pesanan custom yang belum selesai akan muncul di sini',
+                    ]) ?>
+                <?php endif; ?>
             </div>
         </section>
     </div>

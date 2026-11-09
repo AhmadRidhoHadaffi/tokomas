@@ -30,11 +30,11 @@ $authInputClass = 'px-4 py-3.5';
 
     <!-- Identifier Field -->
     <?= view('components/ui/form_field', [
-        'label' => 'Nomor HP / Email',
+        'label' => 'Email',
         'name' => 'email',
         'id' => 'identifier',
         'type' => 'email',
-        'placeholder' => '0812xxxx atau nama@email.com',
+        'placeholder' => 'nama@email.com',
         'value' => $oldIdentifier,
         'error' => $errors['email'] ?? '',
         'required' => true,
@@ -73,13 +73,6 @@ $authInputClass = 'px-4 py-3.5';
         <?php endif; ?>
     </div>
 
-    <!-- Forgot Password -->
-    <div class="flex justify-end">
-        <button type="button" class="min-h-[40px] text-sm font-medium text-gold-deep transition-colors duration-150 hover:text-gold-dark hover:underline focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-            Lupa kata sandi?
-        </button>
-    </div>
-
     <!-- Error Message -->
     <?php if ($error): ?>
         <p role="alert" class="rounded-lg bg-crimson/5 px-3.5 py-2.5 text-sm text-crimson">
@@ -108,26 +101,26 @@ $authInputClass = 'px-4 py-3.5';
 <!-- Demo Accounts -->
 <div class="mt-7 rounded-xl bg-ivory p-4 sm:p-5">
     <p class="text-sm leading-relaxed text-charcoal/60">
-        Peran terdeteksi otomatis dari akun. Coba akun demo (kata sandi bebas, min. 6 karakter):
+        Peran terdeteksi otomatis dari akun. Coba akun demo dengan kata sandi <span class="font-semibold text-charcoal">Gembira#2026</span>:
     </p>
     <div class="mt-3 flex flex-wrap gap-2">
         <button
             type="button"
-            onclick="document.getElementById('identifier').value='owner@tokomasgembira.id'; document.getElementById('password').value='gembira123';"
+            onclick="document.getElementById('identifier').value='owner@demo.test'; document.getElementById('password').value='Gembira#2026';"
             class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
         >
             Owner
         </button>
         <button
             type="button"
-            onclick="document.getElementById('identifier').value='rina@tokomasgembira.id'; document.getElementById('password').value='gembira123';"
+            onclick="document.getElementById('identifier').value='rina@demo.test'; document.getElementById('password').value='Gembira#2026';"
             class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
         >
             Karyawan
         </button>
         <button
             type="button"
-            onclick="document.getElementById('identifier').value='siti.rahma@gmail.com'; document.getElementById('password').value='gembira123';"
+            onclick="document.getElementById('identifier').value='siti@demo.test'; document.getElementById('password').value='Gembira#2026';"
             class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
         >
             Pelanggan

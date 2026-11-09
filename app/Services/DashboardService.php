@@ -49,6 +49,25 @@ class DashboardService
 
         // Low stock products
         $lowStock = count($this->productModel->getLowStock(3));
+        $totalProducts = $this->productModel->countAllResults();
+
+        // Latest transactions and active custom orders for the dashboard tables
+        $recentTransactions = $this->transactionModel->builder()
+            ->select('transactions.id, transactions.invoice_no, transactions.total, transactions.payment_status, transactions.transaction_date, customers.name as customer_name')
+            ->join('customers', 'customers.id = transactions.customer_id', 'left')
+            ->orderBy('transactions.transaction_date', 'DESC')
+            ->limit(5)
+            ->get()
+            ->getResultArray();
+
+        $activeOrderList = $this->customOrderModel->builder()
+            ->select('custom_orders.id, custom_orders.order_no, custom_orders.status, custom_orders.order_date, customers.name as customer_name')
+            ->join('customers', 'customers.id = custom_orders.customer_id', 'left')
+            ->whereNotIn('custom_orders.status', ['Diambil'])
+            ->orderBy('custom_orders.order_date', 'DESC')
+            ->limit(5)
+            ->get()
+            ->getResultArray();
 
         // Finance summary this month
         $financeSummary = $this->financeModel->getSummary($thisMonth, $today);
@@ -59,6 +78,9 @@ class DashboardService
             'transactions_today' => $transToday,
             'active_custom_orders' => $activeOrders,
             'low_stock_count' => $lowStock,
+            'total_products' => $totalProducts,
+            'recent_transactions' => $recentTransactions,
+            'active_order_list' => $activeOrderList,
             'finance_summary' => $financeSummary,
         ];
     }
