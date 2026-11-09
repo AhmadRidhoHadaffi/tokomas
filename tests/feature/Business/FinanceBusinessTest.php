@@ -45,4 +45,24 @@ final class FinanceBusinessTest extends CIUnitTestCase
         $this->expectExceptionMessage('Kategori tidak sesuai');
         (new FinanceService())->create(['type' => 'Pemasukan', 'category' => 'Sewa', 'description' => 'Salah', 'amount' => 1], $this->userId);
     }
+
+    public function testManualEntryCanBeUpdatedAndDeleted(): void
+    {
+        $service = new FinanceService();
+        $id = $service->create([
+            'type' => 'Pengeluaran',
+            'category' => 'Operasional',
+            'description' => 'Catatan manual',
+            'amount' => 200000,
+            'entry_date' => '2026-11-03',
+        ], $this->userId);
+
+        $this->assertTrue($service->update($id, ['description' => 'Catatan diubah', 'amount' => 250000]));
+        $updated = $service->getById($id);
+        $this->assertSame('Catatan diubah', $updated['description']);
+        $this->assertSame(250000.0, (float) $updated['amount']);
+
+        $this->assertTrue($service->delete($id));
+        $this->assertNull($service->getById($id));
+    }
 }
