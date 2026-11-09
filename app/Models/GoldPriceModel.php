@@ -17,7 +17,9 @@ class GoldPriceModel extends Model
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
-    protected $useTimestamps = false;
+    // The table only stores updated_at (no created_at column).
+    protected $useTimestamps = true;
+    protected $createdField = '';
     protected $updatedField = 'updated_at';
 
     protected $validationRules = [];

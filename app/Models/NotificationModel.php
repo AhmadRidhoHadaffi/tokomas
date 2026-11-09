@@ -17,8 +17,11 @@ class NotificationModel extends Model
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
-    protected $useTimestamps = false;
+    // The table only stores created_at (no updated_at column), so the
+    // updated field must stay empty or mark-as-read would target a missing column.
+    protected $useTimestamps = true;
     protected $createdField = 'created_at';
+    protected $updatedField = '';
 
     public function getUnreadCount(int $customerId): int
     {
