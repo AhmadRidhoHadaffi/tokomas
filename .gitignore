@@ -129,3 +129,8 @@ node_modules/
 public/assets/css/app.css
 public/uploads/*
 !public/uploads/**/.gitkeep
+
+# Local database backups
+database/backup/
+!public/uploads/custom-orders/
+!public/uploads/custom-orders/demo-*.jpg
