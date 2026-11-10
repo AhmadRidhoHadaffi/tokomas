@@ -81,13 +81,18 @@ $paddingClass = $compactOnTablet ? 'md:justify-center md:px-0 lg:justify-start l
 <div class="border-t border-white/5 p-3">
     <form method="post" action="<?= base_url('keluar') ?>">
         <?= csrf_field() ?>
-        <button
-            type="submit"
-            title="Keluar"
-            class="flex min-h-10 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-white/55 transition-colors duration-150 hover:bg-white/[0.04] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold/60 <?= esc($centerClass, 'attr') ?>"
-        >
-            <?= icon('log-out', 'h-[18px] w-[18px] shrink-0', 18, 1.75) ?>
-            <span class="whitespace-nowrap <?= esc($labelClass, 'attr') ?>">Keluar</span>
-        </button>
+        <?= ui_button([
+            'type' => 'submit',
+            'icon' => 'log-out',
+            'content' => '<span class="whitespace-nowrap ' . esc($labelClass, 'attr') . '">Keluar</span>',
+            'variant' => 'ghostDark',
+            'size' => 'none',
+            'align' => 'start',
+            'fullWidth' => true,
+            'title' => 'Keluar',
+            'ariaLabel' => 'Keluar',
+            'iconClass' => 'h-[18px] w-[18px] shrink-0',
+            'class' => 'min-h-10 gap-3 rounded-lg px-3 py-2.5 text-sm ' . esc($centerClass, 'attr'),
+        ]) ?>
     </form>
 </div>

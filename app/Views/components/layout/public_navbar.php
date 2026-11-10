@@ -43,24 +43,34 @@ $navLinks = [
         </nav>
 
         <div class="hidden items-center gap-3 lg:flex">
-            <a href="<?= site_url('masuk') ?>" class="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-lg border border-gold/80 bg-transparent px-5 text-xs font-medium text-gold transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:border-gold hover:bg-gold/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                Masuk
-            </a>
-            <a href="<?= site_url('daftar') ?>" class="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-lg bg-gold-gradient px-5 text-xs font-medium text-charcoal shadow-sm transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:brightness-110 hover:shadow-gold-glow active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                Daftar
-            </a>
+            <?= ui_button([
+                'href' => site_url('masuk'),
+                'content' => 'Masuk',
+                'variant' => 'outlineDark',
+                'size' => 'sm',
+            ]) ?>
+            <?= ui_button([
+                'href' => site_url('daftar'),
+                'content' => 'Daftar',
+                'variant' => 'primary',
+                'size' => 'sm',
+            ]) ?>
         </div>
 
-        <button
-            type="button"
-            @click="open = !open"
-            :aria-expanded="open.toString()"
-            :aria-label="open ? 'Tutup menu' : 'Buka menu'"
-            class="rounded-lg p-2 text-white transition-colors duration-150 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 lg:hidden"
-        >
-            <span x-show="!open"><?= icon('menu', 'h-6 w-6', 24, 1.75) ?></span>
-            <span x-show="open" x-cloak><?= icon('x', 'h-6 w-6', 24, 1.75) ?></span>
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'icon' => '',
+            'iconOnly' => true,
+            'variant' => 'ghostDark',
+            'class' => 'lg:hidden',
+            'content' => '<span x-show="!open">' . icon('menu', 'h-6 w-6', 24, 1.75) . '</span>'
+                . '<span x-show="open" x-cloak>' . icon('x', 'h-6 w-6', 24, 1.75) . '</span>',
+            'attrs' => [
+                '@click' => 'open = !open',
+                ':aria-expanded' => 'open.toString()',
+                ":aria-label" => "open ? 'Tutup menu' : 'Buka menu'",
+            ],
+        ]) ?>
     </div>
 
     <nav
@@ -85,12 +95,20 @@ $navLinks = [
             </a>
         <?php endforeach; ?>
         <div class="mt-5 grid grid-cols-2 gap-3">
-            <a href="<?= site_url('masuk') ?>" class="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-lg border border-gold/80 bg-transparent px-5 text-sm font-medium text-gold transition-colors duration-150 hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                Masuk
-            </a>
-            <a href="<?= site_url('daftar') ?>" class="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-lg bg-gold-gradient px-5 text-sm font-medium text-charcoal shadow-sm transition-[filter,box-shadow] duration-150 hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                Daftar
-            </a>
+            <?= ui_button([
+                'href' => site_url('masuk'),
+                'content' => 'Masuk',
+                'variant' => 'outlineDark',
+                'size' => 'md',
+                'fullWidth' => true,
+            ]) ?>
+            <?= ui_button([
+                'href' => site_url('daftar'),
+                'content' => 'Daftar',
+                'variant' => 'primary',
+                'size' => 'md',
+                'fullWidth' => true,
+            ]) ?>
         </div>
     </nav>
 </header>

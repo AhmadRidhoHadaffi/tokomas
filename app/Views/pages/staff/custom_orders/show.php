@@ -39,7 +39,7 @@ $nextStatus = $currentIndex !== false && isset($statuses[$currentIndex + 1]) ? $
                         <option value="<?= esc($nextStatus) ?>" selected><?= esc($nextStatus) ?></option>
                     </select>
                 </label>
-                <button type="submit" class="rounded-lg bg-gold px-4 py-2 font-medium text-charcoal">Simpan Status</button>
+                <?= ui_button(['type' => 'submit', 'content' => 'Simpan Status', 'icon' => 'check']) ?>
             </form>
         <?php endif; ?>
     </div>
@@ -56,6 +56,6 @@ $nextStatus = $currentIndex !== false && isset($statuses[$currentIndex + 1]) ? $
         </ol>
     </div>
 
-    <a href="<?= base_url('karyawan/pesanan-custom') ?>" class="inline-flex items-center gap-2 text-sm font-medium text-gold-deep hover:underline"><?= icon('arrow-left', 'h-4 w-4') ?> Kembali ke daftar pesanan</a>
+    <?= ui_button(['href' => base_url('karyawan/pesanan-custom'), 'content' => 'Kembali ke daftar pesanan', 'icon' => 'arrow-left', 'variant' => 'ghost', 'size' => 'sm']) ?>
 </div>
 <?= $this->endSection() ?>

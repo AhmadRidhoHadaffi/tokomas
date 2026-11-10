@@ -22,10 +22,15 @@
         <div class="bg-arabesque-lg pointer-events-none absolute inset-0" aria-hidden="true"></div>
 
         <!-- Back to Home -->
-        <a href="<?= base_url('/') ?>" class="absolute left-4 top-4 z-10 inline-flex min-h-[44px] items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition-colors duration-150 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 sm:left-10 sm:top-8">
-            <?= icon('arrow-left', 'h-4 w-4') ?>
-            Beranda
-        </a>
+        <?= ui_button([
+            'href' => base_url('/'),
+            'content' => 'Beranda',
+            'icon' => 'arrow-left',
+            'variant' => 'ghostDark',
+            'size' => 'none',
+            'align' => 'start',
+            'class' => 'absolute left-4 top-4 z-10 min-h-[44px] gap-2 px-3 py-2 text-sm sm:left-10 sm:top-8',
+        ]) ?>
 
         <!-- Auth Card -->
         <main class="relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl shadow-black/40 sm:p-10">

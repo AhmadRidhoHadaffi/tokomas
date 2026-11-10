@@ -92,15 +92,18 @@ $inputClass = 'w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-
             </span>
         </div>
 
-        <button
-            type="button"
-            x-show="!editing"
-            @click="edit()"
-            class="mt-6 inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-gold bg-transparent px-5 text-sm font-medium text-gold-deep transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-        >
-            <?= icon('pencil', 'h-4 w-4', 16, 2) ?>
-            Edit Profil
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'content' => 'Edit Profil',
+            'icon' => 'pencil',
+            'variant' => 'outline',
+            'size' => 'md',
+            'class' => 'mt-6',
+            'attrs' => [
+                'x-show' => '!editing',
+                '@click' => 'edit()',
+            ],
+        ]) ?>
     </section>
 
     <div x-show="saved" x-cloak class="rounded-xl bg-emerald-50 px-4 py-3.5 text-sm text-emerald-800 ring-1 ring-inset ring-emerald-200" role="status">
@@ -147,32 +150,33 @@ $inputClass = 'w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-
             <p class="mt-4 text-xs text-charcoal/45">Penyimpanan permanen profil belum tersedia pada versi ini.</p>
 
             <div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                <button
-                    type="button"
-                    @click="cancel()"
-                    class="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-lg border border-line bg-white px-5 text-sm font-medium text-charcoal transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:border-gold/60 hover:bg-ivory focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-                >
-                    Batal
-                </button>
-                <button
-                    type="submit"
-                    class="inline-flex h-11 items-center justify-center whitespace-nowrap rounded-lg bg-gold-gradient px-5 text-sm font-medium text-charcoal shadow-sm transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-                >
-                    Simpan Perubahan
-                </button>
+                <?= ui_button([
+                    'type' => 'button',
+                    'content' => 'Batal',
+                    'variant' => 'light',
+                    'size' => 'md',
+                    'attrs' => ['@click' => 'cancel()'],
+                ]) ?>
+                <?= ui_button([
+                    'type' => 'submit',
+                    'content' => 'Simpan Perubahan',
+                    'variant' => 'primary',
+                    'size' => 'md',
+                ]) ?>
             </div>
         </form>
     </section>
 
     <form method="post" action="<?= base_url('keluar') ?>" class="lg:hidden">
         <?= csrf_field() ?>
-        <button
-            type="submit"
-            class="inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg px-5 text-sm font-medium text-crimson transition-colors duration-150 hover:bg-crimson/5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-crimson/20"
-        >
-            <?= icon('log-out', 'h-4 w-4', 16, 2) ?>
-            Keluar
-        </button>
+        <?= ui_button([
+            'type' => 'submit',
+            'content' => 'Keluar',
+            'icon' => 'log-out',
+            'variant' => 'ghostDanger',
+            'size' => 'md',
+            'fullWidth' => true,
+        ]) ?>
     </form>
 </div>
 <?= $this->endSection() ?>

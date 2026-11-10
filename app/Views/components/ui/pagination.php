@@ -29,7 +29,7 @@ $end = min($currentPage * $perPage, $total);
     
     <nav class="flex items-center gap-1" aria-label="Pagination">
         <?php if ($currentPage > 1): ?>
-            <a href="<?= esc($baseUrl . '?page=' . ($currentPage - 1), 'attr') ?>" class="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-white text-charcoal/60 transition-colors hover:border-gold hover:text-charcoal">
+            <a href="<?= esc($baseUrl . '?page=' . ($currentPage - 1), 'attr') ?>" aria-label="Halaman sebelumnya" class="<?= esc(button_class('light', 'icon-sm'), 'attr') ?>">
                 <?= icon('chevron-right', 'h-4 w-4 rotate-180') ?>
             </a>
         <?php endif; ?>
@@ -40,7 +40,7 @@ $end = min($currentPage * $perPage, $total);
         $end = min($totalPages, $currentPage + $range);
 
         if ($start > 1): ?>
-            <a href="<?= esc($baseUrl . '?page=1', 'attr') ?>" class="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-white text-sm text-charcoal/60 transition-colors hover:border-gold hover:text-charcoal">1</a>
+            <a href="<?= esc($baseUrl . '?page=1', 'attr') ?>" class="<?= esc(button_class('light', 'icon-sm', 'text-sm'), 'attr') ?>">1</a>
             <?php if ($start > 2): ?>
                 <span class="px-2 text-charcoal/40">...</span>
             <?php endif; ?>
@@ -48,9 +48,9 @@ $end = min($currentPage * $perPage, $total);
 
         <?php for ($i = $start; $i <= $end; $i++): ?>
             <?php if ($i === $currentPage): ?>
-                <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-gradient text-sm font-medium text-charcoal shadow-sm"><?= $i ?></span>
+                <span aria-current="page" class="<?= esc(button_class('primary', 'icon-sm', 'text-sm'), 'attr') ?>"><?= $i ?></span>
             <?php else: ?>
-                <a href="<?= esc($baseUrl . '?page=' . $i, 'attr') ?>" class="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-white text-sm text-charcoal/60 transition-colors hover:border-gold hover:text-charcoal"><?= $i ?></a>
+                <a href="<?= esc($baseUrl . '?page=' . $i, 'attr') ?>" class="<?= esc(button_class('light', 'icon-sm', 'text-sm'), 'attr') ?>"><?= $i ?></a>
             <?php endif; ?>
         <?php endfor; ?>
 
@@ -58,11 +58,11 @@ $end = min($currentPage * $perPage, $total);
             <?php if ($end < $totalPages - 1): ?>
                 <span class="px-2 text-charcoal/40">...</span>
             <?php endif; ?>
-            <a href="<?= esc($baseUrl . '?page=' . $totalPages, 'attr') ?>" class="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-white text-sm text-charcoal/60 transition-colors hover:border-gold hover:text-charcoal"><?= $totalPages ?></a>
+            <a href="<?= esc($baseUrl . '?page=' . $totalPages, 'attr') ?>" class="<?= esc(button_class('light', 'icon-sm', 'text-sm'), 'attr') ?>"><?= $totalPages ?></a>
         <?php endif; ?>
 
         <?php if ($currentPage < $totalPages): ?>
-            <a href="<?= esc($baseUrl . '?page=' . ($currentPage + 1), 'attr') ?>" class="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-white text-charcoal/60 transition-colors hover:border-gold hover:text-charcoal">
+            <a href="<?= esc($baseUrl . '?page=' . ($currentPage + 1), 'attr') ?>" aria-label="Halaman berikutnya" class="<?= esc(button_class('light', 'icon-sm'), 'attr') ?>">
                 <?= icon('chevron-right', 'h-4 w-4') ?>
             </a>
         <?php endif; ?>

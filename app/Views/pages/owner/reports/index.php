@@ -10,7 +10,7 @@
         <label class="text-sm text-charcoal/70">Sampai
             <input type="date" name="end_date" value="<?= esc((string) ($endDate ?? '')) ?>" class="mt-1 block rounded-lg border border-line px-3 py-2">
         </label>
-        <button class="rounded-lg bg-gold px-4 py-2 font-medium text-charcoal" type="submit">Tampilkan</button>
+        <?= ui_button(['type' => 'submit', 'content' => 'Tampilkan', 'icon' => 'search', 'size' => 'md']) ?>
     </form>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

@@ -74,14 +74,15 @@ $badgeText = $unreadCount > 99 ? '99+' : (string) $unreadCount;
 
             <form method="post" action="<?= base_url('keluar') ?>" class="hidden lg:block">
                 <?= csrf_field() ?>
-                <button
-                    type="submit"
-                    aria-label="Keluar"
-                    title="Keluar"
-                    class="flex h-10 w-10 items-center justify-center rounded-lg text-charcoal/75 transition-colors duration-150 hover:bg-charcoal/10 hover:text-charcoal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-charcoal/20"
-                >
-                    <?= icon('log-out', 'h-5 w-5', 20, 1.75) ?>
-                </button>
+                <?= ui_button([
+                    'type' => 'submit',
+                    'icon' => 'log-out',
+                    'iconOnly' => true,
+                    'variant' => 'ghostDark',
+                    'ariaLabel' => 'Keluar',
+                    'title' => 'Keluar',
+                    'iconClass' => 'h-5 w-5',
+                ]) ?>
             </form>
         </div>
     </div>

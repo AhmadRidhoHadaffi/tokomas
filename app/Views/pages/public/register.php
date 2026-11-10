@@ -85,15 +85,17 @@ $authInputClass = 'px-4 py-3.5';
                 required
                 class="w-full rounded-lg border bg-white px-4 py-3.5 pr-12 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20 <?= isset($errors['password']) ? 'border-crimson' : 'border-line' ?>"
             >
-            <button
-                type="button"
-                @click="showPassword = !showPassword"
-                aria-label="Tampilkan atau sembunyikan kata sandi"
-                class="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-charcoal/40 transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-            >
-                <span x-show="!showPassword"><?= icon('eye', 'h-5 w-5') ?></span>
-                <span x-show="showPassword" x-cloak><?= icon('eye-off', 'h-5 w-5') ?></span>
-            </button>
+            <?= ui_button([
+                'type' => 'button',
+                'icon' => '',
+                'iconOnly' => true,
+                'variant' => 'ghostSubtle',
+                'class' => 'absolute right-2 top-1/2 -translate-y-1/2',
+                'content' => '<span x-show="!showPassword">' . icon('eye', 'h-5 w-5') . '</span>'
+                    . '<span x-show="showPassword" x-cloak>' . icon('eye-off', 'h-5 w-5') . '</span>',
+                'ariaLabel' => 'Tampilkan atau sembunyikan kata sandi',
+                'attrs' => ['@click' => 'showPassword = !showPassword'],
+            ]) ?>
         </div>
         <?php if (isset($errors['password'])): ?>
             <p class="mt-1.5 text-xs text-crimson"><?= esc($errors['password']) ?></p>
@@ -116,15 +118,17 @@ $authInputClass = 'px-4 py-3.5';
                 required
                 class="w-full rounded-lg border bg-white px-4 py-3.5 pr-12 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20 <?= isset($errors['password_confirm']) ? 'border-crimson' : 'border-line' ?>"
             >
-            <button
-                type="button"
-                @click="showPassword = !showPassword"
-                aria-label="Tampilkan atau sembunyikan konfirmasi kata sandi"
-                class="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-charcoal/40 transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-            >
-                <span x-show="!showPassword"><?= icon('eye', 'h-5 w-5') ?></span>
-                <span x-show="showPassword" x-cloak><?= icon('eye-off', 'h-5 w-5') ?></span>
-            </button>
+            <?= ui_button([
+                'type' => 'button',
+                'icon' => '',
+                'iconOnly' => true,
+                'variant' => 'ghostSubtle',
+                'class' => 'absolute right-2 top-1/2 -translate-y-1/2',
+                'content' => '<span x-show="!showPassword">' . icon('eye', 'h-5 w-5') . '</span>'
+                    . '<span x-show="showPassword" x-cloak>' . icon('eye-off', 'h-5 w-5') . '</span>',
+                'ariaLabel' => 'Tampilkan atau sembunyikan konfirmasi kata sandi',
+                'attrs' => ['@click' => 'showPassword = !showPassword'],
+            ]) ?>
         </div>
         <?php if (isset($errors['password_confirm'])): ?>
             <p class="mt-1.5 text-xs text-crimson"><?= esc($errors['password_confirm']) ?></p>
@@ -138,7 +142,7 @@ $authInputClass = 'px-4 py-3.5';
     </p>
 
     <!-- Submit -->
-    <?= view('components/ui/button', [
+    <?= ui_button([
         'variant' => 'primary',
         'size' => 'lg',
         'type' => 'submit',

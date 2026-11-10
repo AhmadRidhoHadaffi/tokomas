@@ -58,15 +58,17 @@ $authInputClass = 'px-4 py-3.5';
                 required
                 class="w-full rounded-lg border bg-white px-4 py-3.5 pr-12 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20 <?= isset($errors['password']) ? 'border-crimson' : 'border-line' ?>"
             >
-            <button
-                type="button"
-                @click="showPassword = !showPassword"
-                aria-label="Tampilkan atau sembunyikan kata sandi"
-                class="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg text-charcoal/40 transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-            >
-                <span x-show="!showPassword"><?= icon('eye', 'h-5 w-5') ?></span>
-                <span x-show="showPassword" x-cloak><?= icon('eye-off', 'h-5 w-5') ?></span>
-            </button>
+            <?= ui_button([
+                'type' => 'button',
+                'icon' => '',
+                'iconOnly' => true,
+                'variant' => 'ghostSubtle',
+                'class' => 'absolute right-2 top-1/2 -translate-y-1/2',
+                'content' => '<span x-show="!showPassword">' . icon('eye', 'h-5 w-5') . '</span>'
+                    . '<span x-show="showPassword" x-cloak>' . icon('eye-off', 'h-5 w-5') . '</span>',
+                'ariaLabel' => 'Tampilkan atau sembunyikan kata sandi',
+                'attrs' => ['@click' => 'showPassword = !showPassword'],
+            ]) ?>
         </div>
         <?php if (isset($errors['password'])): ?>
             <p class="mt-1.5 text-xs text-crimson"><?= esc($errors['password']) ?></p>
@@ -81,11 +83,11 @@ $authInputClass = 'px-4 py-3.5';
     <?php endif; ?>
 
     <!-- Submit Button -->
-    <?= view('components/ui/button', [
+    <?= ui_button([
         'variant' => 'primary',
-        'size' => 'lg',
+        'size' => 'none',
         'type' => 'submit',
-        'class' => 'h-[52px] w-full text-base',
+        'class' => 'h-[52px] w-full px-6 text-base',
         'content' => 'Masuk',
     ]) ?>
 </form>
@@ -104,27 +106,30 @@ $authInputClass = 'px-4 py-3.5';
         Peran terdeteksi otomatis dari akun. Coba akun demo dengan kata sandi <span class="font-semibold text-charcoal">Gembira#2026</span>:
     </p>
     <div class="mt-3 flex flex-wrap gap-2">
-        <button
-            type="button"
-            onclick="document.getElementById('identifier').value='owner@demo.test'; document.getElementById('password').value='Gembira#2026';"
-            class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-        >
-            Owner
-        </button>
-        <button
-            type="button"
-            onclick="document.getElementById('identifier').value='rina@demo.test'; document.getElementById('password').value='Gembira#2026';"
-            class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-        >
-            Karyawan
-        </button>
-        <button
-            type="button"
-            onclick="document.getElementById('identifier').value='siti@demo.test'; document.getElementById('password').value='Gembira#2026';"
-            class="min-h-[40px] rounded-full border border-gold/40 bg-white px-4 py-2 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-        >
-            Pelanggan
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'content' => 'Owner',
+            'variant' => 'outline',
+            'size' => 'sm',
+            'class' => 'rounded-full',
+            'onclick' => "document.getElementById('identifier').value='owner@demo.test'; document.getElementById('password').value='Gembira#2026';",
+        ]) ?>
+        <?= ui_button([
+            'type' => 'button',
+            'content' => 'Karyawan',
+            'variant' => 'outline',
+            'size' => 'sm',
+            'class' => 'rounded-full',
+            'onclick' => "document.getElementById('identifier').value='rina@demo.test'; document.getElementById('password').value='Gembira#2026';",
+        ]) ?>
+        <?= ui_button([
+            'type' => 'button',
+            'content' => 'Pelanggan',
+            'variant' => 'outline',
+            'size' => 'sm',
+            'class' => 'rounded-full',
+            'onclick' => "document.getElementById('identifier').value='siti@demo.test'; document.getElementById('password').value='Gembira#2026';",
+        ]) ?>
     </div>
 </div>
 

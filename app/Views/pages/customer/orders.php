@@ -29,15 +29,15 @@ $orderProduct = static function (array $order): string {
             <h1 class="font-serif text-2xl font-semibold text-charcoal sm:text-3xl">Pesanan Custom</h1>
             <p class="mt-1 text-sm text-charcoal/55">Pantau setiap tahap pembuatan perhiasan Anda.</p>
         </div>
-        <a
-            href="<?= esc($whatsappLink, 'attr') ?>"
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gold-gradient px-5 text-sm font-medium text-charcoal shadow-sm transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-        >
-            <?= icon('plus', 'h-4 w-4', 16, 2) ?>
-            Ajukan Pesanan Baru
-        </a>
+        <?= ui_button([
+            'href' => $whatsappLink,
+            'target' => '_blank',
+            'rel' => 'noreferrer',
+            'content' => 'Ajukan Pesanan Baru',
+            'icon' => 'plus',
+            'variant' => 'primary',
+            'size' => 'md',
+        ]) ?>
     </div>
 
     <?php if (empty($orders)): ?>
@@ -102,13 +102,13 @@ $orderProduct = static function (array $order): string {
                                 <dd class="font-semibold text-crimson"><?= esc(rupiah($remaining)) ?></dd>
                             </div>
                         </dl>
-                        <button
-                            type="button"
-                            @click="<?= esc($modalVar, 'attr') ?> = true"
-                            class="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-line bg-white px-5 text-sm font-medium text-charcoal transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:border-gold/60 hover:bg-ivory focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-                        >
-                            Lihat Detail
-                        </button>
+                        <?= ui_button([
+                            'type' => 'button',
+                            'content' => 'Lihat Detail',
+                            'variant' => 'light',
+                            'size' => 'md',
+                            'attrs' => ['@click' => esc($modalVar, 'attr') . ' = true'],
+                        ]) ?>
                     </div>
 
                     <?= view('components/ui/modal', [

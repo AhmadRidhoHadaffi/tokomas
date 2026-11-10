@@ -26,6 +26,6 @@
         </div>
     </div>
 
-    <a href="<?= base_url('owner/transaksi') ?>" class="inline-flex items-center gap-2 text-sm font-medium text-gold-deep hover:underline"><?= icon('arrow-left', 'h-4 w-4') ?> Kembali ke daftar transaksi</a>
+    <?= ui_button(['href' => base_url('owner/transaksi'), 'content' => 'Kembali ke daftar transaksi', 'icon' => 'arrow-left', 'variant' => 'ghost', 'size' => 'sm']) ?>
 </div>
 <?= $this->endSection() ?>

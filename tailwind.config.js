@@ -1,5 +1,5 @@
 export default {
-  content: ['./app/Views/**/*.php', './app/Cells/**/*.php'],
+  content: ['./app/Views/**/*.php', './app/Cells/**/*.php', './app/Helpers/**/*.php'],
   theme: {
     extend: {
       colors: {

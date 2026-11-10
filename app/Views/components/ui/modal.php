@@ -84,14 +84,14 @@ $sizeClass = $sizeClasses[$size] ?? $sizeClasses['md'];
                     <p class="mt-1 text-sm text-charcoal/60"><?= esc($description) ?></p>
                 <?php endif; ?>
             </div>
-            <button
-                type="button"
-                @click="<?= esc($id, 'attr') ?> = false"
-                aria-label="Tutup"
-                class="rounded-lg p-2 text-charcoal/50 transition-colors duration-150 hover:bg-ivory hover:text-charcoal"
-            >
-                <?= icon('x', 'h-5 w-5') ?>
-            </button>
+            <?= ui_button([
+                'type' => 'button',
+                'icon' => 'x',
+                'iconOnly' => true,
+                'variant' => 'ghost',
+                'ariaLabel' => 'Tutup',
+                'attrs' => ['@click' => esc($id, 'attr') . ' = false'],
+            ]) ?>
         </div>
 
         <!-- Body -->

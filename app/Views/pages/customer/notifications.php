@@ -63,15 +63,17 @@ $kindMeta = [
                 <span x-show="unread === 0">Semua notifikasi sudah dibaca</span>
             </p>
         </div>
-        <button
-            type="button"
-            @click="markAll()"
-            :disabled="unread === 0"
-            class="inline-flex h-10 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-white px-3.5 text-xs font-medium text-charcoal transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:border-gold/60 hover:bg-ivory focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
-        >
-            <?= icon('check-check', 'h-4 w-4', 16, 2) ?>
-            Tandai semua dibaca
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'content' => 'Tandai semua dibaca',
+            'icon' => 'check-check',
+            'variant' => 'light',
+            'size' => 'sm',
+            'attrs' => [
+                '@click' => 'markAll()',
+                ':disabled' => 'unread === 0',
+            ],
+        ]) ?>
     </div>
 
     <?= view('components/ui/tabs', [

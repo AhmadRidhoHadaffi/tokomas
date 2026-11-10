@@ -121,14 +121,16 @@ $transactionProducts = static function (array $transaction): string {
                     <p class="font-serif text-lg font-semibold text-charcoal"><?= esc($promo['title'] ?? 'Promosi') ?></p>
                     <p class="text-sm text-charcoal/75"><?= esc($promo['message'] ?? '') ?></p>
                 </div>
-                <button
-                    type="button"
-                    @click="promoVisible = false"
-                    aria-label="Tutup promosi"
-                    class="absolute right-1.5 top-1.5 flex h-10 w-10 items-center justify-center rounded-full text-charcoal/70 transition-colors duration-150 hover:bg-charcoal/10 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal/30"
-                >
-                    <?= icon('x', 'h-4 w-4', 16, 2) ?>
-                </button>
+                <?= ui_button([
+                    'type' => 'button',
+                    'icon' => 'x',
+                    'iconOnly' => true,
+                    'variant' => 'ghost',
+                    'size' => 'sm',
+                    'class' => 'absolute right-1.5 top-1.5 rounded-full',
+                    'ariaLabel' => 'Tutup promosi',
+                    'attrs' => ['@click' => 'promoVisible = false'],
+                ]) ?>
             </div>
         </div>
     <?php endif; ?>

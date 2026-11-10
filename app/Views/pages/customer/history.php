@@ -72,14 +72,14 @@ $transactionProducts = static function (array $transaction): string {
                 <thead>
                     <tr class="border-b border-line bg-white">
                         <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left text-xs font-semibold text-charcoal/55">
-                            <button type="button" data-sort="date" class="inline-flex items-center gap-1 rounded py-3 -my-3 transition-colors duration-150 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
+                            <button type="button" data-sort="date" class="inline-flex min-h-10 items-center gap-1 rounded py-3 -my-3 transition-colors duration-150 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
                                 Tanggal
                                 <?= icon('chevrons-up-down', 'h-3.5 w-3.5 opacity-50', 14, 2) ?>
                             </button>
                         </th>
                         <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-left text-xs font-semibold text-charcoal/55">Produk</th>
                         <th scope="col" class="whitespace-nowrap px-4 py-3.5 text-right text-xs font-semibold text-charcoal/55">
-                            <button type="button" data-sort="total" class="inline-flex items-center gap-1 rounded py-3 -my-3 transition-colors duration-150 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
+                            <button type="button" data-sort="total" class="inline-flex min-h-10 items-center gap-1 rounded py-3 -my-3 transition-colors duration-150 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
                                 Total
                                 <?= icon('chevrons-up-down', 'h-3.5 w-3.5 opacity-50', 14, 2) ?>
                             </button>
@@ -120,14 +120,16 @@ $transactionProducts = static function (array $transaction): string {
                                     <?= view('components/customer/payment_badge', ['method' => $transaction['payment_method'] ?? 'Tunai']) ?>
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-3.5 text-right">
-                                    <button
-                                        type="button"
-                                        @click="tx = <?= $transactionId ?>; txInvoice = '<?= esc($invoiceNo, 'js') ?>'; txOpen = true"
-                                        class="inline-flex h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-white px-3.5 text-xs font-medium text-charcoal transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:border-gold/60 hover:bg-ivory focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-                                    >
-                                        <?= icon('eye', 'h-3.5 w-3.5', 14, 2) ?>
-                                        Detail
-                                    </button>
+                                    <?= ui_button([
+                                        'type' => 'button',
+                                        'content' => 'Detail',
+                                        'icon' => 'eye',
+                                        'variant' => 'light',
+                                        'size' => 'sm',
+                                        'attrs' => [
+                                            '@click' => 'tx = ' . $transactionId . "; txInvoice = '" . esc($invoiceNo, 'js') . "'; txOpen = true",
+                                        ],
+                                    ]) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -221,14 +223,15 @@ $transactionProducts = static function (array $transaction): string {
                     <h2 id="tx-modal-title" class="font-serif text-xl font-semibold text-charcoal">Detail Transaksi</h2>
                     <p class="mt-1 text-sm text-charcoal/60" x-text="txInvoice"></p>
                 </div>
-                <button
-                    type="button"
-                    @click="txOpen = false"
-                    aria-label="Tutup"
-                    class="flex h-10 w-10 items-center justify-center rounded-lg text-charcoal/50 transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
-                >
-                    <?= icon('x', 'h-5 w-5', 20, 2) ?>
-                </button>
+                <?= ui_button([
+                    'type' => 'button',
+                    'icon' => 'x',
+                    'iconOnly' => true,
+                    'variant' => 'ghost',
+                    'size' => 'md',
+                    'ariaLabel' => 'Tutup',
+                    'attrs' => ['@click' => 'txOpen = false'],
+                ]) ?>
             </div>
 
             <div class="scrollbar-thin flex-1 overflow-y-auto px-6 py-5">
@@ -244,21 +247,21 @@ $transactionProducts = static function (array $transaction): string {
             </div>
 
             <div class="flex flex-col-reverse gap-2 border-t border-line bg-ivory/60 px-6 py-4 sm:flex-row sm:justify-end">
-                <button
-                    type="button"
-                    @click="txOpen = false"
-                    class="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-line bg-white px-5 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold/60 hover:bg-ivory focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-                >
-                    Tutup
-                </button>
-                <button
-                    type="button"
-                    @click="window.print()"
-                    class="inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gold-gradient px-5 text-sm font-medium text-charcoal shadow-sm transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30 active:scale-[0.98]"
-                >
-                    <?= icon('printer', 'h-4 w-4', 16, 2) ?>
-                    Cetak Nota
-                </button>
+                <?= ui_button([
+                    'type' => 'button',
+                    'content' => 'Tutup',
+                    'variant' => 'light',
+                    'size' => 'md',
+                    'attrs' => ['@click' => 'txOpen = false'],
+                ]) ?>
+                <?= ui_button([
+                    'type' => 'button',
+                    'content' => 'Cetak Nota',
+                    'icon' => 'printer',
+                    'variant' => 'primary',
+                    'size' => 'md',
+                    'attrs' => ['@click' => 'window.print()'],
+                ]) ?>
             </div>
         </div>
     </div>

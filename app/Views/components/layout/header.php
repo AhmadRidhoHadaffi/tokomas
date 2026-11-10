@@ -21,7 +21,7 @@ $initials = mb_strtoupper($initials);
 
 $roleLabels = [
     'owner' => 'Pemilik Toko',
-    'karyawan' => 'Karyawan · Kasir',
+    'karyawan' => 'Karyawan/Kasir',
     'pelanggan' => 'Pelanggan',
 ];
 $roleLabel = $roleLabels[$userRole] ?? $userRole;
@@ -58,14 +58,16 @@ $kindTones = [
 <header class="sticky top-0 z-20 border-b border-line bg-white/90 backdrop-blur">
     <div class="flex h-20 items-center gap-3 px-4 sm:px-6 lg:px-8">
         <!-- Mobile Menu Button -->
-        <button
-            type="button"
-            @click="drawerOpen = true"
-            aria-label="Buka menu"
-            class="-ml-1 rounded-lg p-2 text-charcoal/70 transition-colors duration-150 hover:bg-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 lg:hidden"
-        >
-            <?= icon('menu', 'h-6 w-6') ?>
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'icon' => 'menu',
+            'iconOnly' => true,
+            'variant' => 'ghost',
+            'ariaLabel' => 'Buka menu',
+            'iconClass' => 'h-6 w-6',
+            'class' => '-ml-1 lg:hidden',
+            'attrs' => ['@click' => 'drawerOpen = true'],
+        ]) ?>
 
         <!-- Page Title -->
         <h1 class="min-w-0 flex-1 truncate font-serif text-xl font-semibold text-charcoal">
@@ -76,18 +78,22 @@ $kindTones = [
         <div class="flex items-center gap-2 sm:gap-4">
             <!-- Notifications Dropdown -->
             <div class="relative" x-data="{ notifOpen: false }" @click.outside="notifOpen = false" @keydown.escape.window="notifOpen = false">
-                <button
-                    type="button"
-                    @click="notifOpen = !notifOpen"
-                    aria-label="Notifikasi"
-                    :aria-expanded="notifOpen"
-                    class="relative rounded-lg p-2 text-charcoal/65 transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
-                >
-                    <?= icon('bell', 'h-6 w-6', 24, 1.75) ?>
-                    <?php if ($hasUnread): ?>
-                        <span class="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-crimson ring-2 ring-white" aria-hidden="true"></span>
-                    <?php endif; ?>
-                </button>
+                <?= ui_button([
+                    'type' => 'button',
+                    'icon' => 'bell',
+                    'iconOnly' => true,
+                    'variant' => 'ghost',
+                    'ariaLabel' => 'Notifikasi',
+                    'iconClass' => 'h-6 w-6',
+                    'class' => 'relative',
+                    'content' => $hasUnread
+                        ? '<span class="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-crimson ring-2 ring-white" aria-hidden="true"></span>'
+                        : '',
+                    'attrs' => [
+                        '@click' => 'notifOpen = !notifOpen',
+                        ':aria-expanded' => 'notifOpen',
+                    ],
+                ]) ?>
 
                 <!-- Dropdown -->
                 <div

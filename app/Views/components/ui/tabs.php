@@ -35,7 +35,7 @@ $variant = $variant ?? 'underline';
                 @click="<?= esc($model, 'attr') ?> = '<?= esc($item['value'], 'attr') ?>'"
                 :aria-selected="<?= esc($model, 'attr') ?> === '<?= esc($item['value'], 'attr') ?>'"
                 :class="<?= esc($model, 'attr') ?> === '<?= esc($item['value'], 'attr') ?>' ? 'bg-gold-gradient text-charcoal' : 'text-charcoal/60 hover:bg-white hover:text-charcoal'"
-                class="relative whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150"
+                class="relative min-h-10 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150"
             >
                 <span class="relative flex items-center gap-2">
                     <?= esc($item['label']) ?>
@@ -61,7 +61,7 @@ $variant = $variant ?? 'underline';
                 @click="<?= esc($model, 'attr') ?> = '<?= esc($item['value'], 'attr') ?>'"
                 :aria-selected="<?= esc($model, 'attr') ?> === '<?= esc($item['value'], 'attr') ?>'"
                 :class="<?= esc($model, 'attr') ?> === '<?= esc($item['value'], 'attr') ?>' ? 'text-charcoal' : 'text-charcoal/55 hover:text-charcoal'"
-                class="relative whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors duration-150"
+                class="relative min-h-10 whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors duration-150"
             >
                 <span class="flex items-center gap-2">
                     <?= esc($item['label']) ?>

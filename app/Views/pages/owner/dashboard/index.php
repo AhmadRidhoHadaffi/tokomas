@@ -45,7 +45,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
                 <?= $greeting ?>, <?= esc($userName) ?>
             </p>
         </div>
-        <?= view('components/ui/button', [
+        <?= ui_button([
             'variant' => 'primary',
             'size' => 'md',
             'href' => base_url('owner/transaksi/baru'),

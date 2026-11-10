@@ -27,9 +27,15 @@ $errors = session()->getFlashdata('errors'); // Validation errors array
     >
         <?= icon('check-circle-2', 'h-5 w-5 shrink-0 text-emerald-600') ?>
         <p class="flex-1"><?= esc($success) ?></p>
-        <button type="button" @click="show = false" class="text-emerald-600 hover:text-emerald-800">
-            <?= icon('x', 'h-4 w-4') ?>
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'icon' => 'x',
+            'iconOnly' => true,
+            'variant' => 'ghostCurrent',
+            'size' => 'sm',
+            'ariaLabel' => 'Tutup',
+            'attrs' => ['@click' => 'show = false'],
+        ]) ?>
     </div>
 <?php endif; ?>
 
@@ -45,9 +51,15 @@ $errors = session()->getFlashdata('errors'); // Validation errors array
     >
         <?= icon('x', 'h-5 w-5 shrink-0') ?>
         <p class="flex-1"><?= esc($error) ?></p>
-        <button type="button" @click="show = false" class="hover:text-crimson-dark">
-            <?= icon('x', 'h-4 w-4') ?>
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'icon' => 'x',
+            'iconOnly' => true,
+            'variant' => 'ghostCurrent',
+            'size' => 'sm',
+            'ariaLabel' => 'Tutup',
+            'attrs' => ['@click' => 'show = false'],
+        ]) ?>
     </div>
 <?php endif; ?>
 
@@ -63,9 +75,15 @@ $errors = session()->getFlashdata('errors'); // Validation errors array
     >
         <?= icon('shield-check', 'h-5 w-5 shrink-0 text-yellow-600') ?>
         <p class="flex-1"><?= esc($warning) ?></p>
-        <button type="button" @click="show = false" class="text-yellow-600 hover:text-yellow-800">
-            <?= icon('x', 'h-4 w-4') ?>
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'icon' => 'x',
+            'iconOnly' => true,
+            'variant' => 'ghostCurrent',
+            'size' => 'sm',
+            'ariaLabel' => 'Tutup',
+            'attrs' => ['@click' => 'show = false'],
+        ]) ?>
     </div>
 <?php endif; ?>
 
@@ -81,8 +99,14 @@ $errors = session()->getFlashdata('errors'); // Validation errors array
     >
         <?= icon('bell', 'h-5 w-5 shrink-0 text-blue-600') ?>
         <p class="flex-1"><?= esc($info) ?></p>
-        <button type="button" @click="show = false" class="text-blue-600 hover:text-blue-800">
-            <?= icon('x', 'h-4 w-4') ?>
-        </button>
+        <?= ui_button([
+            'type' => 'button',
+            'icon' => 'x',
+            'iconOnly' => true,
+            'variant' => 'ghostCurrent',
+            'size' => 'sm',
+            'ariaLabel' => 'Tutup',
+            'attrs' => ['@click' => 'show = false'],
+        ]) ?>
     </div>
 <?php endif; ?>

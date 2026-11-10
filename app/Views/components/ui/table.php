@@ -19,7 +19,7 @@ $class = $class ?? '';
                     <?php foreach ($headers as $header): ?>
                         <th class="p-3 font-medium <?= esc($header['class'] ?? '', 'attr') ?>">
                             <?php if ($header['sortable'] ?? false): ?>
-                                <button type="button" class="inline-flex items-center gap-1.5 hover:text-charcoal">
+                                <button type="button" class="inline-flex min-h-10 -my-2 items-center gap-1.5 py-2 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50">
                                     <?= esc($header['label']) ?>
                                     <?= icon('chevrons-up-down', 'h-3.5 w-3.5') ?>
                                 </button>

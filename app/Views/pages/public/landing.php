@@ -206,12 +206,22 @@ $whyUs = [
                     Belanja online, pesan custom, dan pantau pesanan Anda — semua dalam satu platform.
                 </p>
                 <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-                    <a href="#produk" class="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gold-gradient px-6 text-[15px] font-medium text-charcoal shadow-sm transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:brightness-110 hover:shadow-gold-glow active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                        Lihat Produk Kami
-                    </a>
-                    <a href="<?= site_url('daftar') ?>" class="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-white/70 bg-transparent px-6 text-[15px] font-medium text-white transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:bg-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                        Buat Akun Gratis
-                    </a>
+                    <?= ui_button([
+                        'href' => '#produk',
+                        'content' => 'Lihat Produk Kami',
+                        'variant' => 'primary',
+                        'size' => 'lg',
+                        'fullWidth' => true,
+                        'class' => 'sm:w-auto',
+                    ]) ?>
+                    <?= ui_button([
+                        'href' => site_url('daftar'),
+                        'content' => 'Buat Akun Gratis',
+                        'variant' => 'outlineLight',
+                        'size' => 'lg',
+                        'fullWidth' => true,
+                        'class' => 'sm:w-auto',
+                    ]) ?>
                 </div>
             </div>
 
@@ -345,13 +355,15 @@ $whyUs = [
                             <p class="mt-4 text-sm text-white/50">
                                 Mulai <span class="font-semibold text-gold"><?= rupiah($product['price']) ?></span>
                             </p>
-                            <button
-                                type="button"
-                                @click="selected = products[<?= (int) $index ?>]"
-                                class="mt-5 inline-flex h-11 w-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-gold/80 bg-transparent px-5 text-sm font-medium text-gold transition-[background-color,color,box-shadow,transform,filter,border-color] duration-150 ease-out hover:border-gold hover:bg-gold/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-                            >
-                                Lihat Detail
-                            </button>
+                            <?= ui_button([
+                                'type' => 'button',
+                                'content' => 'Lihat Detail',
+                                'variant' => 'outlineDark',
+                                'size' => 'md',
+                                'fullWidth' => true,
+                                'class' => 'mt-5',
+                                'attrs' => ['@click' => 'selected = products[' . (int) $index . ']'],
+                            ]) ?>
                         </div>
                     </article>
                 </div>
@@ -386,14 +398,15 @@ $whyUs = [
             x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
             class="relative max-h-[90dvh] w-full max-w-2xl overflow-y-auto rounded-t-2xl bg-white p-5 shadow-2xl sm:rounded-2xl sm:p-6"
         >
-            <button
-                type="button"
-                @click="selected = null"
-                aria-label="Tutup detail produk"
-                class="absolute right-4 top-4 z-10 rounded-lg bg-white/90 p-2 text-charcoal/70 shadow-sm transition-colors duration-150 hover:bg-ivory hover:text-charcoal focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-            >
-                <?= icon('x', 'h-5 w-5') ?>
-            </button>
+            <?= ui_button([
+                'type' => 'button',
+                'icon' => 'x',
+                'iconOnly' => true,
+                'variant' => 'light',
+                'class' => 'absolute right-4 top-4 z-10 shadow-sm',
+                'ariaLabel' => 'Tutup detail produk',
+                'attrs' => ['@click' => 'selected = null'],
+            ]) ?>
 
             <div class="grid gap-6 sm:grid-cols-2">
                 <img
@@ -427,21 +440,23 @@ $whyUs = [
                     <p class="font-serif text-2xl font-semibold text-charcoal" x-text="selected ? selected.price_label : ''"></p>
 
                     <div class="mt-auto flex flex-col gap-2 pt-6">
-                        <a
-                            href="<?= esc($waHref, 'attr') ?>"
-                            target="_blank"
-                            rel="noreferrer"
-                            class="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-gold-gradient px-5 text-sm font-medium text-charcoal shadow-sm transition-[filter,box-shadow] duration-150 hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-                        >
-                            <?= icon('message-circle', 'h-4 w-4') ?>
-                            Tanya via WhatsApp
-                        </a>
-                        <a
-                            href="<?= site_url('masuk') ?>"
-                            class="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-line bg-white px-5 text-sm font-medium text-charcoal transition-colors duration-150 hover:border-gold/60 hover:bg-ivory focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30"
-                        >
-                            Masuk untuk memesan
-                        </a>
+                        <?= ui_button([
+                            'href' => $waHref,
+                            'target' => '_blank',
+                            'rel' => 'noreferrer',
+                            'content' => 'Tanya via WhatsApp',
+                            'icon' => 'message-circle',
+                            'variant' => 'primary',
+                            'size' => 'md',
+                            'fullWidth' => true,
+                        ]) ?>
+                        <?= ui_button([
+                            'href' => site_url('masuk'),
+                            'content' => 'Masuk untuk memesan',
+                            'variant' => 'light',
+                            'size' => 'md',
+                            'fullWidth' => true,
+                        ]) ?>
                     </div>
                 </div>
             </div>
@@ -460,9 +475,13 @@ $whyUs = [
                 Cincin nikah dengan ukiran nama, liontin inisial, atau gelang bermotif Rumah Gadang — pengrajin kami siap
                 membuatnya sesuai keinginan. Ajukan pesanan dari akun Anda, bayar DP, dan pantau prosesnya hingga selesai.
             </p>
-            <a href="<?= site_url('daftar') ?>" class="mt-8 inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gold-gradient px-6 text-[15px] font-medium text-charcoal shadow-sm transition-[filter,box-shadow] duration-150 hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                Pesan Custom Sekarang
-            </a>
+            <?= ui_button([
+                'href' => site_url('daftar'),
+                'content' => 'Pesan Custom Sekarang',
+                'variant' => 'primary',
+                'size' => 'lg',
+                'class' => 'mt-8',
+            ]) ?>
         </div>
 
         <ol class="relative">
@@ -509,9 +528,12 @@ $whyUs = [
             <?php endforeach; ?>
         </div>
         <div class="reveal mt-10">
-            <a href="<?= site_url('daftar') ?>" class="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-gold-gradient px-6 text-[15px] font-medium text-charcoal shadow-sm transition-[filter,box-shadow] duration-150 hover:brightness-110 hover:shadow-gold-glow focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/30">
-                Daftar Sekarang
-            </a>
+            <?= ui_button([
+                'href' => site_url('daftar'),
+                'content' => 'Daftar Sekarang',
+                'variant' => 'primary',
+                'size' => 'lg',
+            ]) ?>
         </div>
     </div>
 </section>
@@ -565,12 +587,18 @@ $whyUs = [
                     <p class="mt-3 text-charcoal/75">Gratis selamanya. Simpan riwayat belanja dan dapatkan promo khusus pelanggan.</p>
                 </div>
                 <div class="relative mt-8 flex flex-col gap-3 sm:flex-row lg:mt-0">
-                    <a href="<?= site_url('daftar') ?>" class="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-charcoal px-6 text-[15px] font-medium text-white transition-colors duration-150 hover:bg-charcoal-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-charcoal/20">
-                        Buat Akun Gratis
-                    </a>
-                    <a href="<?= site_url('masuk') ?>" class="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-charcoal/70 px-6 text-[15px] font-medium text-charcoal transition-colors duration-150 hover:bg-charcoal/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-charcoal/20">
-                        Masuk ke Akun
-                    </a>
+                    <?= ui_button([
+                        'href' => site_url('daftar'),
+                        'content' => 'Buat Akun Gratis',
+                        'variant' => 'dark',
+                        'size' => 'lg',
+                    ]) ?>
+                    <?= ui_button([
+                        'href' => site_url('masuk'),
+                        'content' => 'Masuk ke Akun',
+                        'variant' => 'outlineCharcoal',
+                        'size' => 'lg',
+                    ]) ?>
                 </div>
             </div>
         </div>
@@ -610,15 +638,16 @@ $whyUs = [
                 </li>
             </ul>
 
-            <a
-                href="<?= esc($waHref, 'attr') ?>"
-                target="_blank"
-                rel="noreferrer"
-                class="mt-8 inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-wa px-5 text-sm font-medium text-white shadow-sm transition-[filter,box-shadow,transform] duration-150 hover:brightness-110 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-wa/40"
-            >
-                <?= icon('message-circle', 'h-4 w-4') ?>
-                Chat WhatsApp
-            </a>
+            <?= ui_button([
+                'href' => $waHref,
+                'target' => '_blank',
+                'rel' => 'noreferrer',
+                'content' => 'Chat WhatsApp',
+                'icon' => 'message-circle',
+                'variant' => 'whatsapp',
+                'size' => 'md',
+                'class' => 'mt-8',
+            ]) ?>
         </div>
 
         <div class="reveal min-w-0 lg:col-span-3" style="transition-delay: 60ms">
