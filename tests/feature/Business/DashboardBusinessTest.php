@@ -172,6 +172,29 @@ final class DashboardBusinessTest extends CIUnitTestCase
         $this->assertSame(500000.0, (float) $stats['finance_summary']['income']);
         $this->assertSame(100000.0, (float) $stats['finance_summary']['expense']);
         $this->assertSame(400000.0, (float) $stats['finance_summary']['balance']);
+
+        $this->assertNull($stats['sales_change_percent']);
+        $this->assertSame(0.0, (float) $stats['sales_yesterday']);
+        $this->assertSame(0, (int) $stats['transactions_yesterday']);
+    }
+
+    public function testOwnerStatsExposeChartSeriesForSevenDaysAndSixMonths(): void
+    {
+        $stats = (new DashboardService())->getOwnerStats();
+
+        $sales = $stats['sales_last_7_days'];
+        $this->assertCount(7, $sales['labels']);
+        $this->assertCount(7, $sales['values']);
+        $this->assertSame(date('d M'), end($sales['labels']));
+        $this->assertSame(500000.0, (float) end($sales['values']));
+
+        $cashflow = $stats['cashflow_last_6_months'];
+        $this->assertCount(6, $cashflow['labels']);
+        $this->assertCount(6, $cashflow['income']);
+        $this->assertCount(6, $cashflow['expense']);
+        $this->assertSame(date('M Y'), end($cashflow['labels']));
+        $this->assertSame(500000.0, (float) end($cashflow['income']));
+        $this->assertSame(100000.0, (float) end($cashflow['expense']));
     }
 
     public function testKaryawanStatsUseTheSameCounters(): void

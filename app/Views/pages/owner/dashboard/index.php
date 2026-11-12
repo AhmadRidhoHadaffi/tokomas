@@ -19,11 +19,34 @@ $greeting = date('H') < 12 ? 'Selamat pagi' : (date('H') < 18 ? 'Selamat siang' 
 $userName = session('user_name') ?? 'Owner';
 
 // Calculate totals
-$salesToday = $stats['sales_today'] ?? 0;
-$transToday = $stats['transactions_today'] ?? 0;
-$activeOrders = $stats['active_custom_orders'] ?? 0;
-$lowStock = $stats['low_stock_count'] ?? 0;
-$totalProducts = $stats['total_products'] ?? 0;
+$salesToday = (float) ($stats['sales_today'] ?? 0);
+$transToday = (int) ($stats['transactions_today'] ?? 0);
+$activeOrders = (int) ($stats['active_custom_orders'] ?? 0);
+$lowStock = (int) ($stats['low_stock_count'] ?? 0);
+$totalProducts = (int) ($stats['total_products'] ?? 0);
+
+// Real trend data (compared with yesterday)
+$salesChange = $stats['sales_change_percent'] ?? null;
+$salesTrend = $salesChange === null ? null : [
+    'value' => number_format(abs((float) $salesChange), 1, ',', '.') . '%',
+    'up' => (float) $salesChange >= 0,
+];
+
+$transYesterday = (int) ($stats['transactions_yesterday'] ?? 0);
+$transTrend = null;
+if ($transYesterday > 0) {
+    $transChange = (($transToday - $transYesterday) / $transYesterday) * 100;
+    $transTrend = [
+        'value' => number_format(abs($transChange), 1, ',', '.') . '%',
+        'up' => $transChange >= 0,
+    ];
+}
+
+// Chart data
+$salesChart = $stats['sales_last_7_days'] ?? ['labels' => [], 'values' => []];
+$cashflowChart = $stats['cashflow_last_6_months'] ?? ['labels' => [], 'income' => [], 'expense' => []];
+$salesWeekTotal = array_sum($salesChart['values'] ?? []);
+$chartJsonFlags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT;
 
 $transactionRows = '';
 foreach ($stats['recent_transactions'] ?? [] as $trx) {
@@ -60,7 +83,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
             'icon' => 'wallet',
             'label' => 'Total Penjualan Hari Ini',
             'value' => rupiah($salesToday),
-            'trend' => ['value' => '12,4%', 'up' => true],
+            'trend' => $salesTrend,
             'hint' => 'Dibanding kemarin',
         ]) ?>
         
@@ -69,7 +92,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
             'icon' => 'shopping-cart',
             'label' => 'Jumlah Transaksi',
             'value' => $transToday . ' transaksi',
-            'trend' => ['value' => '1', 'up' => true],
+            'trend' => $transTrend,
             'hint' => 'Hari ini',
         ]) ?>
         
@@ -99,20 +122,20 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
             <div class="flex items-start justify-between">
                 <div>
                     <h2 class="font-serif text-lg font-semibold text-charcoal">Grafik Penjualan 7 Hari Terakhir</h2>
-                    <p class="text-sm text-charcoal/50">Total <?= rupiah(0) ?></p>
+                    <p class="text-sm text-charcoal/50">Total <?= rupiah($salesWeekTotal) ?></p>
                 </div>
             </div>
-            <div class="mt-4 h-72 flex items-center justify-center bg-ivory/50 rounded-xl">
-                <p class="text-sm text-charcoal/40">Chart.js akan diintegrasikan di sini</p>
+            <div class="mt-4 h-72">
+                <canvas id="salesChart" aria-label="Grafik penjualan tujuh hari terakhir" role="img"></canvas>
             </div>
         </section>
 
         <!-- Cashflow Bar Chart -->
         <section class="rounded-2xl border border-line bg-white p-5 shadow-card lg:col-span-2">
             <h2 class="font-serif text-lg font-semibold text-charcoal">Pemasukan vs Pengeluaran</h2>
-            <p class="text-sm text-charcoal/50"><?= date('F Y') ?></p>
-            <div class="mt-4 h-72 flex items-center justify-center bg-ivory/50 rounded-xl">
-                <p class="text-sm text-charcoal/40">Chart.js akan diintegrasikan di sini</p>
+            <p class="text-sm text-charcoal/50">Enam bulan terakhir</p>
+            <div class="mt-4 h-72">
+                <canvas id="cashflowChart" aria-label="Grafik pemasukan dan pengeluaran enam bulan terakhir" role="img"></canvas>
             </div>
         </section>
     </div>
@@ -178,4 +201,149 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
     </div>
 </div>
 
+<?php $this->endSection(); ?>
+
+<?php $this->section('scripts'); ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    (function () {
+        if (typeof Chart === 'undefined') {
+            return;
+        }
+
+        var sales = <?= json_encode($salesChart, $chartJsonFlags) ?>;
+        var cashflow = <?= json_encode($cashflowChart, $chartJsonFlags) ?>;
+        var formatRupiah = function (value) {
+            return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+        };
+        var compactRupiah = function (value) {
+            if (Math.abs(value) >= 1000000) {
+                return 'Rp ' + (value / 1000000).toLocaleString('id-ID', { maximumFractionDigits: 1 }) + ' jt';
+            }
+            if (Math.abs(value) >= 1000) {
+                return 'Rp ' + (value / 1000).toLocaleString('id-ID', { maximumFractionDigits: 0 }) + ' rb';
+            }
+            return 'Rp ' + value;
+        };
+
+        Chart.defaults.font.family = "'Poppins', ui-sans-serif, system-ui, sans-serif";
+        Chart.defaults.color = 'rgba(28, 28, 28, 0.55)';
+
+        var salesCanvas = document.getElementById('salesChart');
+        if (salesCanvas) {
+            var salesContext = salesCanvas.getContext('2d');
+            var gradient = salesContext.createLinearGradient(0, 0, 0, 280);
+            gradient.addColorStop(0, 'rgba(212, 175, 55, 0.28)');
+            gradient.addColorStop(1, 'rgba(212, 175, 55, 0.02)');
+
+            new Chart(salesContext, {
+                type: 'line',
+                data: {
+                    labels: sales.labels || [],
+                    datasets: [{
+                        label: 'Penjualan',
+                        data: sales.values || [],
+                        borderColor: '#D4AF37',
+                        backgroundColor: gradient,
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.35,
+                        pointBackgroundColor: '#D4AF37',
+                        pointBorderColor: '#FFFFFF',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1C1C1C',
+                            padding: 12,
+                            callbacks: {
+                                label: function (context) {
+                                    return 'Penjualan: ' + formatRupiah(context.parsed.y || 0);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(28, 28, 28, 0.06)' },
+                            border: { display: false },
+                            ticks: { callback: function (value) { return compactRupiah(value); } }
+                        }
+                    }
+                }
+            });
+        }
+
+        var cashflowCanvas = document.getElementById('cashflowChart');
+        if (cashflowCanvas) {
+            new Chart(cashflowCanvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: cashflow.labels || [],
+                    datasets: [
+                        {
+                            label: 'Pemasukan',
+                            data: cashflow.income || [],
+                            backgroundColor: '#D4AF37',
+                            borderRadius: 6,
+                            maxBarThickness: 22
+                        },
+                        {
+                            label: 'Pengeluaran',
+                            data: cashflow.expense || [],
+                            backgroundColor: '#8B0000',
+                            borderRadius: 6,
+                            maxBarThickness: 22
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { usePointStyle: true, boxWidth: 8, padding: 16 }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1C1C1C',
+                            padding: 12,
+                            callbacks: {
+                                label: function (context) {
+                                    return context.dataset.label + ': ' + formatRupiah(context.parsed.y || 0);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(28, 28, 28, 0.06)' },
+                            border: { display: false },
+                            ticks: { callback: function (value) { return compactRupiah(value); } }
+                        }
+                    }
+                }
+            });
+        }
+    })();
+</script>
 <?php $this->endSection(); ?>
