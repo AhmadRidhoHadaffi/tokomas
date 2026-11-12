@@ -4,16 +4,6 @@
 $result = $result ?? ['items' => [], 'total' => 0, 'page' => 1, 'per_page' => 20, 'total_pages' => 0];
 $orders = $result['items'] ?? [];
 
-$settings = null;
-try {
-    $settings = (new \App\Models\StoreSettingModel())->getSettings();
-} catch (\Throwable $e) {
-    $settings = null;
-}
-$whatsapp = preg_replace('/\D+/', '', (string) ($settings['whatsapp'] ?? '6281234567890'));
-$whatsappLink = 'https://wa.me/' . ($whatsapp !== '' ? $whatsapp : '6281234567890')
-    . '?text=' . rawurlencode('Halo Toko Mas Gembira, saya ingin mengajukan pesanan custom.');
-
 $orderProduct = static function (array $order): string {
     $product = trim((string) ($order['product'] ?? ''));
     if ($product !== '') {
@@ -30,9 +20,7 @@ $orderProduct = static function (array $order): string {
             <p class="mt-1 text-sm text-charcoal/55">Pantau setiap tahap pembuatan perhiasan Anda.</p>
         </div>
         <?= ui_button([
-            'href' => $whatsappLink,
-            'target' => '_blank',
-            'rel' => 'noreferrer',
+            'href' => base_url('pelanggan/pesanan/baru'),
             'content' => 'Ajukan Pesanan Baru',
             'icon' => 'plus',
             'variant' => 'primary',
@@ -102,13 +90,24 @@ $orderProduct = static function (array $order): string {
                                 <dd class="font-semibold text-crimson"><?= esc(rupiah($remaining)) ?></dd>
                             </div>
                         </dl>
-                        <?= ui_button([
-                            'type' => 'button',
-                            'content' => 'Lihat Detail',
-                            'variant' => 'light',
-                            'size' => 'md',
-                            'attrs' => ['@click' => esc($modalVar, 'attr') . ' = true'],
-                        ]) ?>
+                        <div class="flex flex-col gap-2 sm:flex-row">
+                            <?php if (($order['status'] ?? '') === 'Masuk'): ?>
+                                <?= ui_button([
+                                    'href' => base_url('pelanggan/pesanan/' . $orderId . '/ubah'),
+                                    'content' => 'Ubah',
+                                    'icon' => 'pencil',
+                                    'variant' => 'light',
+                                    'size' => 'md',
+                                ]) ?>
+                            <?php endif; ?>
+                            <?= ui_button([
+                                'type' => 'button',
+                                'content' => 'Lihat Detail',
+                                'variant' => 'light',
+                                'size' => 'md',
+                                'attrs' => ['@click' => esc($modalVar, 'attr') . ' = true'],
+                            ]) ?>
+                        </div>
                     </div>
 
                     <?= view('components/ui/modal', [

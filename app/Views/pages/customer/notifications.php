@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/customer') ?>
 <?= $this->section('content') ?>
+<?= $this->include('partials/flash') ?>
 <?php
 $result = $result ?? ['items' => [], 'total' => 0, 'page' => 1, 'per_page' => 20, 'total_pages' => 0];
 $notifications = $result['items'] ?? [];
@@ -35,45 +36,39 @@ $kindMeta = [
     ],
 ];
 ?>
-<div
-    class="mx-auto max-w-3xl space-y-6"
-    x-data="{
-        filter: 'Semua',
-        readAll: false,
-        readIds: [],
-        unread: <?= $unreadCount ?>,
-        markRead(id, wasUnread) {
-            if (this.readAll || !wasUnread) return;
-            if (!this.readIds.includes(id)) {
-                this.readIds.push(id);
-                this.unread = Math.max(0, this.unread - 1);
-            }
-        },
-        markAll() {
-            this.readAll = true;
-            this.unread = 0;
-        }
-    }"
->
+<div class="mx-auto max-w-3xl space-y-6" x-data="{ filter: 'Semua' }">
     <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <div>
             <h1 class="font-serif text-2xl font-semibold text-charcoal sm:text-3xl">Notifikasi</h1>
             <p class="mt-1 text-sm text-charcoal/55">
-                <span x-show="unread > 0"><span x-text="unread"><?= $unreadCount ?></span> belum dibaca</span>
-                <span x-show="unread === 0">Semua notifikasi sudah dibaca</span>
+                <?php if ($unreadCount > 0): ?>
+                    <span class="font-medium text-charcoal"><?= $unreadCount ?></span> belum dibaca
+                <?php else: ?>
+                    Semua notifikasi sudah dibaca
+                <?php endif; ?>
             </p>
         </div>
-        <?= ui_button([
-            'type' => 'button',
-            'content' => 'Tandai semua dibaca',
-            'icon' => 'check-check',
-            'variant' => 'light',
-            'size' => 'sm',
-            'attrs' => [
-                '@click' => 'markAll()',
-                ':disabled' => 'unread === 0',
-            ],
-        ]) ?>
+        <?php if ($unreadCount > 0): ?>
+            <form method="post" action="<?= base_url('pelanggan/notifikasi/dibaca-semua') ?>">
+                <?= csrf_field() ?>
+                <?= ui_button([
+                    'type' => 'submit',
+                    'content' => 'Tandai semua dibaca',
+                    'icon' => 'check-check',
+                    'variant' => 'light',
+                    'size' => 'sm',
+                ]) ?>
+            </form>
+        <?php else: ?>
+            <?= ui_button([
+                'type' => 'button',
+                'content' => 'Tandai semua dibaca',
+                'icon' => 'check-check',
+                'variant' => 'light',
+                'size' => 'sm',
+                'disabled' => true,
+            ]) ?>
+        <?php endif; ?>
     </div>
 
     <?= view('components/ui/tabs', [
@@ -96,53 +91,56 @@ $kindMeta = [
         </div>
     <?php else: ?>
         <ul
+            x-show="filter === 'Semua'
+                || (filter === 'Status Pesanan' && <?= (int) $counts['Status Pesanan'] ?> > 0)
+                || (filter === 'Pembayaran' && <?= (int) $counts['Pembayaran'] ?> > 0)
+                || (filter === 'Promosi' && <?= (int) $counts['Promosi'] ?> > 0)"
             class="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white"
-            x-show="(filter === 'Semua' && <?= count($notifications) ?> > 0)
-                || (filter === 'Status Pesanan' && <?= $counts['Status Pesanan'] ?> > 0)
-                || (filter === 'Pembayaran' && <?= $counts['Pembayaran'] ?> > 0)
-                || (filter === 'Promosi' && <?= $counts['Promosi'] ?> > 0)"
         >
             <?php foreach ($notifications as $notification): ?>
                 <?php
                 $notificationId = (int) ($notification['id'] ?? 0);
                 $type = (string) ($notification['type'] ?? '');
                 $meta = $kindMeta[$type] ?? $kindMeta['Status Pesanan'];
-                $serverRead = (int) ($notification['is_read'] ?? 0) === 1;
-                $readExpression = '(' . ($serverRead ? 'true' : 'false') . ' || readAll || readIds.includes(' . $notificationId . '))';
+                $isRead = (int) ($notification['is_read'] ?? 0) === 1;
                 ?>
-                <li x-show="filter === 'Semua' || filter === '<?= esc($type, 'js') ?>'">
-                    <button
-                        type="button"
-                        @click="markRead(<?= $notificationId ?>, <?= $serverRead ? 0 : 1 ?>)"
-                        :class="<?= $readExpression ?> ? 'bg-transparent' : 'bg-gold/[0.06]'"
-                        class="flex w-full gap-4 px-5 py-4 text-left transition-colors duration-150 hover:bg-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold/40"
-                    >
-                        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full <?= esc($meta['iconClass'], 'attr') ?>">
-                            <?= icon($meta['icon'], 'h-5 w-5', 20, 1.75) ?>
-                        </span>
-                        <span class="min-w-0 flex-1">
-                            <span class="flex flex-wrap items-center gap-2">
-                                <span
-                                    :class="<?= $readExpression ?> ? 'font-medium text-charcoal/80' : 'font-semibold text-charcoal'"
-                                    class="text-sm <?= $serverRead ? 'font-medium text-charcoal/80' : 'font-semibold text-charcoal' ?>"
-                                ><?= esc($notification['title'] ?? '-') ?></span>
-                                <?= view('components/ui/badge', ['tone' => $meta['tone'], 'text' => $type]) ?>
-                            </span>
-                            <span class="mt-1 block break-words text-sm text-charcoal/65"><?= esc($notification['message'] ?? '') ?></span>
-                            <span class="mt-1.5 block text-xs text-charcoal/40"><?= esc(format_datetime((string) ($notification['created_at'] ?? ''))) ?></span>
-                        </span>
-                        <span
-                            x-show="!<?= $readExpression ?>"
-                            class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-crimson"
-                            aria-label="Belum dibaca"
-                        ></span>
-                    </button>
+                <li
+                    x-show="filter === 'Semua' || filter === '<?= esc($type, 'js') ?>'"
+                    class="flex gap-3 px-4 py-4 sm:gap-4 sm:px-5 <?= $isRead ? 'bg-white' : 'bg-gold/[0.06]' ?>"
+                >
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full <?= esc($meta['iconClass'], 'attr') ?>">
+                        <?= icon($meta['icon'], 'h-5 w-5', 20, 1.75) ?>
+                    </span>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <p class="text-sm <?= $isRead ? 'font-medium text-charcoal/80' : 'font-semibold text-charcoal' ?>"><?= esc($notification['title'] ?? '-') ?></p>
+                            <?= view('components/ui/badge', ['tone' => $meta['tone'], 'text' => $type]) ?>
+                            <?php if (!$isRead): ?>
+                                <span class="h-2.5 w-2.5 rounded-full bg-crimson" aria-label="Belum dibaca"></span>
+                            <?php endif; ?>
+                        </div>
+                        <p class="mt-1 break-words text-sm text-charcoal/65"><?= esc($notification['message'] ?? '') ?></p>
+                        <p class="mt-1.5 text-xs text-charcoal/40"><?= esc(format_datetime((string) ($notification['created_at'] ?? ''))) ?></p>
+                    </div>
+                    <?php if (!$isRead): ?>
+                        <form method="post" action="<?= base_url('pelanggan/notifikasi/' . $notificationId . '/dibaca') ?>" class="shrink-0 self-center">
+                            <?= csrf_field() ?>
+                            <?= ui_button([
+                                'type' => 'submit',
+                                'content' => 'Tandai',
+                                'icon' => 'check',
+                                'variant' => 'light',
+                                'size' => 'sm',
+                                'ariaLabel' => 'Tandai notifikasi sudah dibaca',
+                            ]) ?>
+                        </form>
+                    <?php endif; ?>
                 </li>
             <?php endforeach; ?>
         </ul>
 
         <?php foreach ($counts as $type => $count): ?>
-            <div x-show="filter === '<?= esc($type, 'js') ?>' && <?= (int) $count ?> === 0" class="rounded-2xl border border-line bg-white">
+            <div x-show="filter === '<?= esc($type, 'js') ?>' && <?= (int) $count ?> === 0" x-cloak class="rounded-2xl border border-line bg-white">
                 <?= view('components/customer/empty_state', [
                     'heading' => 'Tidak ada notifikasi',
                     'description' => 'Kabar terbaru tentang pesanan dan promo akan muncul di sini.',

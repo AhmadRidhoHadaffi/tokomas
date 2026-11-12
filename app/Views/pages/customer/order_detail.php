@@ -31,6 +31,17 @@ $product = $product !== '' ? $product : 'Detail Pesanan';
                 &middot;
                 Target <?= esc(format_date((string) ($order['due_date'] ?? ''))) ?>
             </p>
+            <?php if (($order['status'] ?? '') === 'Masuk'): ?>
+                <div class="mt-4">
+                    <?= ui_button([
+                        'href' => base_url('pelanggan/pesanan/' . $order['id'] . '/ubah'),
+                        'content' => 'Ubah Pesanan',
+                        'icon' => 'pencil',
+                        'variant' => 'light',
+                        'size' => 'md',
+                    ]) ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="border-b border-line px-5 py-6 sm:px-6">
