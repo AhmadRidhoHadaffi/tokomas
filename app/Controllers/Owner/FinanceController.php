@@ -69,6 +69,50 @@ class FinanceController extends BaseController
         }
     }
 
+    public function edit(int $id): string|\CodeIgniter\HTTP\ResponseInterface
+    {
+        $service = new FinanceService();
+        $finance = $service->getById($id);
+
+        if (!$finance) {
+            return redirect()->to('/owner/pembukuan')->with('error', 'Catatan pembukuan tidak ditemukan');
+        }
+
+        if (!empty($finance['transaction_id']) || !empty($finance['custom_order_id'])) {
+            return redirect()->to('/owner/pembukuan')->with('error', 'Catatan otomatis dari transaksi tidak dapat diubah');
+        }
+
+        return view('pages/owner/finances/edit', [
+            'title' => 'Ubah Catatan Pembukuan',
+            'finance' => $finance,
+            'categories' => $service->getCategories(),
+        ]);
+    }
+
+    public function update(int $id)
+    {
+        $rules = FinanceRules::update();
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        try {
+            $data = [
+                'type' => $this->request->getPost('type'),
+                'category' => $this->request->getPost('category'),
+                'description' => $this->request->getPost('description'),
+                'amount' => $this->request->getPost('amount'),
+                'entry_date' => $this->request->getPost('entry_date') ?: date('Y-m-d'),
+            ];
+
+            (new FinanceService())->update($id, $data);
+
+            return redirect()->to('/owner/pembukuan')->with('success', 'Catatan pembukuan berhasil diperbarui');
+        } catch (\Throwable $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
+        }
+    }
+
     public function delete(int $id)
     {
         try {

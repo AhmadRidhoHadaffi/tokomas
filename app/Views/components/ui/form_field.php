@@ -38,6 +38,7 @@ $autocomplete = $autocomplete ?? '';
 $options = $options ?? [];
 $rows = $rows ?? '4';
 $accept = $accept ?? '';
+$extraAttrs = $extraAttrs ?? '';
 
 $inputClass = 'w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20 disabled:bg-ivory disabled:text-charcoal/50';
 if ($inputExtra !== '') {
@@ -67,6 +68,7 @@ if ($error) {
             <?= $autocomplete ? 'autocomplete="' . esc($autocomplete, 'attr') . '"' : '' ?>
             <?= $required ? 'required' : '' ?>
             <?= $disabled ? 'disabled' : '' ?>
+            <?= $extraAttrs ?>
         >
             <?php if ($placeholder): ?>
                 <option value=""><?= esc($placeholder) ?></option>
@@ -88,6 +90,7 @@ if ($error) {
             <?= $autocomplete ? 'autocomplete="' . esc($autocomplete, 'attr') . '"' : '' ?>
             <?= $required ? 'required' : '' ?>
             <?= $disabled ? 'disabled' : '' ?>
+            <?= $extraAttrs ?>
         ><?= esc($value) ?></textarea>
 
     <?php elseif ($type === 'file'): ?>
@@ -99,6 +102,7 @@ if ($error) {
             accept="<?= esc($accept, 'attr') ?>"
             <?= $required ? 'required' : '' ?>
             <?= $disabled ? 'disabled' : '' ?>
+            <?= $extraAttrs ?>
         />
 
     <?php else: ?>
@@ -112,6 +116,7 @@ if ($error) {
             <?= $autocomplete ? 'autocomplete="' . esc($autocomplete, 'attr') . '"' : '' ?>
             <?= $required ? 'required' : '' ?>
             <?= $disabled ? 'disabled' : '' ?>
+            <?= $extraAttrs ?>
         />
     <?php endif; ?>
 
