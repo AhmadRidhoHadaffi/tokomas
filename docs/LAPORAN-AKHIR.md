@@ -1,10 +1,10 @@
-# LAPORAN AKHIR — Bagian 1–4
+# LAPORAN AKHIR — Bagian 1–5
 
 > Proyek: **Toko Mas Gembira** (CodeIgniter 4.7.4, view PHP, Tailwind CLI, Alpine.js, Chart.js)
 > Branch: `hadaffi` · Commit kode Bagian 4: `b05d831`
-> Tanggal: **10 November 2026** · Lingkungan: `development`
+> Tanggal: **12 November 2026** · Lingkungan: `development`
 > Database: `db_tokogembira` (dev) dan `db_tokogembira_test` (PHPUnit)
-> Status: **belum di-push** — menunggu konfirmasi.
+> Status: **siap di-push** setelah seluruh pemeriksaan pada §6 lulus.
 
 ---
 
@@ -16,9 +16,10 @@
 | **2. Seeder** | **13 tabel** terisi data demo idempoten, bertanda `[DEMO]`/`@demo.test`/`DM-*`/`PD-2026-*`. Run kedua identik. Cleanup terverifikasi di DB uji. | `docs/SEEDER.md`, `docs/DEMO-AKUN.md`, commit `c474407` |
 | **3. Uji fitur** | **33 halaman** Owner/Karyawan/Pelanggan HTTP 200; aksi inti lulus; **14 kelompok bug** terbukti diperbaiki dan diberi tes regresi. | `docs/LAPORAN-UJI.md`, commit `b67155c`, `7999f40`, `4fd66cd` |
 | **4. Unifikasi tombol** | **79 tombol aplikasi di 43 file** dimigrasikan ke satu komponen; 7 halaman × 3 lebar layar didokumentasikan before/after. | `docs/screenshots/bagian4/`, commit `b05d831` |
-| **Verifikasi akhir** | PHPUnit **37 tes / 207 assertion OK** (sebelum Bagian 4: 32/190). Smoke 33 halaman `FAILURES=0`. `npm run build` sukses. | Bagian 6 laporan ini |
+| **5. Backend & grafik** | Dead code dihapus; CRUD produk/karyawan, pengaturan, promosi, edit pembukuan/pelanggan, custom order pelanggan, notifikasi, dan profil ditambahkan; grafik dashboard memakai data asli. | `docs/LAPORAN-BAGIAN-5.md` |
+| **Verifikasi akhir** | PHPUnit **41 tes / 244 assertion OK**. Smoke 30 halaman kunci `FAILURES=0`. `php spark demo:verify` PASS. `npm run build` sukses. | Bagian 6 laporan ini |
 
-Tidak ada fitur baru, perubahan skema, migrasi lama yang diubah, atau perubahan di `design/`.
+Tidak ada perubahan skema, migrasi lama yang diubah, atau perubahan di `design/`. Backend baru hanya mengisi fitur yang sebelumnya sudah punya tampilan/route tanpa implementasi.
 
 ---
 
@@ -77,11 +78,11 @@ Angka demo (bukan total tabel), diverifikasi `php spark demo:verify`:
 | `finances` | 38 manual `[DEMO]` + 65 penjualan + 15 DP + 3 pelunasan | deskripsi `[DEMO]` / linked |
 | `promotions` | 7 | judul `[DEMO] ...` |
 | `promotion_customers` | 9 | promosi `terpilih` |
-| `notifications` | 117 pelanggan demo (+2 pelanggan lama) | customer/promotion demo |
+| `notifications` | 117 | customer/promotion demo |
 | `store_settings` | 1 (diperbarui) | — |
 | `gold_prices` | 4 (satu per kadar) | PK `purity` |
 
-Total tabel dev setelah seed: users 19, customers 16, products 41, transactions 80, details 204, orders 18, histories 50, promotions 7, promotion_customers 9, notifications 119, finances 121, settings 1, gold prices 4.
+Total tabel dev setelah seed dan pembersihan data lama: users 16, customers 15, products 41 (36 demo + 5 lama), transactions 80, details 204, orders 18, histories 50, promotions 7, promotion_customers 9, notifications 117, finances 121, settings 1, gold prices 4.
 
 ### 3.2 Invarian
 
@@ -111,6 +112,7 @@ Hasil: **semua PASS**.
   2. seed → clean → restore `store_settings`/`gold_prices`;
   3. seluruh baris demo kembali 0, jumlah baris non-demo tidak berubah.
 - `DemoCleanSeeder` menghapus mengikuti urutan FK dan **tidak** menghapus data lama/non-demo.
+- `php spark demo:clean-legacy` menghapus khusus dataset lama `@tokomasgembira.id`/`siti@example.com` beserta turunannya, tanpa menyentuh `@demo.test`. Seeder idempoten; run kedua menghapus 0 baris. Detail: `docs/LAPORAN-BAGIAN-5.md` §5.
 
 ### 3.4 Akun demo
 
@@ -170,20 +172,20 @@ Daftar lengkap: `docs/DEMO-AKUN.md`.
 
 Rincian baris demi baris: `docs/LAPORAN-UJI.md` §6.
 
-### 4.4 Gap manual (tidak diuji penuh)
+### 4.4 Gap yang Ditutup di Bagian 5
 
-Fitur berikut tidak punya route/backend, sehingga **tidak ditambahkan** (sesuai batasan tugas):
+Fitur yang sebelumnya tidak punya route/backend kini sudah tersedia dan diuji:
 
-- CRUD produk dan karyawan (hanya daftar/filter).
-- Simpan pengaturan toko/harga emas (read-only).
-- Export laporan.
-- Buat/edit promosi (hanya daftar + kirim).
-- Edit pembukuan dan edit pelanggan.
-- Pelanggan membuat/mengubah custom order.
-- Tandai notifikasi dibaca via POST; badge header tidak bisa berkurang tanpa state/route bersama.
-- Ubah profil pelanggan.
-- Riwayat harga emas (butuh migrasi).
-- Grafik dashboard masih placeholder (bukan bug fungsional).
+- CRUD produk dan karyawan (termasuk toggle aktif dan reset kata sandi).
+- Simpan pengaturan toko dan harga emas.
+- Buat promosi sebagai draf lalu kirim.
+- Edit pembukuan manual dan edit pelanggan.
+- Pelanggan membuat/mengubah custom order (hanya saat status `Masuk`).
+- Tandai notifikasi dibaca (satu atau semua).
+- Ubah profil dan ganti kata sandi pelanggan.
+- Grafik dashboard dengan data penjualan dan arus kas asli.
+
+Yang tetap tidak dikerjakan: export laporan dan riwayat harga emas (butuh keputusan produk/migrasi). Detail lengkap: `docs/LAPORAN-BAGIAN-5.md`.
 
 ---
 
@@ -286,12 +288,14 @@ Catatan: screenshot memakai data demo asli dan menonaktifkan animasi reveal agar
 
 | Pemeriksaan | Hasil |
 |---|---|
-| PHPUnit | **OK (37 tes, 207 assertion)** — sebelumnya 32/190 |
-| Smoke HTTP 33 halaman (owner/karyawan/pelanggan) | `FAILURES=0` |
+| PHPUnit | **OK (41 tes, 244 assertion)** — sebelumnya 37/207 |
+| Smoke HTTP 30 halaman kunci (owner/karyawan/pelanggan, termasuk form baru) | `FAILURES=0` |
+| Mutasi HTTP | Produk, pembukuan, karyawan, pelanggan, promosi, pengaturan, custom order pelanggan, notifikasi, dan profil |
 | `/dev/tombol` | HTTP 200 di development |
-| `php -l` seluruh view yang berubah | 0 error |
+| `php -l` seluruh berkas berubah/baru (38 berkas) | 0 error |
 | Duplikasi atribut `type` pada HTML login | 0 |
 | `php spark demo:verify` | semua PASS |
+| `php spark demo:clean-legacy` (run kedua) | 0 baris (idempoten) |
 | `npm run build` | sukses (hanya peringatan Browserslist usang) |
 
 **Responsif:** matriks 360/390/414/768/1024/1280/1440/1920 + 844×390 telah diuji pada restyle area pelanggan (commit `ca5d1e3`) tanpa scroll horizontal. Bagian 4 di-retest pada 390/768/1440; tidak ditemukan regresi layout maupun overflow baru.
@@ -312,7 +316,14 @@ Catatan: screenshot memakai data demo asli dan menonaktifkan animasi reveal agar
 | `4fd66cd` | `test: regresi timestamp, dashboard, pembukuan, dan otorisasi` |
 | `467da5d` | `docs: laporan uji Bagian 3` |
 | `b05d831` | `feat(ui): satukan seluruh tombol lewat komponen Button` (Bagian 4) |
-| _(commit berikutnya)_ | `docs: laporan akhir dan screenshot tombol` |
+| `d5dcc41` | `docs: laporan akhir dan screenshot tombol` |
+| `02e382a` | `refactor: hapus view staff flat dan page controller` (Bagian 5) |
+| `389cbbb` | `feat(owner): lengkapi CRUD produk, karyawan, pengaturan, promosi, dan pembukuan` |
+| `729bfac` | `feat(customer): custom order, notifikasi, dan profil pelanggan` |
+| `d58e685` | `feat(dashboard): grafik penjualan dan arus kas dari data asli` |
+| `2fc7633` | `chore(demo): bersihkan dataset demo lama @tokomasgembira.id` |
+| `8d48643` | `test: regresi CRUD admin dan halaman baru` |
+| _(commit berikutnya)_ | `docs: laporan Bagian 5` |
 
 ### 7.2 Berkas utama Bagian 4
 
@@ -331,18 +342,32 @@ Catatan: screenshot memakai data demo asli dan menonaktifkan animasi reveal agar
 
 Total perubahan kode Bagian 4: **53 file, +934 / −377**.
 
+### 7.3 Berkas utama Bagian 5
+
+| Kelompok | Berkas |
+|---|---|
+| Controller | `Owner/{Product,Employee,Setting,Promotion,Finance,Customer}Controller.php`, `Customer/{Order,Notification,Profile}Controller.php` |
+| Service & validasi | `UploadService.php`, `DashboardService.php`, `EmployeeRules`, `StoreSettingRules`, `PromotionRules`, `CustomerRules`, `ProfileRules` |
+| Route | `app/Config/Routes/owner.php`, `app/Config/Routes/customer.php` |
+| View owner | `pages/owner/{products,employees,settings,promotions,customers,finances,dashboard}/*` |
+| View pelanggan | `pages/customer/{orders,order_detail,notifications,profile}.php`, `pages/customer/orders/form.php` |
+| Data lama | `LegacyDemoCleanSeeder.php`, `DemoCleanLegacy.php` |
+| Tes | `AdminCrudBusinessTest.php`, `DashboardBusinessTest.php`, `RoutePageTest.php` |
+
+Rincian lengkap: `docs/LAPORAN-BAGIAN-5.md`.
+
 ---
 
-## 8. Keputusan yang Dibutuhkan
+## 8. Keputusan yang Sudah Dijalankan
 
-1. **Hapus view flat lama karyawan** — `pages/staff/{customers,custom_orders,transactions,finances,products}.php` tidak terpakai (tidak ada controller yang merujuk). Tombolnya sudah dimigrasikan, tetapi penghapusan menunggu keputusan.
-2. **Migrasi `gold_prices`** — jika riwayat harga emas diperlukan, PK `purity` harus diubah (tabel baru `gold_price_histories` atau PK surrogate). Ini perubahan skema, jadi belum dikerjakan.
-3. **Backend yang belum ada** — CRUD produk/karyawan, simpan pengaturan, export laporan, buat promosi, edit pembukuan/pelanggan, custom order pelanggan, tandai notifikasi dibaca, ubah profil. Perlu keputusan apakah akan dibangun.
-4. **Grafik dashboard** — masih placeholder; perlu data agregat dan konfigurasi Chart.js.
-5. **Badge notifikasi header** — perlu state bersama/route mark-read agar bisa berkurang.
-6. **Deviasi ukuran `sm` 40 px** — mohon dikonfirmasi sebagai standar proyek (atau dikembalikan ke 36 px bila target sentuh 40 px tidak wajib).
-7. **Data demo lama** (`@tokomasgembira.id`, dll.) — sengaja dipertahankan, tidak dihapus cleanup. Putuskan apakah akan dibersihkan.
-8. **Push** — belum dilakukan; menunggu konfirmasi.
+1. **Hapus view flat lama karyawan** — sudah dihapus bersama `Staff\PageController`; `dashboard.php` dan `promotions.php` tetap.
+2. **Migrasi `gold_prices`** — tidak dibuat; riwayat harga emas tetap tidak tersedia sesuai keputusan pengguna.
+3. **Backend yang belum ada** — sudah dibangun: CRUD produk/karyawan, simpan pengaturan, buat promosi, edit pembukuan/pelanggan, custom order pelanggan, tandai notifikasi dibaca, dan ubah profil.
+4. **Grafik dashboard** — sudah memakai data agregat asli dan Chart.js.
+5. **Badge notifikasi header** — mark-read sudah berfungsi di halaman notifikasi; badge global lintas-halaman masih di luar lingkup.
+6. **Deviasi ukuran `sm` 40 px** — dipertahankan sebagai standar target sentuh proyek.
+7. **Data demo lama** — sudah dibersihkan dengan `demo:clean-legacy`; data `@demo.test` tidak berubah.
+8. **Push** — dilakukan setelah seluruh perubahan Bagian 5 di-commit.
 
 ---
 
@@ -355,7 +380,8 @@ vendor\bin\phpunit --no-coverage
 # Data demo
 php spark demo:seed
 php spark demo:verify
-php spark demo:test-cycle   # DB uji saja
+php spark demo:clean-legacy   # hapus dataset lama @tokomasgembira.id saja
+php spark demo:test-cycle     # DB uji saja
 
 # Build aset
 npm run build
@@ -369,8 +395,9 @@ php spark serve --port 8080
 
 ## 10. Kesimpulan
 
-- Seluruh halaman yang punya route berhasil dirender dengan data demo tanpa error.
-- Data demo lengkap, idempoten, dan dapat dibersihkan tanpa menyentuh data non-demo.
-- Bug yang terbukti (timestamp, kontrak view/controller, data dashboard, tautan mati) sudah diperbaiki dan dilindungi tes regresi.
-- Seluruh tombol aplikasi kini berasal dari satu komponen dengan varian, ukuran, state, aksesibilitas, dan pola aksi berbahaya yang konsisten.
-- Sisa pekerjaan adalah fitur yang memang belum punya backend atau skema — didaftarkan sebagai keputusan produk, bukan ditambal diam-diam.
+- Seluruh halaman yang punya route berhasil dirender dengan data demo tanpa error, termasuk form dan halaman detail baru.
+- Backend yang sebelumnya hilang sudah tersedia dengan validasi, CSRF, otorisasi peran, dan pola aksi berbahaya yang konsisten.
+- Grafik dashboard owner kini menampilkan penjualan 7 hari serta pemasukan/pengeluaran 6 bulan dari data asli.
+- Data demo lama sudah dibersihkan tanpa menyentuh fixture `@demo.test`, dan perintahnya idempoten.
+- Dead code view staff flat sudah dihapus; tidak ada referensi tersisa.
+- Tes regresi bertambah menjadi **41 tes / 244 assertion**, smoke 30 halaman `FAILURES=0`, dan seluruh pemeriksaan demo PASS.
