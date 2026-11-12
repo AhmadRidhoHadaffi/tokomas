@@ -19,9 +19,9 @@ final class RoutePageTest extends CIUnitTestCase
     public function testAllRoleGetPagesDoNotReturnServerError(): void
     {
         $routes = [
-            'owner' => ['/owner', '/owner/produk', '/owner/transaksi', '/owner/transaksi/baru', '/owner/pembukuan', '/owner/pembukuan/baru', '/owner/pesanan-custom', '/owner/pesanan-custom/baru', '/owner/pelanggan', '/owner/promosi', '/owner/karyawan', '/owner/laporan', '/owner/pengaturan'],
+            'owner' => ['/owner', '/owner/produk', '/owner/produk/baru', '/owner/transaksi', '/owner/transaksi/baru', '/owner/pembukuan', '/owner/pembukuan/baru', '/owner/pesanan-custom', '/owner/pesanan-custom/baru', '/owner/pelanggan', '/owner/promosi', '/owner/promosi/baru', '/owner/karyawan', '/owner/karyawan/baru', '/owner/laporan', '/owner/pengaturan'],
             'karyawan' => ['/karyawan', '/karyawan/produk', '/karyawan/transaksi', '/karyawan/transaksi/baru', '/karyawan/pembukuan', '/karyawan/pembukuan/baru', '/karyawan/pesanan-custom', '/karyawan/pesanan-custom/baru', '/karyawan/pelanggan', '/karyawan/promosi'],
-            'pelanggan' => ['/pelanggan', '/pelanggan/pesanan', '/pelanggan/riwayat', '/pelanggan/notifikasi', '/pelanggan/profil'],
+            'pelanggan' => ['/pelanggan', '/pelanggan/pesanan', '/pelanggan/pesanan/baru', '/pelanggan/riwayat', '/pelanggan/notifikasi', '/pelanggan/profil'],
         ];
         foreach ($routes as $role => $paths) {
             foreach ($paths as $path) {
