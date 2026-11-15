@@ -3,53 +3,53 @@
 <?= $this->include('partials/flash') ?>
 <?php $items = $result['items'] ?? []; ?>
 <div class="space-y-6">
-    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-        <div>
-            <h1 class="font-serif text-2xl font-semibold text-charcoal sm:text-3xl">Promosi &amp; Notifikasi</h1>
-            <p class="mt-2 text-sm text-charcoal/60">Buat promo, pilih penerima, lalu kirim ke pelanggan.</p>
-        </div>
-        <?= ui_button([
+    <?= view('components/ui/page_header', [
+        'title' => 'Promosi & Notifikasi',
+        'description' => 'Buat promo, pilih penerima, lalu kirim ke pelanggan.',
+        'actions' => ui_button([
             'href' => base_url('owner/promosi/baru'),
             'content' => 'Buat Promosi',
             'icon' => 'plus',
             'size' => 'md',
-        ]) ?>
-    </div>
+        ]),
+    ]) ?>
 
     <div class="rounded-2xl border border-line bg-white shadow-card">
         <?php if ($items === []): ?>
-            <?= view('components/ui/empty_state', [
+            <?= empty_state([
                 'icon' => 'gift',
                 'title' => 'Belum ada promosi',
                 'description' => 'Buat promosi pertama untuk dikirim ke pelanggan.',
             ]) ?>
         <?php else: ?>
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[860px] text-left text-sm">
+                <table class="w-full min-w-[720px] text-left text-sm">
                     <thead>
-                        <tr class="border-b border-line text-charcoal/60">
-                            <th class="p-3">Judul</th>
-                            <th class="p-3">Dibuat</th>
+                        <tr class="border-b border-line text-xs font-semibold uppercase tracking-wide text-charcoal/50">
+                            <th class="p-3">Promosi</th>
                             <th class="p-3">Dikirim</th>
                             <th class="p-3">Target</th>
-                            <th class="p-3">Penerima</th>
                             <th class="p-3">Status</th>
                             <th class="p-3 text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($items as $promo): ?>
-                            <tr class="border-b border-line/70 last:border-0">
+                        <?php foreach ($items as $index => $promo): ?>
+                            <tr class="border-b border-line/70 transition-colors hover:bg-gold/10 last:border-0 <?= $index % 2 === 1 ? 'bg-ivory/60' : '' ?>">
                                 <td class="p-3">
                                     <p class="font-medium text-charcoal"><?= esc($promo['title']) ?></p>
-                                    <p class="max-w-md text-xs text-charcoal/50"><?= esc($promo['message']) ?></p>
+                                    <p class="mt-0.5 max-w-[280px] text-xs text-charcoal/50"><?= esc($promo['message']) ?></p>
                                 </td>
-                                <td class="p-3"><?= format_date((string) ($promo['created_at'] ?? '')) ?></td>
-                                <td class="p-3"><?= format_datetime((string) ($promo['send_at'] ?? '')) ?></td>
-                                <td class="p-3"><?= esc(($promo['target_type'] ?? 'semua') === 'semua' ? 'Semua pelanggan' : 'Pelanggan terpilih') ?></td>
-                                <td class="p-3"><?= esc((string) ($promo['recipient_count'] ?? 0)) ?></td>
+                                <td class="whitespace-nowrap p-3 text-charcoal/70">
+                                    <p><?= format_datetime((string) ($promo['send_at'] ?? '')) ?></p>
+                                    <p class="mt-0.5 text-xs text-charcoal/45">Dibuat <?= format_date((string) ($promo['created_at'] ?? '')) ?></p>
+                                </td>
+                                <td class="p-3">
+                                    <p class="whitespace-nowrap text-charcoal/70"><?= esc(($promo['target_type'] ?? 'semua') === 'semua' ? 'Semua pelanggan' : 'Pelanggan terpilih') ?></p>
+                                    <p class="mt-0.5 text-xs text-charcoal/45"><?= esc((string) ($promo['recipient_count'] ?? 0)) ?> penerima</p>
+                                </td>
                                 <td class="p-3"><?= view_cell('App\\Cells\\StatusBadgeCell::show', ['status' => $promo['status']]) ?></td>
-                                <td class="p-3 text-right">
+                                <td class="whitespace-nowrap p-3 text-right">
                                     <?php if (($promo['status'] ?? '') !== 'Terkirim'): ?>
                                         <form method="post" action="<?= base_url('owner/promosi/' . $promo['id'] . '/kirim') ?>" class="inline" onsubmit="return confirm('Kirim promosi ini ke penerima sekarang?');">
                                             <?= csrf_field() ?>

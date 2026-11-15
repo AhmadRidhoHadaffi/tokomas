@@ -13,6 +13,7 @@ class FinanceController extends BaseController
         $filters = [
             'search' => $this->request->getGet('search'),
             'type' => $this->request->getGet('type'),
+            'category' => $this->request->getGet('category'),
             'start_date' => $this->request->getGet('start_date'),
             'end_date' => $this->request->getGet('end_date'),
             'sort' => 'finances.entry_date',

@@ -19,12 +19,12 @@ $errors = session()->getFlashdata('errors') ?? [];
             <p class="text-charcoal/60"><?= esc($employee['email'] ?? '-') ?></p>
         </div>
 
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'type' => 'password', 'name' => 'password', 'label' => 'Kata Sandi Baru', 'required' => true,
             'placeholder' => 'Minimal 8 karakter', 'error' => $errors['password'] ?? '',
             'autocomplete' => 'new-password',
         ]) ?>
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'type' => 'password', 'name' => 'password_confirm', 'label' => 'Konfirmasi Kata Sandi Baru', 'required' => true,
             'placeholder' => 'Ulangi kata sandi baru', 'error' => $errors['password_confirm'] ?? '',
             'autocomplete' => 'new-password',

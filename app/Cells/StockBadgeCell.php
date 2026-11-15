@@ -19,7 +19,7 @@ class StockBadgeCell
             $text = 'Tersedia';
         }
 
-        return view('components/ui/badge', [
+        return badge([
             'tone' => $tone,
             'text' => $text,
             'dot' => true,

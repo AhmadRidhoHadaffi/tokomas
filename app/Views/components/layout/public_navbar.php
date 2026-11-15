@@ -7,12 +7,14 @@
  */
 
 $navLinks = [
-    ['label' => 'Beranda', 'href' => '#beranda'],
-    ['label' => 'Produk', 'href' => '#produk'],
-    ['label' => 'Custom', 'href' => '#custom'],
-    ['label' => 'Tentang', 'href' => '#tentang'],
-    ['label' => 'Kontak', 'href' => '#kontak'],
+    ['label' => 'Beranda', 'href' => site_url('/'), 'path' => ''],
+    ['label' => 'Produk', 'href' => site_url('produk'), 'path' => 'produk'],
+    ['label' => 'Custom', 'href' => site_url('custom'), 'path' => 'custom'],
+    ['label' => 'Tentang', 'href' => site_url('tentang'), 'path' => 'tentang'],
+    ['label' => 'Kontak', 'href' => site_url('kontak'), 'path' => 'kontak'],
 ];
+
+$currentPath = trim(uri_string(), '/');
 ?>
 <header
     x-data="{ scrolled: false, open: false }"
@@ -33,9 +35,11 @@ $navLinks = [
 
         <nav aria-label="Navigasi utama" class="hidden items-center gap-8 lg:flex">
             <?php foreach ($navLinks as $link): ?>
+                <?php $isActive = $currentPath === $link['path']; ?>
                 <a
                     href="<?= esc($link['href'], 'attr') ?>"
-                    class="text-sm font-medium text-white/80 transition-colors duration-150 hover:text-gold"
+                    <?= $isActive ? 'aria-current="page"' : '' ?>
+                    class="text-sm font-medium transition-colors duration-150 <?= $isActive ? 'text-gold' : 'text-white/80 hover:text-gold' ?>"
                 >
                     <?= esc($link['label']) ?>
                 </a>
@@ -86,10 +90,12 @@ $navLinks = [
         class="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-white/10 bg-charcoal px-5 pb-6 pt-2 lg:hidden"
     >
         <?php foreach ($navLinks as $link): ?>
+            <?php $isActive = $currentPath === $link['path']; ?>
             <a
                 href="<?= esc($link['href'], 'attr') ?>"
+                <?= $isActive ? 'aria-current="page"' : '' ?>
                 @click="open = false"
-                class="block border-b border-white/5 py-3.5 text-[15px] text-white/85 transition-colors duration-150 hover:text-gold"
+                class="block border-b border-white/5 py-3.5 text-[15px] transition-colors duration-150 <?= $isActive ? 'text-gold' : 'text-white/85 hover:text-gold' ?>"
             >
                 <?= esc($link['label']) ?>
             </a>

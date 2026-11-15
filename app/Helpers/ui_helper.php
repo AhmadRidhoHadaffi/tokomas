@@ -24,6 +24,61 @@ if (! function_exists('ui_button')) {
     }
 }
 
+if (! function_exists('form_field')) {
+    /**
+     * Render a form field in an isolated data scope.
+     *
+     * Passing options as a single key keeps values from one field (labels,
+     * required flags, errors) from leaking into the next field, which happens
+     * when CodeIgniter merges saved view data across consecutive renders.
+     *
+     * @param array<string, mixed> $options
+     */
+    function form_field(array $options = []): string
+    {
+        return view('components/ui/form_field', ['formField' => $options], ['saveData' => false]);
+    }
+}
+
+if (! function_exists('stat_card')) {
+    /**
+     * Render a stat card in an isolated data scope.
+     *
+     * The featured flag must never leak into the following cards, so the
+     * options travel as one key instead of loose view variables.
+     *
+     * @param array<string, mixed> $options
+     */
+    function stat_card(array $options = []): string
+    {
+        return view('components/ui/stat_card', ['statCard' => $options], ['saveData' => false]);
+    }
+}
+
+if (! function_exists('empty_state')) {
+    /**
+     * Render an empty state block in an isolated data scope.
+     *
+     * @param array<string, mixed> $options
+     */
+    function empty_state(array $options = []): string
+    {
+        return view('components/ui/empty_state', ['emptyState' => $options], ['saveData' => false]);
+    }
+}
+
+if (! function_exists('badge')) {
+    /**
+     * Render a badge in an isolated data scope.
+     *
+     * @param array<string, mixed> $options
+     */
+    function badge(array $options = []): string
+    {
+        return view('components/ui/badge', ['uiBadge' => $options], ['saveData' => false]);
+    }
+}
+
 if (! function_exists('button_class')) {
     /**
      * Build the class list for a button, mirroring design/src/components/ui/Button.tsx.

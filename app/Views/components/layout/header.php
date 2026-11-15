@@ -56,7 +56,7 @@ $kindTones = [
 ];
 ?>
 <header class="sticky top-0 z-20 border-b border-line bg-white/90 backdrop-blur">
-    <div class="flex h-20 items-center gap-3 px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
         <!-- Mobile Menu Button -->
         <?= ui_button([
             'type' => 'button',
@@ -64,18 +64,18 @@ $kindTones = [
             'iconOnly' => true,
             'variant' => 'ghost',
             'ariaLabel' => 'Buka menu',
-            'iconClass' => 'h-6 w-6',
+            'iconClass' => 'h-5 w-5',
             'class' => '-ml-1 lg:hidden',
             'attrs' => ['@click' => 'drawerOpen = true'],
         ]) ?>
 
         <!-- Page Title -->
-        <h1 class="min-w-0 flex-1 truncate font-serif text-xl font-semibold text-charcoal">
+        <h1 class="min-w-0 flex-1 truncate font-serif text-lg font-semibold text-charcoal sm:text-xl">
             <?= esc($title) ?>
         </h1>
 
         <!-- Header Actions -->
-        <div class="flex items-center gap-2 sm:gap-4">
+        <div class="flex items-center gap-1.5 sm:gap-3">
             <!-- Notifications Dropdown -->
             <div class="relative" x-data="{ notifOpen: false }" @click.outside="notifOpen = false" @keydown.escape.window="notifOpen = false">
                 <?= ui_button([
@@ -84,7 +84,7 @@ $kindTones = [
                     'iconOnly' => true,
                     'variant' => 'ghost',
                     'ariaLabel' => 'Notifikasi',
-                    'iconClass' => 'h-6 w-6',
+                    'iconClass' => 'h-5 w-5',
                     'class' => 'relative',
                     'content' => $hasUnread
                         ? '<span class="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-crimson ring-2 ring-white" aria-hidden="true"></span>'
@@ -105,7 +105,7 @@ $kindTones = [
                     x-transition:leave="transition ease-in duration-100"
                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
-                    class="fixed left-4 right-4 top-[84px] z-40 w-auto origin-top-right overflow-hidden rounded-xl border border-line bg-white shadow-xl sm:absolute sm:left-auto sm:right-0 sm:top-14 sm:w-80 sm:max-w-[calc(100vw-2rem)]"
+                    class="fixed left-4 right-4 top-[72px] z-40 w-auto origin-top-right overflow-hidden rounded-xl border border-line bg-white shadow-xl sm:absolute sm:left-auto sm:right-0 sm:top-12 sm:w-80 sm:max-w-[calc(100vw-2rem)]"
                     style="display: none;"
                 >
                     <p class="border-b border-line px-4 py-3 text-sm font-semibold text-charcoal">Aktivitas terbaru</p>
@@ -114,7 +114,7 @@ $kindTones = [
                             <?php foreach ($notifications as $notification): ?>
                                 <?php $tone = $kindTones[$notification['type']] ?? 'grey'; ?>
                                 <li class="px-4 py-3">
-                                    <?= view('components/ui/badge', [
+                                    <?= badge([
                                         'tone' => $tone,
                                         'text' => $notification['type'],
                                     ]) ?>
@@ -134,13 +134,13 @@ $kindTones = [
             </div>
 
             <!-- User Profile -->
-            <div class="flex items-center gap-3">
-                <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gold-gradient text-base font-semibold text-charcoal" aria-hidden="true">
+            <div class="flex items-center gap-2.5">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-gradient text-xs font-semibold text-charcoal" aria-hidden="true">
                     <?= esc($initials) ?>
                 </span>
                 <div class="hidden min-w-0 leading-tight sm:block">
-                    <p class="truncate text-lg font-semibold text-charcoal"><?= esc($userName) ?></p>
-                    <p class="truncate text-sm text-charcoal/50"><?= esc($roleLabel) ?></p>
+                    <p class="truncate text-sm font-semibold text-charcoal"><?= esc($userName) ?></p>
+                    <p class="truncate text-xs text-charcoal/50"><?= esc($roleLabel) ?></p>
                 </div>
             </div>
         </div>

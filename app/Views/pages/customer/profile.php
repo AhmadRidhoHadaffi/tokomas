@@ -46,22 +46,22 @@ $since = $createdTimestamp ? $months[(int) date('n', $createdTimestamp) - 1] . '
         <form method="post" action="<?= base_url('pelanggan/profil') ?>" class="mt-5 space-y-4">
             <?= csrf_field() ?>
             <div class="grid gap-4 sm:grid-cols-2">
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'name' => 'name', 'label' => 'Nama Lengkap', 'required' => true,
                     'value' => old('name', $customerName),
                     'error' => $errors['name'] ?? '', 'autocomplete' => 'name',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'tel', 'name' => 'phone', 'label' => 'Nomor HP', 'required' => true,
                     'value' => old('phone', $customerPhone),
                     'error' => $errors['phone'] ?? '', 'autocomplete' => 'tel',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'email', 'name' => 'email', 'label' => 'Email', 'required' => true,
                     'value' => old('email', $customerEmail),
                     'error' => $errors['email'] ?? '', 'autocomplete' => 'email',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'textarea', 'name' => 'address', 'label' => 'Alamat', 'class' => 'sm:col-span-2',
                     'value' => old('address', $customer['address'] ?? ''),
                     'error' => $errors['address'] ?? '', 'rows' => '3',
@@ -80,17 +80,17 @@ $since = $createdTimestamp ? $months[(int) date('n', $createdTimestamp) - 1] . '
         <form method="post" action="<?= base_url('pelanggan/profil/kata-sandi') ?>" class="mt-5 space-y-4">
             <?= csrf_field() ?>
             <div class="grid gap-4 sm:grid-cols-2">
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'password', 'name' => 'current_password', 'label' => 'Kata Sandi Saat Ini', 'required' => true,
                     'error' => $errors['current_password'] ?? '', 'autocomplete' => 'current-password',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'password', 'name' => 'new_password', 'label' => 'Kata Sandi Baru', 'required' => true,
                     'hint' => 'Minimal 8 karakter.', 'error' => $errors['new_password'] ?? '',
                     'autocomplete' => 'new-password',
                 ]) ?>
                 <div class="sm:col-span-2">
-                    <?= view('components/ui/form_field', [
+                    <?= form_field([
                         'type' => 'password', 'name' => 'new_password_confirm', 'label' => 'Konfirmasi Kata Sandi Baru', 'required' => true,
                         'error' => $errors['new_password_confirm'] ?? '', 'autocomplete' => 'new-password',
                     ]) ?>

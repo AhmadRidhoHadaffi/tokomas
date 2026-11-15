@@ -22,52 +22,52 @@ $action = $isEdit ? base_url('pelanggan/pesanan/' . $order['id']) : base_url('pe
         <input type="hidden" name="order_date" value="<?= esc((string) old('order_date', $order['order_date'] ?? date('Y-m-d')), 'attr') ?>">
 
         <div class="grid gap-4 sm:grid-cols-2">
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'select', 'name' => 'jewelry_type', 'label' => 'Jenis Perhiasan', 'required' => true,
                 'value' => old('jewelry_type', $order['jewelry_type'] ?? ''),
                 'placeholder' => 'Pilih jenis',
                 'options' => ['Cincin' => 'Cincin', 'Kalung' => 'Kalung', 'Gelang' => 'Gelang', 'Anting' => 'Anting', 'Liontin' => 'Liontin'],
                 'error' => $errors['jewelry_type'] ?? '',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'name' => 'model', 'label' => 'Model', 'required' => true,
                 'value' => old('model', $order['model'] ?? ''),
                 'placeholder' => 'Contoh: Cincin solitaire',
                 'error' => $errors['model'] ?? '',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'name' => 'engraving_name', 'label' => 'Nama Ukiran',
                 'value' => old('engraving_name', $order['engraving_name'] ?? ''),
                 'placeholder' => 'Opsional, maksimal 50 karakter',
                 'error' => $errors['engraving_name'] ?? '',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'select', 'name' => 'purity', 'label' => 'Kadar', 'required' => true,
                 'value' => old('purity', $order['purity'] ?? ''),
                 'placeholder' => 'Pilih kadar',
                 'options' => ['24K' => '24K', '22K' => '22K', '18K' => '18K', '17K' => '17K', 'Perak 925' => 'Perak 925'],
                 'error' => $errors['purity'] ?? '',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'number', 'name' => 'weight', 'label' => 'Berat Estimasi (gram)',
                 'value' => old('weight', $order['weight'] ?? ''),
                 'placeholder' => 'Contoh: 2.5', 'error' => $errors['weight'] ?? '',
                 'extraAttrs' => 'step="0.01" min="0.01"',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'number', 'name' => 'estimated_price', 'label' => 'Estimasi Harga (Rp)', 'required' => true,
                 'value' => old('estimated_price', $order['estimated_price'] ?? ''),
                 'placeholder' => 'Contoh: 3000000', 'error' => $errors['estimated_price'] ?? '',
                 'extraAttrs' => 'step="1" min="1"',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'date', 'name' => 'due_date', 'label' => 'Target Selesai',
                 'value' => old('due_date', $order['due_date'] ?? ''),
                 'error' => $errors['due_date'] ?? '',
             ]) ?>
         </div>
 
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'type' => 'textarea', 'name' => 'notes', 'label' => 'Catatan',
             'value' => old('notes', $order['notes'] ?? ''), 'rows' => '3',
             'placeholder' => 'Detail tambahan, ukuran, atau permintaan khusus.',
@@ -75,7 +75,7 @@ $action = $isEdit ? base_url('pelanggan/pesanan/' . $order['id']) : base_url('pe
         ]) ?>
 
         <div>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'file', 'name' => 'reference_image', 'label' => 'Foto Referensi',
                 'accept' => 'image/jpeg,image/png,image/webp',
                 'hint' => 'Opsional. JPG, PNG, atau WEBP maksimal 2 MB.',

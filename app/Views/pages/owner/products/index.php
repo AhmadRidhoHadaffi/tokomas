@@ -72,14 +72,14 @@ $baseQuery = array_filter([
         </div>
 
         <?php if ($items === []): ?>
-            <?= view('components/ui/empty_state', [
+            <?= empty_state([
                 'icon' => 'package',
                 'title' => 'Belum ada produk',
                 'description' => 'Tambahkan produk pertama untuk mulai mengelola katalog.',
             ]) ?>
         <?php else: ?>
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[720px] text-left text-sm">
+                <table class="w-full min-w-[900px] text-left text-sm">
                     <thead>
                         <tr class="border-b border-line text-charcoal/60">
                             <th class="p-3">Kode</th>
@@ -93,16 +93,16 @@ $baseQuery = array_filter([
                     </thead>
                     <tbody>
                         <?php foreach ($items as $product): ?>
-                            <tr class="border-b border-line/70 last:border-0">
-                                <td class="p-3 font-mono text-xs text-charcoal/70"><?= esc($product['code']) ?></td>
+                            <tr class="border-b border-line/70 transition-colors hover:bg-gold/10 last:border-0">
+                                <td class="whitespace-nowrap p-3 font-mono text-xs text-charcoal/70"><?= esc($product['code']) ?></td>
                                 <td class="p-3">
                                     <p class="font-medium text-charcoal"><?= esc($product['name']) ?></p>
                                     <?php if (!empty($product['model'])): ?>
                                         <p class="text-xs text-charcoal/50"><?= esc($product['model']) ?></p>
                                     <?php endif; ?>
                                 </td>
-                                <td class="p-3"><?= esc($product['category']) ?></td>
-                                <td class="p-3"><?= esc($product['purity']) ?></td>
+                                <td class="whitespace-nowrap p-3"><?= esc($product['category']) ?></td>
+                                <td class="whitespace-nowrap p-3"><?= esc($product['purity']) ?></td>
                                 <td class="p-3 whitespace-nowrap">Rp <?= esc(number_format((float) $product['price'], 0, ',', '.')) ?></td>
                                 <td class="p-3"><?= view_cell('App\\Cells\\StockBadgeCell::show', ['stock' => $product['stock']]) ?></td>
                                 <td class="p-3">

@@ -12,7 +12,7 @@ $tones = [
     'QRIS' => 'gold',
 ];
 ?>
-<?= view('components/ui/badge', [
+<?= badge([
     'tone' => $tones[$method] ?? 'grey',
     'text' => $method,
 ]) ?>

@@ -1,7 +1,10 @@
 <?php
 /**
  * Form Field Component
- * 
+ *
+ * Render through the form_field() helper so options never leak between fields.
+ *
+ * @var array $formField
  * @var string $type text|email|password|number|tel|date|select|textarea|file
  * @var string $name Field name
  * @var string $id Field ID
@@ -19,26 +22,29 @@
  * @var array $options Options for select (value => label)
  * @var string $rows Textarea rows
  * @var string $accept File input accept
+ * @var string $extraAttrs Extra attributes rendered verbatim
  */
 
-$type = $type ?? 'text';
-$name = $name ?? '';
-$id = $id ?? $name;
-$label = $label ?? '';
-$value = $value ?? '';
-$placeholder = $placeholder ?? '';
-$hint = $hint ?? '';
-$error = $error ?? '';
-$required = $required ?? false;
-$showRequired = $showRequired ?? true;
-$disabled = $disabled ?? false;
-$class = $class ?? '';
-$inputExtra = $inputClass ?? '';
-$autocomplete = $autocomplete ?? '';
-$options = $options ?? [];
-$rows = $rows ?? '4';
-$accept = $accept ?? '';
-$extraAttrs = $extraAttrs ?? '';
+$formField = is_array($formField ?? null) ? $formField : [];
+
+$type = $formField['type'] ?? 'text';
+$name = $formField['name'] ?? '';
+$id = $formField['id'] ?? $name;
+$label = $formField['label'] ?? '';
+$value = $formField['value'] ?? '';
+$placeholder = $formField['placeholder'] ?? '';
+$hint = $formField['hint'] ?? '';
+$error = $formField['error'] ?? '';
+$required = $formField['required'] ?? false;
+$showRequired = $formField['showRequired'] ?? true;
+$disabled = $formField['disabled'] ?? false;
+$class = $formField['class'] ?? '';
+$inputExtra = $formField['inputClass'] ?? '';
+$autocomplete = $formField['autocomplete'] ?? '';
+$options = $formField['options'] ?? [];
+$rows = $formField['rows'] ?? '4';
+$accept = $formField['accept'] ?? '';
+$extraAttrs = $formField['extraAttrs'] ?? '';
 
 $inputClass = 'w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-charcoal placeholder:text-charcoal/40 outline-none transition-[border-color,box-shadow] duration-150 focus:border-gold focus:ring-4 focus:ring-gold/20 disabled:bg-ivory disabled:text-charcoal/50';
 if ($inputExtra !== '') {
@@ -60,8 +66,8 @@ if ($error) {
     <?php endif; ?>
 
     <?php if ($type === 'select'): ?>
-        <select 
-            name="<?= esc($name, 'attr') ?>" 
+        <select
+            name="<?= esc($name, 'attr') ?>"
             id="<?= esc($id, 'attr') ?>"
             class="<?= esc($inputClass, 'attr') ?> appearance-none bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-9"
             style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E&quot;)"
@@ -81,8 +87,8 @@ if ($error) {
         </select>
 
     <?php elseif ($type === 'textarea'): ?>
-        <textarea 
-            name="<?= esc($name, 'attr') ?>" 
+        <textarea
+            name="<?= esc($name, 'attr') ?>"
             id="<?= esc($id, 'attr') ?>"
             class="<?= esc($inputClass, 'attr') ?> min-h-[96px] resize-y"
             rows="<?= esc($rows, 'attr') ?>"
@@ -94,9 +100,9 @@ if ($error) {
         ><?= esc($value) ?></textarea>
 
     <?php elseif ($type === 'file'): ?>
-        <input 
+        <input
             type="file"
-            name="<?= esc($name, 'attr') ?>" 
+            name="<?= esc($name, 'attr') ?>"
             id="<?= esc($id, 'attr') ?>"
             class="<?= esc($inputClass, 'attr') ?>"
             accept="<?= esc($accept, 'attr') ?>"
@@ -106,9 +112,9 @@ if ($error) {
         />
 
     <?php else: ?>
-        <input 
+        <input
             type="<?= esc($type, 'attr') ?>"
-            name="<?= esc($name, 'attr') ?>" 
+            name="<?= esc($name, 'attr') ?>"
             id="<?= esc($id, 'attr') ?>"
             value="<?= esc($value, 'attr') ?>"
             placeholder="<?= esc($placeholder, 'attr') ?>"

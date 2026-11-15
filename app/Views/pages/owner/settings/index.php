@@ -25,28 +25,28 @@ $purities = $purities ?? ['24K', '22K', '18K', '17K'];
         <section class="rounded-2xl border border-line bg-white p-5 shadow-card sm:p-6">
             <h2 class="font-serif text-lg font-semibold text-charcoal">Identitas Toko</h2>
             <div class="mt-5 grid gap-4 sm:grid-cols-2">
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'name' => 'store_name', 'label' => 'Nama Toko', 'required' => true,
                     'value' => old('store_name', $store['store_name'] ?? ''),
                     'error' => $errors['store_name'] ?? '',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'email', 'name' => 'email', 'label' => 'Email Toko',
                     'value' => old('email', $store['email'] ?? ''),
                     'error' => $errors['email'] ?? '',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'tel', 'name' => 'phone', 'label' => 'Telepon',
                     'value' => old('phone', $store['phone'] ?? ''),
                     'error' => $errors['phone'] ?? '',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'tel', 'name' => 'whatsapp', 'label' => 'WhatsApp',
                     'value' => old('whatsapp', $store['whatsapp'] ?? ''),
                     'hint' => 'Gunakan format 62… agar tautan WhatsApp berfungsi.',
                     'error' => $errors['whatsapp'] ?? '',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'textarea', 'name' => 'address', 'label' => 'Alamat', 'class' => 'sm:col-span-2',
                     'value' => old('address', $store['address'] ?? ''),
                     'error' => $errors['address'] ?? '', 'rows' => '3',
@@ -87,7 +87,7 @@ $purities = $purities ?? ['24K', '22K', '18K', '17K'];
                     $current = $oldPrices[$purity] ?? ($priceByPurity[$purity]['price_per_gram'] ?? '');
                     $updatedAt = $priceByPurity[$purity]['updated_at'] ?? null;
                     ?>
-                    <?= view('components/ui/form_field', [
+                    <?= form_field([
                         'type' => 'number', 'name' => 'prices[' . $purity . ']', 'id' => 'price-' . $purity,
                         'label' => 'Harga ' . $purity, 'value' => $current,
                         'placeholder' => 'Contoh: 1500000',

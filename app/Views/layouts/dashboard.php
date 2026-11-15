@@ -23,7 +23,7 @@ foreach ($navItems as $item) {
         }
     }
 }
-if ($currentPath === 'owner/transaksi/baru') {
+if ($currentPath === 'owner/transaksi/baru' || $currentPath === 'karyawan/transaksi/baru') {
     $navTitle = 'Catat Transaksi';
 }
 $pageTitle = $sectionTitle !== '' ? $sectionTitle : $navTitle;

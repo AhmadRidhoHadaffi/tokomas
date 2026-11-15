@@ -30,33 +30,52 @@ $search = (string) ($filters['search'] ?? '');
 
     <div class="rounded-2xl border border-line bg-white shadow-card">
         <?php if ($items === []): ?>
-            <?= view('components/ui/empty_state', [
+            <?= empty_state([
                 'icon' => 'user',
                 'title' => 'Belum ada pelanggan',
                 'description' => 'Pelanggan yang mendaftar akan muncul di sini.',
             ]) ?>
         <?php else: ?>
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[760px] text-left text-sm">
+                <table class="w-full min-w-[680px] text-left text-sm">
                     <thead>
-                        <tr class="border-b border-line text-charcoal/60">
-                            <th class="p-3">Nama</th>
-                            <th class="p-3">Email</th>
-                            <th class="p-3">Telepon</th>
-                            <th class="p-3">Bergabung</th>
-                            <th class="p-3">Transaksi</th>
-                            <th class="p-3 text-right">Aksi</th>
+                        <tr class="border-b border-line text-xs font-semibold uppercase tracking-wide text-charcoal/50">
+                            <th class="px-4 py-3">Pelanggan</th>
+                            <th class="px-4 py-3">Telepon</th>
+                            <th class="px-4 py-3">Bergabung</th>
+                            <th class="px-4 py-3">Transaksi</th>
+                            <th class="px-4 py-3 text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($items as $customer): ?>
-                            <tr class="border-b border-line/70 last:border-0">
-                                <td class="p-3 font-medium text-charcoal"><?= esc($customer['name']) ?></td>
-                                <td class="p-3 text-charcoal/60"><?= esc($customer['email'] ?? '-') ?></td>
-                                <td class="p-3"><?= esc($customer['phone'] ?? '-') ?></td>
-                                <td class="p-3"><?= format_date((string) ($customer['created_at'] ?? '')) ?></td>
-                                <td class="p-3"><?= esc((string) ($customer['total_transactions'] ?? 0)) ?></td>
-                                <td class="p-3 text-right">
+                        <?php foreach ($items as $index => $customer): ?>
+                            <?php
+                            $nameParts = preg_split('/\s+/', trim((string) ($customer['name'] ?? ''))) ?: [];
+                            $initials = '';
+                            foreach (array_slice($nameParts, 0, 2) as $part) {
+                                $initials .= mb_substr($part, 0, 1);
+                            }
+                            ?>
+                            <tr class="border-b border-line/70 transition-colors hover:bg-gold/10 last:border-0 <?= $index % 2 === 1 ? 'bg-ivory/60' : '' ?>">
+                                <td class="px-4 py-3.5">
+                                    <div class="flex items-center gap-3">
+                                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-light text-xs font-semibold text-gold-deep" aria-hidden="true">
+                                            <?= esc(mb_strtoupper($initials)) ?>
+                                        </span>
+                                        <div class="min-w-0">
+                                            <p class="whitespace-nowrap font-medium text-charcoal"><?= esc($customer['name']) ?></p>
+                                            <p class="mt-0.5 max-w-[220px] truncate text-xs text-charcoal/50"><?= esc($customer['email'] ?? '-') ?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3.5 text-charcoal/70"><?= esc($customer['phone'] ?? '-') ?></td>
+                                <td class="whitespace-nowrap px-4 py-3.5 text-charcoal/70"><?= format_date((string) ($customer['created_at'] ?? '')) ?></td>
+                                <td class="whitespace-nowrap px-4 py-3.5">
+                                    <span class="inline-flex items-center rounded-full bg-ivory px-2.5 py-1 text-xs font-medium text-charcoal/70">
+                                        <?= esc((string) ($customer['total_transactions'] ?? 0)) ?> transaksi
+                                    </span>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3.5 text-right">
                                     <?= ui_button([
                                         'href' => base_url('owner/pelanggan/' . $customer['id'] . '/ubah'),
                                         'content' => 'Ubah',

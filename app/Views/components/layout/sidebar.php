@@ -20,7 +20,7 @@ $paddingClass = $compactOnTablet ? 'md:justify-center md:px-0 lg:justify-start l
 <!-- Logo -->
 <a
     href="<?= base_url('/') ?>"
-    class="flex h-20 shrink-0 items-center gap-3 rounded-none border-b border-white/5 px-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold/60 <?= esc($paddingClass, 'attr') ?>"
+    class="flex h-16 shrink-0 items-center gap-3 rounded-none border-b border-white/5 px-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold/60 <?= esc($paddingClass, 'attr') ?>"
     aria-label="Toko Mas Gembira - Beranda"
 >
     <svg viewBox="0 0 100 100" class="h-9 w-9 shrink-0" role="img" aria-label="Logo Toko Mas Gembira">

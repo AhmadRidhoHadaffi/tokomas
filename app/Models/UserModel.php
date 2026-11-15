@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['name', 'email', 'password', 'role', 'is_active'];
+    protected $allowedFields = ['name', 'email', 'password', 'role', 'is_active', 'phone_verified_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

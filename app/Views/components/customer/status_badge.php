@@ -14,7 +14,7 @@ $tones = [
     'Diambil' => 'grey',
 ];
 ?>
-<?= view('components/ui/badge', [
+<?= badge([
     'tone' => $tones[$status] ?? 'grey',
     'text' => $status,
     'dot' => true,

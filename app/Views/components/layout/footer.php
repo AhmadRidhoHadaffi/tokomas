@@ -4,11 +4,11 @@
  */
 
 $navLinks = [
-    ['label' => 'Beranda', 'href' => '#beranda'],
-    ['label' => 'Produk', 'href' => '#produk'],
-    ['label' => 'Custom', 'href' => '#custom'],
-    ['label' => 'Tentang', 'href' => '#tentang'],
-    ['label' => 'Kontak', 'href' => '#kontak'],
+    ['label' => 'Beranda', 'href' => site_url('/')],
+    ['label' => 'Produk', 'href' => site_url('produk')],
+    ['label' => 'Custom', 'href' => site_url('custom')],
+    ['label' => 'Tentang', 'href' => site_url('tentang')],
+    ['label' => 'Kontak', 'href' => site_url('kontak')],
 ];
 
 $storeName = $store['store_name'] ?? 'Toko Mas Gembira';

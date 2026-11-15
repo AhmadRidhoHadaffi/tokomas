@@ -25,7 +25,7 @@ class StatusBadgeCell
 
         $tone = $toneMap[$status] ?? 'gold';
         
-        return view('components/ui/badge', [
+        return badge([
             'tone' => $tone,
             'text' => $status,
             'dot' => true,

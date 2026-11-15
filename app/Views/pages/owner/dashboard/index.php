@@ -78,7 +78,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
 
     <!-- Stats Cards -->
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <?= view('components/ui/stat_card', [
+        <?= stat_card([
             'featured' => true,
             'icon' => 'wallet',
             'label' => 'Total Penjualan Hari Ini',
@@ -87,7 +87,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
             'hint' => 'Dibanding kemarin',
         ]) ?>
         
-        <?= view('components/ui/stat_card', [
+        <?= stat_card([
             'featured' => false,
             'icon' => 'shopping-cart',
             'label' => 'Jumlah Transaksi',
@@ -96,7 +96,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
             'hint' => 'Hari ini',
         ]) ?>
         
-        <?= view('components/ui/stat_card', [
+        <?= stat_card([
             'featured' => false,
             'icon' => 'package',
             'label' => 'Stok Produk',
@@ -105,7 +105,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
             'hint' => $lowStock . ' produk hampir/sudah habis',
         ]) ?>
         
-        <?= view('components/ui/stat_card', [
+        <?= stat_card([
             'featured' => false,
             'icon' => 'gem',
             'label' => 'Pesanan Custom Aktif',
@@ -158,7 +158,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
                         ['label' => 'Total', 'class' => ''],
                         ['label' => 'Status', 'class' => ''],
                     ],
-                    'rows' => $transactionRows !== '' ? $transactionRows : view('components/ui/empty_state', [
+                    'rows' => $transactionRows !== '' ? $transactionRows : empty_state([
                         'icon' => 'receipt-text',
                         'title' => 'Belum ada transaksi',
                         'description' => 'Transaksi yang dicatat akan muncul di sini',
@@ -190,7 +190,7 @@ foreach ($stats['recent_transactions'] ?? [] as $trx) {
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
-                    <?= view('components/ui/empty_state', [
+                    <?= empty_state([
                         'icon' => 'gem',
                         'title' => 'Belum ada pesanan aktif',
                         'description' => 'Pesanan custom yang belum selesai akan muncul di sini',

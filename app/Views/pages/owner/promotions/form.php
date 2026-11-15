@@ -16,13 +16,13 @@ $targetType = (string) old('target_type', 'semua');
     <form method="post" action="<?= base_url('owner/promosi') ?>" class="space-y-6 rounded-2xl border border-line bg-white p-5 shadow-card sm:p-6" x-data="{ target: '<?= esc($targetType, 'attr') ?>' }">
         <?= csrf_field() ?>
 
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'name' => 'title', 'label' => 'Judul Promosi', 'required' => true,
             'value' => old('title'), 'placeholder' => 'Contoh: Diskon Perhiasan Akhir Tahun',
             'error' => $errors['title'] ?? '',
         ]) ?>
 
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'type' => 'textarea', 'name' => 'message', 'label' => 'Isi Pesan', 'required' => true,
             'value' => old('message'), 'rows' => '4',
             'placeholder' => 'Tulis pesan singkat yang akan tampil di notifikasi pelanggan.',

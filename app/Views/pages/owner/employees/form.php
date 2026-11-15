@@ -18,13 +18,13 @@ $isActive = (string) old('is_active', $employee['is_active'] ?? 1) === '1';
         <?= csrf_field() ?>
 
         <div class="grid gap-4 sm:grid-cols-2">
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'name' => 'name', 'label' => 'Nama Lengkap', 'required' => true,
                 'value' => old('name', $employee['name'] ?? ''),
                 'placeholder' => 'Nama karyawan', 'error' => $errors['name'] ?? '',
                 'autocomplete' => 'name',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'email', 'name' => 'email', 'label' => 'Email', 'required' => true,
                 'value' => old('email', $employee['email'] ?? ''),
                 'placeholder' => 'nama@tokogembira.id', 'error' => $errors['email'] ?? '',
@@ -34,12 +34,12 @@ $isActive = (string) old('is_active', $employee['is_active'] ?? 1) === '1';
 
         <?php if (!$isEdit): ?>
             <div class="grid gap-4 sm:grid-cols-2">
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'password', 'name' => 'password', 'label' => 'Kata Sandi', 'required' => true,
                     'placeholder' => 'Minimal 8 karakter', 'error' => $errors['password'] ?? '',
                     'autocomplete' => 'new-password',
                 ]) ?>
-                <?= view('components/ui/form_field', [
+                <?= form_field([
                     'type' => 'password', 'name' => 'password_confirm', 'label' => 'Konfirmasi Kata Sandi', 'required' => true,
                     'placeholder' => 'Ulangi kata sandi', 'error' => $errors['password_confirm'] ?? '',
                     'autocomplete' => 'new-password',

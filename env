@@ -24,17 +24,6 @@ database.default.DBDriver = MySQLi
 database.default.DBPrefix =
 database.default.port = 3306
 
-# Test database (PHPUnit)
-database.tests.hostname = localhost
-database.tests.database = db_tokogembira_test
-database.tests.username = root
-database.tests.password =
-database.tests.DBDriver = MySQLi
-database.tests.DBPrefix =
-database.tests.charset = utf8mb4
-database.tests.DBCollat = utf8mb4_general_ci
-database.tests.port = 3306
-
 #--------------------------------------------------------------------
 #--------------------------------------------------------------------
 
@@ -46,3 +35,14 @@ jwt.issuer = 'toko-mas-gembira'
 #--------------------------------------------------------------------
 
 cors.allowedOrigins = 'http://localhost:5173,http://localhost:3000'
+
+#--------------------------------------------------------------------
+# OTP (verifikasi nomor HP & reset kata sandi)
+#--------------------------------------------------------------------
+# channel: log (kode ditulis ke log + tampil di UI saat development)
+#          fonnte (kirim WhatsApp via api.fonnte.com)
+# otp.channel = 'log'
+# otp.fonnteToken = ''
+# otp.ttlMinutes = 10
+# otp.maxAttempts = 5
+# otp.resendCooldown = 60

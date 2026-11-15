@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= esc($title ?? 'Toko Mas Gembira') ?></title>
+    <?php $pageTitle = trim((string) $this->renderSection('title')); ?>
+    <title><?= esc($pageTitle !== '' ? $pageTitle . ' - Toko Mas Gembira' : 'Toko Mas Gembira') ?></title>
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
     <style>[x-cloak] { display: none !important; }</style>
     <script>document.documentElement.classList.add('js');</script>

@@ -35,7 +35,7 @@ $type = (string) old('type', $finance['type'] ?? 'Pemasukan');
         </div>
     </div>
 
-    <?= view('components/ui/form_field', [
+    <?= form_field([
         'name' => 'description', 'label' => 'Deskripsi', 'required' => true,
         'value' => old('description', $finance['description'] ?? ''),
         'placeholder' => 'Contoh: Pembelian bahan baku perak',
@@ -43,13 +43,13 @@ $type = (string) old('type', $finance['type'] ?? 'Pemasukan');
     ]) ?>
 
     <div class="grid gap-4 sm:grid-cols-2">
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'type' => 'number', 'name' => 'amount', 'label' => 'Jumlah (Rp)', 'required' => true,
             'value' => old('amount', $finance['amount'] ?? ''),
             'placeholder' => 'Contoh: 500000', 'error' => $errors['amount'] ?? '',
             'extraAttrs' => 'step="1" min="1"',
         ]) ?>
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'type' => 'date', 'name' => 'entry_date', 'label' => 'Tanggal',
             'value' => old('entry_date', $finance['entry_date'] ?? date('Y-m-d')),
             'error' => $errors['entry_date'] ?? '',

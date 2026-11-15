@@ -1,17 +1,22 @@
 <?php
 /**
  * Badge Component
- * 
+ *
+ * Render through the badge() helper to keep options isolated.
+ *
+ * @var array $uiBadge
  * @var string $tone blue|yellow|orange|green|grey|red|gold|crimson
  * @var string $text Badge text
  * @var bool $dot Show indicator dot
  * @var string $class Additional classes
  */
 
-$tone = $tone ?? 'gold';
-$text = $text ?? '';
-$dot = $dot ?? false;
-$class = $class ?? '';
+$uiBadge = is_array($uiBadge ?? null) ? $uiBadge : [];
+
+$tone = $uiBadge['tone'] ?? 'gold';
+$text = $uiBadge['text'] ?? '';
+$dot = (bool) ($uiBadge['dot'] ?? false);
+$class = $uiBadge['class'] ?? '';
 
 $toneClasses = [
     'blue' => 'bg-blue-50 text-blue-700 ring-blue-200',

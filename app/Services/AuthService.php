@@ -50,13 +50,20 @@ class AuthService
         }
     }
 
+    /**
+     * @return array{user:array, unverified:bool}|null
+     */
     public function login(string $email, string $password): ?array
     {
         $user = $this->userModel->findActiveByEmail($email);
         if (! $user || ! password_verify($password, $user['password'])) {
             return null;
         }
-        return ['user' => $this->publicUser($user)];
+
+        return [
+            'user'       => $this->publicUser($user),
+            'unverified' => empty($user['phone_verified_at']),
+        ];
     }
 
     public function changePassword(int $userId, string $currentPassword, string $newPassword): bool
@@ -68,11 +75,61 @@ class AuthService
         return $this->userModel->update($userId, ['password' => $newPassword]);
     }
 
+    /**
+     * Cari akun berdasarkan email atau nomor HP.
+     */
+    public function findUserByIdentifier(string $identifier): ?array
+    {
+        $identifier = trim($identifier);
+        if ($identifier === '') {
+            return null;
+        }
+
+        $user = $this->userModel->findByEmail($identifier);
+        if ($user) {
+            return $user;
+        }
+
+        $customer = $this->customerModel
+            ->whereIn('phone', OtpService::phoneVariants($identifier))
+            ->first();
+
+        if ($customer && ! empty($customer['user_id'])) {
+            return $this->userModel->find((int) $customer['user_id']);
+        }
+
+        return null;
+    }
+
+    public function phoneForUser(int $userId): ?string
+    {
+        $customer = $this->customerModel->findByUserId($userId);
+
+        return $customer['phone'] ?? null;
+    }
+
+    public function markPhoneVerified(int $userId): bool
+    {
+        return (bool) $this->userModel->update($userId, ['phone_verified_at' => date('Y-m-d H:i:s')]);
+    }
+
+    public function updatePassword(int $userId, string $newPassword): bool
+    {
+        return (bool) $this->userModel->update($userId, ['password' => $newPassword]);
+    }
+
     private function publicUser(?array $user): array
     {
         if (! $user) {
             return [];
         }
-        return ['id' => (int) $user['id'], 'name' => $user['name'], 'email' => $user['email'], 'role' => $user['role']];
+
+        return [
+            'id'                => (int) $user['id'],
+            'name'              => $user['name'],
+            'email'             => $user['email'],
+            'role'              => $user['role'],
+            'phone_verified_at' => $user['phone_verified_at'] ?? null,
+        ];
     }
 }

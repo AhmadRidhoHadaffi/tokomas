@@ -34,10 +34,17 @@ class AuthRules
                 ],
             ],
             'password' => [
-                'rules' => 'required|min_length[6]',
+                'rules' => 'required|min_length[8]',
                 'errors' => [
-                    'required' => 'Password wajib diisi',
-                    'min_length' => 'Password minimal 6 karakter',
+                    'required' => 'Kata sandi wajib diisi',
+                    'min_length' => 'Kata sandi minimal 8 karakter',
+                ],
+            ],
+            'password_confirm' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => 'Konfirmasi kata sandi wajib diisi',
+                    'matches' => 'Konfirmasi kata sandi tidak cocok',
                 ],
             ],
             'address' => [
@@ -82,6 +89,62 @@ class AuthRules
                 'errors' => [
                     'required' => 'Password baru wajib diisi',
                     'min_length' => 'Password baru minimal 6 karakter',
+                ],
+            ],
+        ];
+    }
+
+    public static function verifyOtp(): array
+    {
+        return [
+            'code' => [
+                'rules' => 'required|min_length[4]|max_length[8]',
+                'errors' => [
+                    'required' => 'Kode OTP wajib diisi',
+                    'min_length' => 'Kode OTP tidak valid',
+                    'max_length' => 'Kode OTP tidak valid',
+                ],
+            ],
+        ];
+    }
+
+    public static function forgotPassword(): array
+    {
+        return [
+            'identifier' => [
+                'rules' => 'required|min_length[6]|max_length[100]',
+                'errors' => [
+                    'required' => 'Email atau nomor HP wajib diisi',
+                    'min_length' => 'Email atau nomor HP terlalu pendek',
+                    'max_length' => 'Email atau nomor HP terlalu panjang',
+                ],
+            ],
+        ];
+    }
+
+    public static function resetPassword(): array
+    {
+        return [
+            'code' => [
+                'rules' => 'required|min_length[4]|max_length[8]',
+                'errors' => [
+                    'required' => 'Kode OTP wajib diisi',
+                    'min_length' => 'Kode OTP tidak valid',
+                    'max_length' => 'Kode OTP tidak valid',
+                ],
+            ],
+            'password' => [
+                'rules' => 'required|min_length[8]',
+                'errors' => [
+                    'required' => 'Kata sandi baru wajib diisi',
+                    'min_length' => 'Kata sandi baru minimal 8 karakter',
+                ],
+            ],
+            'password_confirm' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => 'Konfirmasi kata sandi wajib diisi',
+                    'matches' => 'Konfirmasi kata sandi tidak cocok',
                 ],
             ],
         ];

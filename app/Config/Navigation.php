@@ -22,7 +22,7 @@ class Navigation extends BaseConfig
     public array $karyawan = [
         ['label' => 'Dashboard', 'url' => '/karyawan', 'icon' => 'home', 'end' => true],
         ['label' => 'Produk & Stok', 'url' => '/karyawan/produk', 'icon' => 'package'],
-        ['label' => 'Catat Transaksi', 'url' => '/karyawan/transaksi', 'icon' => 'receipt-text'],
+        ['label' => 'Transaksi Penjualan', 'url' => '/karyawan/transaksi', 'icon' => 'receipt-text'],
         ['label' => 'Pembukuan', 'url' => '/karyawan/pembukuan', 'icon' => 'book-open'],
         ['label' => 'Pesanan Custom', 'url' => '/karyawan/pesanan-custom', 'icon' => 'gem'],
         ['label' => 'Pelanggan', 'url' => '/karyawan/pelanggan', 'icon' => 'user'],

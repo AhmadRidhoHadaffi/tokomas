@@ -19,17 +19,18 @@ $this->endSection();
 
 $this->section('content');
 
-$error = session('error');
 $errors = session('errors') ?? [];
 $oldIdentifier = old('email');
 $authInputClass = 'px-4 py-3.5';
 ?>
 
+<?= $this->include('components/auth/flash') ?>
+
 <form method="POST" action="<?= base_url('masuk') ?>" noValidate class="space-y-4">
     <?= csrf_field() ?>
 
     <!-- Identifier Field -->
-    <?= view('components/ui/form_field', [
+    <?= form_field([
         'label' => 'Email',
         'name' => 'email',
         'id' => 'identifier',
@@ -45,9 +46,14 @@ $authInputClass = 'px-4 py-3.5';
 
     <!-- Password Field -->
     <div>
-        <label for="password" class="mb-1.5 block text-sm font-medium text-charcoal/80">
-            Kata Sandi
-        </label>
+        <div class="mb-1.5 flex items-center justify-between gap-3">
+            <label for="password" class="block text-sm font-medium text-charcoal/80">
+                Kata Sandi
+            </label>
+            <a href="<?= base_url('lupa-sandi') ?>" class="text-xs font-semibold text-gold-deep hover:underline">
+                Lupa kata sandi?
+            </a>
+        </div>
         <div x-data="{ showPassword: false }" class="relative">
             <input
                 :type="showPassword ? 'text' : 'password'"
@@ -75,13 +81,6 @@ $authInputClass = 'px-4 py-3.5';
         <?php endif; ?>
     </div>
 
-    <!-- Error Message -->
-    <?php if ($error): ?>
-        <p role="alert" class="rounded-lg bg-crimson/5 px-3.5 py-2.5 text-sm text-crimson">
-            <?= esc($error) ?>
-        </p>
-    <?php endif; ?>
-
     <!-- Submit Button -->
     <?= ui_button([
         'variant' => 'primary',
@@ -99,38 +98,5 @@ $authInputClass = 'px-4 py-3.5';
         Daftar di sini
     </a>
 </p>
-
-<!-- Demo Accounts -->
-<div class="mt-7 rounded-xl bg-ivory p-4 sm:p-5">
-    <p class="text-sm leading-relaxed text-charcoal/60">
-        Peran terdeteksi otomatis dari akun. Coba akun demo dengan kata sandi <span class="font-semibold text-charcoal">Gembira#2026</span>:
-    </p>
-    <div class="mt-3 flex flex-wrap gap-2">
-        <?= ui_button([
-            'type' => 'button',
-            'content' => 'Owner',
-            'variant' => 'outline',
-            'size' => 'sm',
-            'class' => 'rounded-full',
-            'onclick' => "document.getElementById('identifier').value='owner@demo.test'; document.getElementById('password').value='Gembira#2026';",
-        ]) ?>
-        <?= ui_button([
-            'type' => 'button',
-            'content' => 'Karyawan',
-            'variant' => 'outline',
-            'size' => 'sm',
-            'class' => 'rounded-full',
-            'onclick' => "document.getElementById('identifier').value='rina@demo.test'; document.getElementById('password').value='Gembira#2026';",
-        ]) ?>
-        <?= ui_button([
-            'type' => 'button',
-            'content' => 'Pelanggan',
-            'variant' => 'outline',
-            'size' => 'sm',
-            'class' => 'rounded-full',
-            'onclick' => "document.getElementById('identifier').value='siti@demo.test'; document.getElementById('password').value='Gembira#2026';",
-        ]) ?>
-    </div>
-</div>
 
 <?php $this->endSection(); ?>

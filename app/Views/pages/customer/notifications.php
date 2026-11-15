@@ -114,7 +114,7 @@ $kindMeta = [
                     <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <p class="text-sm <?= $isRead ? 'font-medium text-charcoal/80' : 'font-semibold text-charcoal' ?>"><?= esc($notification['title'] ?? '-') ?></p>
-                            <?= view('components/ui/badge', ['tone' => $meta['tone'], 'text' => $type]) ?>
+                            <?= badge(['tone' => $meta['tone'], 'text' => $type]) ?>
                             <?php if (!$isRead): ?>
                                 <span class="h-2.5 w-2.5 rounded-full bg-crimson" aria-label="Belum dibaca"></span>
                             <?php endif; ?>

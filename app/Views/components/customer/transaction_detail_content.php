@@ -33,7 +33,7 @@ $statusTone = $status === 'Lunas' ? 'green' : 'yellow';
         <div>
             <dt class="text-charcoal/50">Status</dt>
             <dd class="mt-1">
-                <?= view('components/ui/badge', ['tone' => $statusTone, 'text' => $status, 'dot' => true]) ?>
+                <?= badge(['tone' => $statusTone, 'text' => $status, 'dot' => true]) ?>
             </dd>
         </div>
     </dl>

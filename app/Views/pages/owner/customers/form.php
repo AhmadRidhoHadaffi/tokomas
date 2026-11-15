@@ -15,22 +15,22 @@ $errors = session()->getFlashdata('errors') ?? [];
         <?= csrf_field() ?>
 
         <div class="grid gap-4 sm:grid-cols-2">
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'name' => 'name', 'label' => 'Nama Lengkap', 'required' => true,
                 'value' => old('name', $customer['name'] ?? ''),
                 'error' => $errors['name'] ?? '', 'autocomplete' => 'name',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'tel', 'name' => 'phone', 'label' => 'Nomor HP', 'required' => true,
                 'value' => old('phone', $customer['phone'] ?? ''),
                 'error' => $errors['phone'] ?? '', 'autocomplete' => 'tel',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'email', 'name' => 'email', 'label' => 'Email',
                 'value' => old('email', $customer['email'] ?? ''),
                 'error' => $errors['email'] ?? '', 'autocomplete' => 'email',
             ]) ?>
-            <?= view('components/ui/form_field', [
+            <?= form_field([
                 'type' => 'textarea', 'name' => 'address', 'label' => 'Alamat', 'class' => 'sm:col-span-2',
                 'value' => old('address', $customer['address'] ?? ''),
                 'error' => $errors['address'] ?? '', 'rows' => '3',

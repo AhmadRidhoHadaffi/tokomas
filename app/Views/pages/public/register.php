@@ -23,11 +23,13 @@ $errors = session('errors') ?? [];
 $authInputClass = 'px-4 py-3.5';
 ?>
 
+<?= $this->include('components/auth/flash') ?>
+
 <form method="POST" action="<?= base_url('daftar') ?>" noValidate class="space-y-4">
     <?= csrf_field() ?>
 
     <!-- Name -->
-    <?= view('components/ui/form_field', [
+    <?= form_field([
         'label' => 'Nama Lengkap',
         'name' => 'name',
         'id' => 'name',
@@ -42,7 +44,7 @@ $authInputClass = 'px-4 py-3.5';
 
     <!-- Phone & Email Grid -->
     <div class="grid gap-4 sm:grid-cols-2">
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'label' => 'Nomor HP',
             'name' => 'phone',
             'id' => 'phone',
@@ -56,7 +58,7 @@ $authInputClass = 'px-4 py-3.5';
             'inputClass' => $authInputClass,
         ]) ?>
 
-        <?= view('components/ui/form_field', [
+        <?= form_field([
             'label' => 'Email',
             'name' => 'email',
             'id' => 'email',

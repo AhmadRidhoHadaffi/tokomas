@@ -73,7 +73,7 @@ foreach (($categories ?? []) as $group) {
 
     <div class="rounded-2xl border border-line bg-white shadow-card">
         <?php if ($items === []): ?>
-            <?= view('components/ui/empty_state', [
+            <?= empty_state([
                 'icon' => 'book-open',
                 'title' => 'Belum ada catatan',
                 'description' => 'Tambahkan catatan pemasukan atau pengeluaran pertama.',
